@@ -82,7 +82,7 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
 
-        <!-- GENERATORE INTELLIGENTE -->
+        <!-- GENERATORE INTELLETTUALE -->
         <section id="tab-generator" class="tab-content space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="border-b border-slate-100 pb-5">
@@ -273,8 +273,8 @@
             </div>
         </section>
 
-        <!-- SEZIONE GARE / PROGRAMMI ATLETE -->
-        <section id="tab-competitions" class="tab-content space-y-6">
+        <!-- SEZIONE GARE / PROGRAMMI ATLETE (LIBERA E SENZA BLOCCHI DI PIN) -->
+        <section id="tab-competitions" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-5 gap-4">
                     <div>
@@ -652,6 +652,9 @@
             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
             localStorage.setItem('gym_calendar_slots', JSON.stringify(calendarSlots));
             localStorage.setItem('gym_scheduled_lessons', JSON.stringify(scheduledLessons));
+            if (currentInstructor) {
+                localStorage.setItem('gym_current_user', JSON.stringify(currentInstructor));
+            }
 
             if (useCloud && db) {
                 db.collection("gym_data").doc("main").set({
@@ -714,7 +717,6 @@
 
         function initStartupLogin() {
             const select = document.getElementById('login-select-instructor');
-            if (!select) return;
             select.innerHTML = '';
             instructors.forEach(ins => {
                 const opt = document.createElement('option');
@@ -730,12 +732,8 @@
         let tempLoggedInInstructor = null;
 
         function performLogin() {
-            const select = document.getElementById('login-select-instructor');
-            const pinInput = document.getElementById('startup-pin-input');
-            if (!select || !pinInput) return;
-
-            const selectedId = parseInt(select.value);
-            const pin = pinInput.value.trim();
+            const selectedId = parseInt(document.getElementById('login-select-instructor').value);
+            const pin = document.getElementById('startup-pin-input').value.trim();
             const ins = instructors.find(i => i.id === selectedId);
 
             if (ins && ins.pin === pin) {
@@ -747,8 +745,9 @@
                 } else {
                     currentInstructor = ins;
                     if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari 1";
+                    saveData();
                     document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
-                    //switchTab('generator');
+                    switchTab('generator');
                 }
             } else {
                 alert("PIN errato!");
@@ -770,13 +769,21 @@
 
         function forceLogout() {
             currentInstructor = null;
+            localStorage.removeItem('gym_current_user');
             initStartupLogin();
         }
 
-    function switchTab(tabId) {
+        function switchTab(tabId) {
+            // Se non c'è l'utente loggato ma siamo sul tab competitions, assegniamo la prima insegnante di default per sbloccare la sezione gare senza PIN
             if (!currentInstructor) {
-                currentInstructor = instructors[0];
+                if (tabId === 'competitions') {
+                    currentInstructor = instructors[0];
+                    document.getElementById('current-user-name').textContent = `${currentInstructor.name} [${currentInstructor.assignedGroup || 'Elementari 1'}]`;
+                } else {
+                    return;
+                }
             }
+
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(el => {
                 el.classList.remove('bg-gymBlue', 'text-white', 'shadow-sm');
@@ -800,11 +807,6 @@
             if (tabId === 'team') renderInstructors();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-             if (e.target.closest('#nav-competitions')) {
-                 currentInstructor=instructor[0];
-                 document.getElementById('starup-login-modal').classList.add('hidden');
-        }
-     });        
 
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
@@ -957,6 +959,7 @@
             renderCurrentLessonResult();
         }
 
+        // SEZIONE GARE / PROGRAMMI ATLETE
         function renderCompetitionsSection() {
             const container = document.getElementById('athletes-competition-container');
             if (!container) return;
@@ -1065,6 +1068,7 @@
             }
         }
 
+        // FASI & CATEGORIE
         function renderPhasesEditor() {
             const container = document.getElementById('phases-editor-container');
             const tagsContainer = document.getElementById('categories-tags-container');
@@ -1359,7 +1363,7 @@
             if (!currentInstructor || !currentInstructor.isAdmin) return;
             const name = prompt("Nome della nuova insegnante:");
             if (!name) return;
-            const tempPin = prompt("PIN provvisorio:");
+            const tempPin = prompt("Inserisci un PIN provvisorio:");
             if (!tempPin || tempPin.length < 4) { alert("PIN non valido"); return; }
             
             const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
