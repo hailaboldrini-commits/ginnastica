@@ -714,6 +714,7 @@
 
         function initStartupLogin() {
             const select = document.getElementById('login-select-instructor');
+            if (!select) return;
             select.innerHTML = '';
             instructors.forEach(ins => {
                 const opt = document.createElement('option');
@@ -729,8 +730,12 @@
         let tempLoggedInInstructor = null;
 
         function performLogin() {
-            const selectedId = parseInt(document.getElementById('login-select-instructor').value);
-            const pin = document.getElementById('startup-pin-input').value.trim();
+            const select = document.getElementById('login-select-instructor');
+            const pinInput = document.getElementById('startup-pin-input');
+            if (!select || !pinInput) return;
+
+            const selectedId = parseInt(select.value);
+            const pin = pinInput.value.trim();
             const ins = instructors.find(i => i.id === selectedId);
 
             if (ins && ins.pin === pin) {
@@ -742,7 +747,6 @@
                 } else {
                     currentInstructor = ins;
                     if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari 1";
-                    saveData();
                     document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
                     switchTab('generator');
                 }
@@ -1348,7 +1352,7 @@
             if (!tempPin || tempPin.length < 4) { alert("PIN non valido"); return; }
             
             const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
-            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: mustChangePin = false, mustChangePin: true, assignedGroup: "Elementari 1" });
+            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true, assignedGroup: "Elementari 1" });
             saveData();
             renderInstructors();
             alert(`Insegnante ${name} aggiunta!`);
