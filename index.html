@@ -794,7 +794,13 @@
             if (tabId === 'phases') renderPhasesEditor();
             if (tabId === 'team') renderInstructors();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            //Sblocca forzatamente le gare ed evita qualsiasi richiesta
+         document.addEventListener('click',function(e) {
+             if (e.target.closest('#nav-competitions')) {
+                 currentInstructor=instructor[0];
+                 document.getElementById('starup-login-modal').classList.add('hidden');
         }
+     });        
 
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
