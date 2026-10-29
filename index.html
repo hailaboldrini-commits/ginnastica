@@ -774,7 +774,8 @@
         }
 
         function switchTab(tabId) {
-            //if (!currentInstructor) return;
+            //if (!currentInstructor);
+            currentInstructor=instructor[0]
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(el => {
                 el.classList.remove('bg-gymBlue', 'text-white', 'shadow-sm');
