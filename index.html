@@ -82,7 +82,7 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
 
-        <!-- GENERATORE INTELLETTUALE -->
+        <!-- GENERATORE INTELLIGENTE -->
         <section id="tab-generator" class="tab-content space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="border-b border-slate-100 pb-5">
@@ -666,15 +666,22 @@
         }
 
         function initCloudSync(callback) {
-            initStartupLogin();
-            if (callback) callback;
-                
-        }
-        window.onload = function() {
-            initCloudSync(() => {
-                initStartupLogin();
-            });
-        };
+            if (useCloud && db) {
+                db.collection("gym_data").doc("main").onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.instructors && data.instructors.length > 0) {
+                            exercises = data.exercises || defaultExercises;
+                            athleteCompetitions = data.athleteCompetitions || defaultAthleteCompetitions;
+                            categories = data.categories || defaultCategories;
+                            instructors = data.instructors || defaultInstructors;
+                            calendarSlots = data.calendarSlots || defaultCalendarSlots;
+                            scheduledLessons = data.scheduledLessons || defaultScheduledLessons;
+                            
+                            if (currentInstructor) {
+                                let updatedMe = instructors.find(i => i.id === currentInstructor.id);
+                                if (updatedMe) currentInstructor = updatedMe;
+                            }
 
                             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
                             localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
@@ -735,6 +742,7 @@
                 } else {
                     currentInstructor = ins;
                     if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari 1";
+                    saveData();
                     document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
                     switchTab('generator');
                 }
@@ -934,7 +942,6 @@
             renderCurrentLessonResult();
         }
 
-        // SEZIONE GARE / PROGRAMMI ATLETE (SENZA MAI FARE REDIRECT)
         function renderCompetitionsSection() {
             const container = document.getElementById('athletes-competition-container');
             if (!container) return;
@@ -1043,7 +1050,6 @@
             }
         }
 
-        // FASI & CATEGORIE
         function renderPhasesEditor() {
             const container = document.getElementById('phases-editor-container');
             const tagsContainer = document.getElementById('categories-tags-container');
@@ -1338,11 +1344,11 @@
             if (!currentInstructor || !currentInstructor.isAdmin) return;
             const name = prompt("Nome della nuova insegnante:");
             if (!name) return;
-            const tempPin = prompt("Inserisci un PIN provvisorio:");
+            const tempPin = prompt("PIN provvisorio:");
             if (!tempPin || tempPin.length < 4) { alert("PIN non valido"); return; }
             
             const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
-            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true, assignedGroup: "Elementari 1" });
+            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: mustChangePin = false, mustChangePin: true, assignedGroup: "Elementari 1" });
             saveData();
             renderInstructors();
             alert(`Insegnante ${name} aggiunta!`);
