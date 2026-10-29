@@ -773,19 +773,24 @@
             initStartupLogin();
         }
 
-        function switchTab(tabId) {
-            //if (!currentInstructor);
-            currentInstructor=instructor[0]
+    function switchTab(tabId) {
+            if (!currentInstructor) {
+                currentInstructor = instructors[0];
+            }
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(el => {
                 el.classList.remove('bg-gymBlue', 'text-white', 'shadow-sm');
                 el.classList.add('hover:bg-[#00537A]', 'text-slate-200');
             });
 
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) targetTab.classList.remove('hidden');
+
             const activeBtn = document.getElementById('nav-' + tabId);
-            activeBtn.classList.add('bg-gymBlue', 'text-white', 'shadow-sm');
-            activeBtn.classList.remove('hover:bg-[#00537A]', 'text-slate-200');
+            if (activeBtn) {
+                activeBtn.classList.add('bg-gymBlue', 'text-white', 'shadow-sm');
+                activeBtn.classList.remove('hover:bg-[#00537A]', 'text-slate-200');
+            }
 
             if (tabId === 'generator') updateGeneratorElements();
             if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); }
@@ -794,8 +799,7 @@
             if (tabId === 'phases') renderPhasesEditor();
             if (tabId === 'team') renderInstructors();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            //Sblocca forzatamente le gare ed evita qualsiasi richiesta
-         document.addEventListener('click',function(e) {
+        }
              if (e.target.closest('#nav-competitions')) {
                  currentInstructor=instructor[0];
                  document.getElementById('starup-login-modal').classList.add('hidden');
