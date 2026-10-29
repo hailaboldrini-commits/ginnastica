@@ -666,22 +666,9 @@
         }
 
         function initCloudSync(callback) {
-            if (useCloud && db) {
-                db.collection("gym_data").doc("main").onSnapshot((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        if (data.instructors && data.instructors.length > 0) {
-                            exercises = data.exercises || defaultExercises;
-                            athleteCompetitions = data.athleteCompetitions || defaultAthleteCompetitions;
-                            categories = data.categories || defaultCategories;
-                            instructors = data.instructors || defaultInstructors;
-                            calendarSlots = data.calendarSlots || defaultCalendarSlots;
-                            scheduledLessons = data.scheduledLessons || defaultScheduledLessons;
-                            
-                            if (currentInstructor) {
-                                let updatedMe = instructors.find(i => i.id === currentInstructor.id);
-                                if (updatedMe) currentInstructor = updatedMe;
-                            }
+            if (callback) callback;
+                
+        }
 
                             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
                             localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
