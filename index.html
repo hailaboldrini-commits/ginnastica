@@ -670,6 +670,11 @@
             if (callback) callback;
                 
         }
+        window.onload = function() {
+            initCloudSync(() => {
+                initStartupLogin();
+            });
+        };
 
                             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
                             localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
