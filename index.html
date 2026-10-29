@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gymnastics Team Planner</title>
+    <!-- Nome app per schermata Home -->
     <meta name="apple-mobile-web-app-title" content="Gym Team Planner">
     <meta name="application-name" content="Gym Team Planner">
+    <!-- Icona personalizzata standard ad alta definizione -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3112/3112946.png">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3112/3112946.png">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -40,34 +42,30 @@
                 </div>
                 <div>
                     <h1 class="text-base sm:text-lg font-extrabold tracking-wide text-white">Gymnastics Team Planner</h1>
-                    <p class="text-xs text-[#A8E8F9]">Gestione Lezioni & Sincronizzazione Cloud</p>
+                    <p class="text-xs text-[#A8E8F9]">Gestione Lezioni & Archivio Condiviso</p>
                 </div>
             </div>
 
+            <!-- Navigation Tabs -->
             <nav class="flex space-x-1.5 sm:space-x-2 mt-2.5 sm:mt-0 overflow-x-auto py-1">
                 <button onclick="switchTab('generator')" id="nav-generator" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gymBlue text-white transition flex items-center space-x-2 shadow-sm">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Generatore</span>
-                </button>
-                <button onclick="switchTab('result')" id="nav-result" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2 hidden">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>Piano Lezione</span>
                 </button>
                 <button onclick="switchTab('calendar')" id="nav-calendar" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
                     <i class="fa-solid fa-calendar-days"></i> <span>Calendario</span>
                 </button>
                 <button onclick="switchTab('archive')" id="nav-archive" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio</span>
-                </button>
-                <button onclick="switchTab('competitions')" id="nav-competitions" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-trophy"></i> <span>Gare</span>
+                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio Esercizi</span>
                 </button>
                 <button onclick="switchTab('phases')" id="nav-phases" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-list-check"></i> <span>Fasi & Categorie</span>
+                    <i class="fa-solid fa-list-check"></i> <span>Fasi Allenamento</span>
                 </button>
                 <button onclick="switchTab('team')" id="nav-team" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-users"></i> <span>Team & Gruppi</span>
+                    <i class="fa-solid fa-users"></i> <span>Team Insegnanti</span>
                 </button>
             </nav>
 
+            <!-- User Status / Logout badge -->
             <div class="flex items-center space-x-3 mt-2 sm:mt-0">
                 <div id="user-badge" class="flex items-center space-x-2 bg-[#00537A] px-3.5 py-1.5 rounded-full text-xs border border-[#A8E8F9]/30 shadow-inner">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -80,103 +78,61 @@
         </div>
     </header>
 
+    <!-- Main Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
 
-        <!-- GENERATORE INTELLETTUALE -->
+        <!-- TAB 1: GENERATORE LEZIONE -->
         <section id="tab-generator" class="tab-content space-y-6">
-            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="border-b border-slate-100 pb-5">
-                    <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Crea Nuova Lezione Intelligente</h2>
-                    <p class="text-sm text-slate-500 mt-0.5">Scrivi il nome del gruppo (es. Elementari 1), bilancia stretching/forza e seleziona gli elementi tecnici.</p>
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8">
+                <div class="border-b border-slate-100 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Crea Nuova Lezione</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Seleziona i parametri per generare la scaletta d'allenamento ideale.</p>
+                    </div>
+                    <button onclick="generateLesson()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-black px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition flex items-center space-x-2 text-sm">
+                        <i class="fa-solid fa-bolt"></i> <span>Genera Lezione</span>
+                    </button>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Nome Gruppo Personalizzato</label>
-                        <input type="text" id="gen-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm transition" value="Elementari 1">
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Gruppo / Età</label>
+                        <select id="gen-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue focus:ring-2 focus:ring-[#A8E8F9] outline-none bg-white font-bold text-slate-900 shadow-sm transition">
+                            <option value="Asilo">Asilo</option>
+                            <option value="Elementari" selected>Elementari</option>
+                            <option value="Medie">Medie</option>
+                            <option value="Pre Silver">Pre Silver</option>
+                            <option value="Silver">Silver</option>
+                        </select>
                     </div>
                     <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
                         <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Livello</label>
-                        <select id="gen-level" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm transition">
+                        <select id="gen-level" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue focus:ring-2 focus:ring-[#A8E8F9] outline-none bg-white font-bold text-slate-900 shadow-sm transition">
                             <option value="Base" selected>Base</option>
                             <option value="Medio">Medio</option>
                             <option value="Avanzato">Avanzato</option>
                         </select>
                     </div>
-                </div>
-
-                <!-- BILANCIAMENTO STRETCHING / FORZA -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
-                    <div>
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Focus Stretching / Mobilità</label>
-                        <select id="gen-stretching-focus" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm">
-                            <option value="Normale">Normale (Standard)</option>
-                            <option value="Alto" selected>Alto (Più allungamento e mobilità)</option>
-                            <option value="Basso">Basso (Ridotto)</option>
+                    <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Obiettivo Principale</label>
+                        <select id="gen-objective" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue focus:ring-2 focus:ring-[#A8E8F9] outline-none bg-white font-bold text-slate-900 shadow-sm transition">
+                            <!-- Populated dynamically -->
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Focus Forza Fisica / Potenziamento</label>
-                        <select id="gen-strength-focus" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm">
-                            <option value="Normale">Normale (Standard)</option>
-                            <option value="Alto" selected>Alto (Più rinforzo e tenute)</option>
-                            <option value="Basso">Basso (Ridotto)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner space-y-3">
-                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Attrezzi Utilizzati</label>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-2 bg-white rounded-xl border-2 border-slate-200">
-                        <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Trampolino" class="w-4 h-4 text-gymBlue rounded border-slate-300">
-                            <span>Trampolino</span>
-                        </label>
-                        <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Volteggio" class="w-4 h-4 text-gymBlue rounded border-slate-300">
-                            <span>Volteggio</span>
-                        </label>
-                        <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Trave" class="w-4 h-4 text-gymBlue rounded border-slate-300">
-                            <span>Trave</span>
-                        </label>
-                        <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Corpo Libero" class="w-4 h-4 text-gymBlue rounded border-slate-300">
-                            <span>Corpo Libero</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- SOLO ELEMENTI TECNICI -->
-                <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner space-y-3">
-                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Seleziona Elementi Tecnici (Solo acrobatica e passaggi)</label>
-                    <div id="gen-elements-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-48 overflow-y-auto p-2 bg-white rounded-xl border-2 border-slate-200">
-                    </div>
-                </div>
-
-                <div class="pt-4 flex justify-end">
-                    <button onclick="generateIntelligentLesson()" class="w-full sm:w-auto bg-gymOrange hover:bg-amber-600 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition flex items-center justify-center space-x-3 text-base">
-                        <i class="fa-solid fa-bolt text-lg"></i> <span>Genera Lezione Automatica</span>
-                    </button>
                 </div>
             </div>
-        </section>
 
-        <!-- PIANO LEZIONE -->
-        <section id="tab-result" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
+            <!-- Risultato Lezione Generata -->
+            <div id="lesson-result-container" class="hidden bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
                     <div>
-                        <button onclick="switchTab('generator')" class="text-xs font-bold text-gymBlue hover:underline mb-2 flex items-center space-x-1.5">
-                            <i class="fa-solid fa-arrow-left"></i> <span>Torna al Generatore</span>
-                        </button>
                         <h3 class="text-xl font-black text-gymDarkBlue flex items-center space-x-3">
                             <span class="p-2.5 bg-gymYellow/30 text-gymDarkBlue rounded-2xl shadow-sm"><i class="fa-solid fa-clipboard-list"></i></span>
                             <span id="res-title">Scheda Allenamento</span>
                         </h3>
                         <p class="text-xs text-slate-500 mt-1 font-medium" id="res-subtitle">Dettagli gruppo e livello</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex space-x-2.5">
                         <button onclick="openScheduleModal()" class="bg-gymBlue hover:bg-[#013C58] text-white text-xs font-bold px-4 py-3 rounded-xl transition shadow-md flex items-center space-x-1.5">
                             <i class="fa-solid fa-calendar-plus"></i> <span>Programma in Calendario</span>
                         </button>
@@ -187,74 +143,41 @@
                 </div>
 
                 <div id="lesson-phases-output" class="space-y-4">
+                    <!-- Dynamic phases -->
                 </div>
             </div>
         </section>
 
-        <!-- CALENDARIO (GIORNI FISSI + LEZIONI PROGRAMMATE SOTTO) -->
-        <section id="tab-calendar" class="tab-content hidden space-y-8">
-            <!-- PARTE 1: ORARIO SETTIMANALE FISSO (LUN-VEN) -->
-            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
+        <!-- TAB 2: CALENDARIO -->
+        <section id="tab-calendar" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario Settimanale dei Turni</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Orari fissi dei gruppi dal lunedì al venerdì.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario e Orario Settimanale</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Gestisci i turni, le fasce orarie e le lezioni assegnate.</p>
                     </div>
-                    <button onclick="openAddSlotModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center space-x-2">
-                        <i class="fa-solid fa-plus"></i> <span>Aggiungi Turno Fisso</span>
+                    <button onclick="openAddSlotModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i> <span>Aggiungi Turno</span>
                     </button>
                 </div>
 
                 <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                </div>
-            </div>
-
-            <!-- PARTE 2: LEZIONI PROGRAMMATE (PERSONALI) -->
-            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="border-b pb-4">
-                    <h3 class="text-lg font-black text-gymDarkBlue flex items-center space-x-2">
-                        <i class="fa-solid fa-bookmark text-gymBlue"></i>
-                        <span>Lezioni Programmate (Personali)</span>
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5">Lezioni che hai programmato tu per date specifiche in vista degli allenamenti futuri.</p>
-                </div>
-
-                <div id="scheduled-lessons-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Days -->
                 </div>
             </div>
         </section>
 
-        <!-- ARCHIVIO GENERALE -->
+        <!-- TAB 3: ARCHIVIO ESERCIZI -->
         <section id="tab-archive" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-5">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Generale Esercizi</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Database completo di tutti gli elementi tecnici, potenziamento e stretching.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Esercizi Condiviso</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Elementi visibili e sincronizzati in tempo reale per tutto il team.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="openAddExerciseModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i> <span>Nuovo Esercizio</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
-                    <div>
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Categoria</label>
-                        <select id="filter-category" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                            <option value="Tutti">Tutte le categorie</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Livello</label>
-                        <select id="filter-level" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                            <option value="Tutti">Tutti i livelli</option>
-                            <option value="Base">Base</option>
-                            <option value="Medio">Medio</option>
-                            <option value="Avanzato">Avanzato</option>
-                        </select>
-                    </div>
+                    <button onclick="openAddExerciseModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i> <span>Nuovo Esercizio</span>
+                    </button>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -269,110 +192,76 @@
                             </tr>
                         </thead>
                         <tbody id="exercise-table-body" class="divide-y divide-slate-100 text-sm font-medium">
+                            <!-- Injected -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- SEZIONE GARE / PROGRAMMI ATLETE -->
-        <section id="tab-competitions" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-5 gap-4">
-                    <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight flex items-center space-x-2">
-                            <i class="fa-solid fa-trophy text-gymOrange"></i>
-                            <span>Gestione Programmi di Gara per Atleta</span>
-                        </h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Scrivi il nome dell'atleta e componi i suoi esercizi di gara scegliendo gli elementi dai menù a tendina.</p>
-                    </div>
-                    <button onclick="openAddAthleteCompetitionModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                        <i class="fa-solid fa-user-plus"></i> <span>Aggiungi Scheda Atleta</span>
-                    </button>
-                </div>
-
-                <div id="athletes-competition-container" class="space-y-6">
-                </div>
-            </div>
-        </section>
-
-        <!-- FASI & CATEGORIE -->
+        <!-- TAB 4: FASI ALLENAMENTO (PERSONALI) -->
         <section id="tab-phases" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Gestione Categorie e Fasi</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Aggiungi nuove categorie, gestisci le fasi della lezione o creane di nuove.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Fasi di Allenamento Personali</h2>
+                        <p class="text-sm text-slate-500 mt-0.5" id="phases-subtitle">Personalizza la struttura delle tue lezioni.</p>
                     </div>
-                    <button onclick="saveCategoriesAndPhases()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 text-xs font-bold px-6 py-3 rounded-2xl shadow-lg transition flex items-center space-x-2">
-                        <i class="fa-solid fa-floppy-disk"></i> <span>Salva Modifiche</span>
+                    <button onclick="saveMyPhases()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 text-xs font-bold px-6 py-3 rounded-2xl shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-floppy-disk"></i> <span>Salva Modifiche Fasi</span>
                     </button>
                 </div>
-
-                <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 space-y-3">
-                    <h3 class="font-black text-gymDarkBlue text-sm">Aggiungi Nuova Categoria di Esercizi</h3>
-                    <div class="flex gap-2">
-                        <input type="text" id="new-category-name" placeholder="Es. Mobilità Attiva, Acrobatica..." class="w-full sm:w-80 border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                        <button onclick="addNewCategory()" class="bg-gymBlue hover:bg-[#013C58] text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow-sm">Aggiungi Categoria</button>
-                    </div>
-                    <div id="categories-tags-container" class="flex flex-wrap gap-2 pt-2">
-                    </div>
-                </div>
-
-                <div class="space-y-4 pt-4 border-t border-slate-100">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-black text-gymDarkBlue text-base">Struttura delle Fasi della Lezione</h3>
-                        <button onclick="addNewPhase()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-sm flex items-center space-x-1.5">
-                            <i class="fa-solid fa-plus"></i> <span>Aggiungi Nuova Fase</span>
-                        </button>
-                    </div>
-                    <div id="phases-editor-container" class="space-y-4">
-                    </div>
+                <div id="phases-editor-container" class="space-y-4">
+                    <!-- Injected dynamically -->
                 </div>
             </div>
         </section>
 
-        <!-- TEAM & GRUPPI -->
+        <!-- TAB 5: TEAM INSEGNANTI (SOLO ADMIN) -->
         <section id="tab-team" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & Gruppi</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Gestione insegnanti e assegnazione gruppi.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & PIN</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Gestione riservata all'Amministratrice (Ilaria Boldrini).</p>
                     </div>
                     <div id="admin-action-btn-container">
+                        <!-- Injected if admin -->
                     </div>
                 </div>
-                <div id="instructors-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div id="instructors-list" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- Injected -->
                 </div>
             </div>
         </section>
 
     </main>
 
+    <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 mt-auto">
-        Gymnastics Team Planner &bull; Sincronizzato con Cloud &bull; Società Sportiva
+        Gymnastics Team Planner &bull; Condiviso e Sincronizzato per la tua Società Sportiva
     </footer>
 
-    <!-- MODAL LOGIN -->
-    <div id="startup-login-modal" class="fixed inset-0 bg-slate-900/90 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center space-y-6 border border-slate-100 relative z-50">
+    <!-- MODAL: LOGIN PIN OBBLIGATORIO ALL'AVVIO -->
+    <div id="startup-login-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center space-y-6 border border-slate-100">
             <div class="w-16 h-16 bg-[#A8E8F9]/30 text-gymDarkBlue rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <div>
-                <h3 class="text-2xl font-black text-gymDarkBlue">Benvenuta</h3>
+                <h3 class="text-2xl font-black text-gymDarkBlue">Benvenuto</h3>
                 <p class="text-sm text-slate-500 mt-1 font-medium">Seleziona la tua persona e inserisci il PIN per accedere.</p>
             </div>
             <div class="space-y-4 text-left">
                 <div class="bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
                     <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Seleziona Insegnante</label>
-                    <select id="login-select-instructor" class="w-full border-2 border-gymBlue rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm cursor-pointer">
+                    <select id="login-select-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm">
+                        <!-- Populated dynamically -->
                     </select>
                 </div>
                 <div class="bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
                     <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">PIN / Password</label>
-                    <input type="password" id="startup-pin-input" maxlength="10" class="w-full text-center tracking-widest text-2xl border-2 border-gymBlue rounded-xl p-3 focus:border-gymBlue outline-none font-bold bg-white text-slate-900 shadow-sm" placeholder="••••••" value="112000">
+                    <input type="password" id="startup-pin-input" maxlength="10" class="w-full text-center tracking-widest text-2xl border-2 border-slate-200 rounded-xl p-3 focus:border-gymBlue outline-none font-bold bg-white text-slate-900 shadow-sm" placeholder="••••••" value="112000">
                 </div>
             </div>
             <button onclick="performLogin()" class="w-full py-4 rounded-2xl font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-xl transition text-base">
@@ -381,9 +270,9 @@
         </div>
     </div>
 
-    <!-- MODAL CAMBIO PIN -->
-    <div id="change-pin-modal" class="fixed inset-0 bg-slate-900/90 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center space-y-6 border border-slate-100 relative z-50">
+    <!-- MODAL: CAMBIO PIN PRIMO ACCESSO -->
+    <div id="change-pin-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center space-y-6 border border-slate-100">
             <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
                 <i class="fa-solid fa-key"></i>
             </div>
@@ -394,7 +283,7 @@
             <div class="space-y-4 text-left">
                 <div class="bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
                     <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Nuovo PIN Personale</label>
-                    <input type="password" id="new-pin-input" maxlength="10" class="w-full text-center tracking-widest text-2xl border-2 border-gymBlue rounded-xl p-3 focus:border-gymBlue outline-none font-bold bg-white text-slate-900 shadow-sm" placeholder="••••••">
+                    <input type="password" id="new-pin-input" maxlength="10" class="w-full text-center tracking-widest text-2xl border-2 border-slate-200 rounded-xl p-3 focus:border-gymBlue outline-none font-bold bg-white text-slate-900 shadow-sm" placeholder="••••••">
                 </div>
             </div>
             <button onclick="saveNewPin()" class="w-full py-4 rounded-2xl font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-xl transition text-base">
@@ -403,10 +292,11 @@
         </div>
     </div>
 
-    <!-- MODAL ESERCIZIO -->
+    <!-- MODAL: AGGIUNGI / MODIFICA ESERCIZIO -->
     <div id="exercise-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Nuovo Esercizio Standard</h3>
+            <h3 class="text-xl font-black text-gymDarkBlue" id="exercise-modal-title">Nuovo Esercizio</h3>
+            <input type="hidden" id="ex-edit-id">
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Esercizio / Elemento</label>
                 <input type="text" id="ex-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Verticale al muro">
@@ -414,25 +304,24 @@
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Categoria</label>
                 <select id="ex-category" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <option value="Riscaldamento">Riscaldamento / Andature</option>
+                    <option value="Stretching">Stretching & Mobilità</option>
+                    <option value="Potenziamento">Potenziamento & Tenute</option>
+                    <option value="Elemento Tecnico">Elemento Tecnico / Propedeutico</option>
+                    <option value="Gioco Finale">Gioco / Scioltezza Finale</option>
                 </select>
             </div>
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Livello</label>
-                <div id="ex-levels-container" class="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl border-2 border-slate-200">
-                    <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                        <input type="checkbox" name="ex-level-chk" value="Base" class="rounded text-gymBlue"> <span>Base</span>
-                    </label>
-                    <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                        <input type="checkbox" name="ex-level-chk" value="Medio" class="rounded text-gymBlue"> <span>Medio</span>
-                    </label>
-                    <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
-                        <input type="checkbox" name="ex-level-chk" value="Avanzato" class="rounded text-gymBlue"> <span>Avanzato</span>
-                    </label>
-                </div>
+                <select id="ex-level" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <option value="Base">Base</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Avanzato">Avanzato</option>
+                </select>
             </div>
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Descrizione / Note</label>
-                <textarea id="ex-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Consiglio didattico..."></textarea>
+                <textarea id="ex-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Breve spiegazione o consiglio didattico..."></textarea>
             </div>
             <div class="flex justify-end space-x-2 pt-2">
                 <button onclick="closeModal('exercise-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
@@ -441,63 +330,13 @@
         </div>
     </div>
 
-    <!-- MODAL AGGIUNGI SCHEDA ATLETA GARA -->
-    <div id="athlete-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Nuova Scheda Atleta (Gara)</h3>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome / Nome di Battesimo (es. Giulia)</label>
-                <input type="text" id="athlete-custom-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm" placeholder="Es. Giulia">
-            </div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo / Corso</label>
-                <select id="athlete-custom-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
-                    <option value="Elementari">Elementari</option>
-                    <option value="Medie">Medie</option>
-                    <option value="Pre Silver">Pre Silver</option>
-                    <option value="Silver">Silver</option>
-                </select>
-            </div>
-            <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('athlete-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="saveNewAthlete()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Crea Scheda</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL AGGIUNGI ELEMENTO AL VOLO NELLA FASE -->
-    <div id="add-phase-item-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Aggiungi Esercizio alla Fase</h3>
-            <input type="hidden" id="modal-target-phase-idx">
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Scegli dall'Archivio</label>
-                <select id="modal-existing-exercise-select" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
-                </select>
-            </div>
-            <div class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest my-2">- OPPURE CREA NUOVO -</div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Nuovo Esercizio</label>
-                <input type="text" id="modal-new-item-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Esercizio speciale inventato ora">
-            </div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Descrizione / Nota</label>
-                <textarea id="modal-new-item-desc" rows="2" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Come eseguirlo..."></textarea>
-            </div>
-            <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('add-phase-item-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="confirmAddPhaseItem()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi alla Fase</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL AGGIUNGI TURNO FISSO AL CALENDARIO -->
+    <!-- MODAL: AGGIUNGI TURNO CALENDARIO -->
     <div id="calendar-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Aggiungi Turno Fisso Settimanale</h3>
+            <h3 class="text-xl font-black text-gymDarkBlue">Pianifica Turno in Calendario</h3>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Giorno</label>
-                <select id="cal-day" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Giorno della Settimana</label>
+                <select id="cal-day" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
                     <option value="Lunedì">Lunedì</option>
                     <option value="Martedì">Martedì</option>
                     <option value="Mercoledì">Mercoledì</option>
@@ -507,214 +346,93 @@
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Inizio</label>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Ora Inizio</label>
                     <input type="time" id="cal-start" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="16:30">
                 </div>
                 <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Fine</label>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Ora Fine</label>
                     <input type="time" id="cal-end" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="18:00">
                 </div>
             </div>
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo / Corso</label>
-                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Elementari 1">
+                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Elementari o Silver">
             </div>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante</label>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante Assegnata</label>
                 <select id="cal-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <!-- Injected -->
                 </select>
             </div>
             <div class="flex justify-end space-x-2 pt-2">
                 <button onclick="closeModal('calendar-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi Turno</button>
+                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PROGRAMMAZIONE LEZIONE CON DATA -->
-    <div id="schedule-lesson-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Programma Lezione nel Calendario</h3>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Data dell'allenamento</label>
-                <input type="date" id="sch-date" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Gruppo / Squadra</label>
-                <input type="text" id="sch-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm" placeholder="Es. Elementari 1">
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Inizio</label>
-                    <input type="time" id="sch-start" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="16:30">
-                </div>
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Fine</label>
-                    <input type="time" id="sch-end" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="18:00">
-                </div>
-            </div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante</label>
-                <select id="sch-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
-                </select>
-            </div>
-            <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('schedule-lesson-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="saveScheduledLesson()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Salva Programmazione</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- LOGICA JAVASCRIPT -->
+    <!-- JavaScript Logic -->
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDc3LwkEN6dKJcDhVN_su17TzzM_rUn1ZQ",
-            authDomain: "ginnastica-22c83.firebaseapp.com",
-            projectId: "ginnastica-22c83",
-            storageBucket: "ginnastica-22c83.firebasestorage.app",
-            messagingSenderId: "299179967946",
-            appId: "1:299179967946:web:b3cfa18ec8bb691a6ebb33"
-        };
-
-        let db = null;
-        let useCloud = false;
-
-        if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "") {
-            try {
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.firestore();
-                useCloud = true;
-            } catch (e) {
-                console.log("Firebase non configurato:", e);
-            }
-        }
-
-        const defaultExercises = [
-            { id: 1, name: "Corsa leggera & Andature", category: "Riscaldamento", level: "Base, Medio, Avanzato", desc: "Corsa in cerchio, calzate, ginocchia alte." },
-            { id: 2, name: "Stretching gambe e spalle", category: "Stretching", level: "Base, Medio", desc: "Allungamento passivo e mobilità." },
-            { id: 3, name: "Tenuta candela & squadra", category: "Potenziamento", level: "Base, Medio", desc: "Tenute isometriche addome e lombari." },
-            { id: 4, name: "Passo del gatto", category: "Elemento Tecnico", level: "Base", desc: "Camminata coordinata." },
-            { id: 5, name: "Capriola avanti", category: "Elemento Tecnico", level: "Base", desc: "Rotolamento raccolto in avanti." },
-            { id: 6, name: "Capriola indietro", category: "Elemento Tecnico", level: "Base, Medio", desc: "Rotolamento raccolto indietro." },
-            { id: 7, name: "Verticale al muro", category: "Elemento Tecnico", level: "Medio, Avanzato", desc: "Allineamento corpo e spinta." },
-            { id: 8, name: "Ruota", category: "Elemento Tecnico", level: "Medio", desc: "Passaggio laterale mani-piedi." },
-            { id: 9, name: "Salto teso al trampolino", category: "Elemento Tecnico", level: "Base", desc: "Slancio e chiusura in volo." }
+        let defaultExercises = [
+            { id: 1, name: "Corsa leggera & Andature", category: "Riscaldamento", level: "Base", desc: "Corsa in cerchio, calzate, ginocchia alte, passaggi laterali." },
+            { id: 2, name: "Stretching gambe e spalle", category: "Stretching", level: "Base", desc: "Allungamento passivo e mobilità articolare." },
+            { id: 3, name: "Tenuta candela & squadra", category: "Potenziamento", level: "Base", desc: "Tenute isometriche a terra per addome e lombari." },
+            { id: 4, name: "Passo del gatto", category: "Elemento Tecnico", level: "Base", desc: "Camminata coordinata con sollevamento ginocchio." },
+            { id: 5, name: "Sforbiciata", category: "Elemento Tecnico", level: "Base", desc: "Passaggi e piccoli slanci coordinativi." },
+            { id: 6, name: "Spaccata sagittale / frontale", category: "Elemento Tecnico", level: "Base", desc: "Mobilità e allungamento progressivo." },
+            { id: 7, name: "Ponte da terra", category: "Elemento Tecnico", level: "Base", desc: "Spinta braccia e apertura toracica." },
+            { id: 8, name: "Capriola avanti e indietro", category: "Elemento Tecnico", level: "Base", desc: "Rotolamento raccolto coordinato." },
+            { id: 9, name: "Verticale al muro", category: "Elemento Tecnico", level: "Medio", desc: "Allineamento corpo, spinta spalle." },
+            { id: 10, name: "Ruota", category: "Elemento Tecnico", level: "Medio", desc: "Passaggio laterale mani-piedi in asse." },
+            { id: 11, name: "Gioco dei passaggi / Percorso", category: "Gioco Finale", level: "Base", desc: "Percorso ludico motorio per la fine lezione." }
         ];
 
-        const defaultAthleteCompetitions = [
-            {
-                id: 1,
-                name: "Giulia",
-                group: "Elementari 1",
-                apparatus: {
-                    trave: ["Capriola avanti", "Passo del gatto"],
-                    volteggio: ["Salto teso al trampolino"],
-                    corpoLibero: ["Ruota", "Verticale al muro"],
-                    trampolino: ["Salto teso al trampolino"]
-                }
-            }
+        let defaultPhases = [
+            { id: 1, title: "Fase 1: Riscaldamento", desc: "Corsa e Andature specifiche." },
+            { id: 2, title: "Fase 2: Stretching e Potenziamento", desc: "Tenute, mobilità e rinforzo muscolare." },
+            { id: 3, title: "Fase 3: Elementi Tecnici", desc: "Lavoro mirato sugli elementi e propedeutici." },
+            { id: 4, title: "Fase 4: Fase Finale / Scioltezza", desc: "Giochi motori o defaticamento blando." }
         ];
 
-        const defaultCategories = ["Riscaldamento", "Stretching", "Potenziamento", "Elemento Tecnico", "Gioco Finale"];
-
-        const defaultPhases = [
-            { id: 1, title: "Fase 1: Riscaldamento", desc: "Corsa e andature specifiche.", category: "Riscaldamento" },
-            { id: 2, title: "Fase 2: Stretching e Potenziamento", desc: "Tenute e rinforzo muscolare.", category: "Potenziamento" },
-            { id: 3, title: "Fase 3: Elementi Tecnici", desc: "Lavoro mirato sugli elementi.", category: "Elemento Tecnico" },
-            { id: 4, title: "Fase 4: Fase Finale", desc: "Giochi motori e defaticamento.", category: "Gioco Finale" }
+        let defaultInstructors = [
+            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false },
+            { id: 2, name: "Maestra Matilde", pin: "1234", isAdmin: false, mustChangePin: false },
+            { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false }
         ];
 
-        const defaultInstructors = [
-            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false, assignedGroup: "Elementari 1" },
-            { id: 2, name: "Maestra Matilde", pin: "1234", isAdmin: false, mustChangePin: false, assignedGroup: "Silver" },
-            { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false, assignedGroup: "Medie" }
-        ];
-
-        const defaultCalendarSlots = [
-            { id: 1, day: "Lunedì", start: "16:30", end: "18:00", group: "Elementari 1", instructor: "Ilaria Boldrini" },
-            { id: 2, day: "Mercoledì", start: "17:00", end: "18:30", group: "Medie", instructor: "Maestra Giulia" }
-        ];
-
-        const defaultScheduledLessons = [
-            { id: 1, date: "2026-11-19", start: "16:30", end: "18:00", group: "Elementari 1", instructor: "Ilaria Boldrini" }
+        let defaultCalendar = [
+            { id: 1, day: "Lunedì", start: "16:30", end: "17:30", group: "Asilo", instructor: "Ilaria Boldrini" },
+            { id: 2, day: "Lunedì", start: "17:30", end: "19:00", group: "Elementari", instructor: "Maestra Giulia" },
+            { id: 3, day: "Mercoledì", start: "16:30", end: "18:00", group: "Medie", instructor: "Maestra Matilde" }
         ];
 
         let exercises = JSON.parse(localStorage.getItem('gym_exercises')) || defaultExercises;
-        let athleteCompetitions = JSON.parse(localStorage.getItem('gym_athlete_competitions')) || defaultAthleteCompetitions;
-        let categories = JSON.parse(localStorage.getItem('gym_categories')) || defaultCategories;
-        let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar_slots')) || defaultCalendarSlots;
-        let scheduledLessons = JSON.parse(localStorage.getItem('gym_scheduled_lessons')) || defaultScheduledLessons;
-        let instructors = JSON.parse(localStorage.getItem('gym_instructors')) || defaultInstructors;
+        
+        let storedInstructors = JSON.parse(localStorage.getItem('gym_instructors'));
+        let instructors = storedInstructors ? storedInstructors : defaultInstructors;
+
+        localStorage.removeItem('gym_current_user');
         let currentInstructor = null;
 
         function saveData() {
             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
-            localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
-            localStorage.setItem('gym_categories', JSON.stringify(categories));
             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
-            localStorage.setItem('gym_calendar_slots', JSON.stringify(calendarSlots));
-            localStorage.setItem('gym_scheduled_lessons', JSON.stringify(scheduledLessons));
+            localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
             if (currentInstructor) {
                 localStorage.setItem('gym_current_user', JSON.stringify(currentInstructor));
             }
-
-            if (useCloud && db) {
-                db.collection("gym_data").doc("main").set({
-                    exercises: exercises,
-                    athleteCompetitions: athleteCompetitions,
-                    categories: categories,
-                    instructors: instructors,
-                    calendarSlots: calendarSlots,
-                    scheduledLessons: scheduledLessons
-                }).catch(err => console.log("Errore sync cloud:", err));
-            }
         }
 
-        function initCloudSync(callback) {
-            if (useCloud && db) {
-                db.collection("gym_data").doc("main").onSnapshot((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        if (data.instructors && data.instructors.length > 0) {
-                            exercises = data.exercises || defaultExercises;
-                            athleteCompetitions = data.athleteCompetitions || defaultAthleteCompetitions;
-                            categories = data.categories || defaultCategories;
-                            instructors = data.instructors || defaultInstructors;
-                            calendarSlots = data.calendarSlots || defaultCalendarSlots;
-                            scheduledLessons = data.scheduledLessons || defaultScheduledLessons;
-                            
-                            if (currentInstructor) {
-                                let updatedMe = instructors.find(i => i.id === currentInstructor.id);
-                                if (updatedMe) currentInstructor = updatedMe;
-                            }
-
-                            localStorage.setItem('gym_exercises', JSON.stringify(exercises));
-                            localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
-                            localStorage.setItem('gym_categories', JSON.stringify(categories));
-                            localStorage.setItem('gym_instructors', JSON.stringify(instructors));
-                            localStorage.setItem('gym_calendar_slots', JSON.stringify(calendarSlots));
-                            localStorage.setItem('gym_scheduled_lessons', JSON.stringify(scheduledLessons));
-                        } else {
-                            saveData();
-                        }
-                    } else {
-                        saveData();
-                    }
-                    if (callback) callback();
-                }, (error) => {
-                    console.log("Errore Cloud:", error);
-                    if (callback) callback();
-                });
-            } else {
-                if (callback) callback();
-            }
-        }
+        let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar')) || defaultCalendar;
 
         function getMyPhases() {
             if (!currentInstructor) return defaultPhases;
             const key = 'gym_phases_' + currentInstructor.id;
             let saved = JSON.parse(localStorage.getItem(key));
-            return saved ? saved : JSON.parse(JSON.stringify(defaultPhases));
+            if (!saved) {
+                saved = JSON.parse(JSON.stringify(defaultPhases));
+            }
+            return saved;
         }
 
         function initStartupLogin() {
@@ -723,10 +441,11 @@
             instructors.forEach(ins => {
                 const opt = document.createElement('option');
                 opt.value = ins.id;
-                opt.textContent = `${ins.name} (${ins.assignedGroup || 'Nessun gruppo'})`;
+                opt.textContent = ins.name;
                 if (ins.id === 1) opt.selected = true;
                 select.appendChild(opt);
             });
+
             document.getElementById('startup-login-modal').classList.remove('hidden');
             document.getElementById('startup-login-modal').classList.add('flex');
         }
@@ -741,14 +460,14 @@
             if (ins && ins.pin === pin) {
                 tempLoggedInInstructor = ins;
                 document.getElementById('startup-login-modal').classList.add('hidden');
+
                 if (ins.mustChangePin) {
                     document.getElementById('change-pin-modal').classList.remove('hidden');
                     document.getElementById('change-pin-modal').classList.add('flex');
                 } else {
                     currentInstructor = ins;
-                    if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari 1";
                     saveData();
-                    document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
+                    document.getElementById('current-user-name').textContent = ins.name;
                     switchTab('generator');
                 }
             } else {
@@ -758,14 +477,22 @@
 
         function saveNewPin() {
             const newPin = document.getElementById('new-pin-input').value.trim();
-            if (!newPin || newPin.length < 4) { alert("Il PIN deve essere di almeno 4 caratteri."); return; }
+            if (!newPin || newPin.length < 4) {
+                alert("Il PIN deve essere di almeno 4 caratteri.");
+                return;
+            }
+
             tempLoggedInInstructor.pin = newPin;
             tempLoggedInInstructor.mustChangePin = false;
+
             instructors = instructors.map(i => i.id === tempLoggedInInstructor.id ? tempLoggedInInstructor : i);
+
             currentInstructor = tempLoggedInInstructor;
             saveData();
+
             document.getElementById('change-pin-modal').classList.add('hidden');
-            document.getElementById('current-user-name').textContent = `${currentInstructor.name} [${currentInstructor.assignedGroup || 'Elementari 1'}]`;
+            document.getElementById('current-user-name').textContent = currentInstructor.name;
+            alert("PIN aggiornato con successo! Benvenuta.");
             switchTab('generator');
         }
 
@@ -788,468 +515,215 @@
             activeBtn.classList.add('bg-gymBlue', 'text-white', 'shadow-sm');
             activeBtn.classList.remove('hover:bg-[#00537A]', 'text-slate-200');
 
-            if (tabId === 'generator') updateGeneratorElements();
-            if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); }
-            if (tabId === 'competitions') renderCompetitionsSection();
-            if (tabId === 'calendar') renderCalendarTab();
+            if (tabId === 'generator') updateGeneratorObjectives();
+            if (tabId === 'archive') renderExercisesTable();
+            if (tabId === 'calendar') renderCalendar();
             if (tabId === 'phases') renderPhasesEditor();
             if (tabId === 'team') renderInstructors();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
-        function updateGeneratorElements() {
-            const container = document.getElementById('gen-elements-container');
-            container.innerHTML = '';
-            let techExercises = exercises.filter(e => e.category === "Elemento Tecnico");
-            if(techExercises.length === 0) techExercises = exercises;
-
+        function updateGeneratorObjectives() {
+            const select = document.getElementById('gen-objective');
+            select.innerHTML = '';
+            const techExercises = exercises.filter(e => e.category === 'Elemento Tecnico');
             techExercises.forEach(ex => {
-                const label = document.createElement('label');
-                label.className = "flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition";
-                label.innerHTML = `
-                    <input type="checkbox" name="gen-elem-checkbox" value="${ex.name}" class="w-4 h-4 text-gymBlue rounded border-slate-300">
-                    <span>${ex.name} <span class="text-xs font-medium text-slate-400">(${ex.level})</span></span>
-                `;
-                container.appendChild(label);
+                const opt = document.createElement('option');
+                opt.value = ex.name;
+                opt.textContent = ex.name + ` (${ex.level})`;
+                select.appendChild(opt);
             });
         }
 
-        let currentGeneratedLesson = null;
-
-        function generateIntelligentLesson() {
+        function generateLesson() {
             const group = document.getElementById('gen-group').value;
             const level = document.getElementById('gen-level').value;
-            const stretchFocus = document.getElementById('gen-stretching-focus').value;
-            const strengthFocus = document.getElementById('gen-strength-focus').value;
+            const objective = document.getElementById('gen-objective').value;
 
-            const apparatusCheckboxes = document.querySelectorAll('input[name="gen-apparatus"]:checked');
-            let selectedApparatus = Array.from(apparatusCheckboxes).map(cb => cb.value);
-            
-            const checkboxes = document.querySelectorAll('input[name="gen-elem-checkbox"]:checked');
-            let selectedElements = Array.from(checkboxes).map(cb => cb.value);
-
-            if (selectedElements.length === 0) { alert("Seleziona almeno un elemento tecnico per la lezione!"); return; }
-
-            const myPhases = getMyPhases();
-            
-            currentGeneratedLesson = {
-                group: group, level: level, apparatus: selectedApparatus, elements: selectedElements,
-                stretchFocus: stretchFocus, strengthFocus: strengthFocus,
-                phases: myPhases.map((phase, index) => {
-                    let phaseExercises = [];
-                    let catName = phase.category || categories[0];
-
-                    if (catName === "Stretching") {
-                        let count = stretchFocus === "Alto" ? 3 : (stretchFocus === "Basso" ? 1 : 2);
-                        phaseExercises = exercises.filter(e => e.category === "Stretching").slice(0, count).map(e => ({ name: e.name, desc: e.desc }));
-                    } else if (catName === "Potenziamento") {
-                        let count = strengthFocus === "Alto" ? 3 : (strengthFocus === "Basso" ? 1 : 2);
-                        phaseExercises = exercises.filter(e => e.category === "Potenziamento").slice(0, count).map(e => ({ name: e.name, desc: e.desc }));
-                    } else if (catName === "Elemento Tecnico") {
-                        phaseExercises = selectedElements.map(elemName => {
-                            let found = exercises.find(e => e.name === elemName);
-                            return { name: elemName, desc: found ? found.desc : "Esercizio tecnico mirato" };
-                        });
-                    } else {
-                        phaseExercises = exercises.filter(e => e.category === catName).slice(0, 1).map(e => ({ name: e.name, desc: e.desc }));
-                    }
-
-                    return { title: phase.title, desc: phase.desc, category: catName, exercises: phaseExercises };
-                })
-            };
-
-            renderCurrentLessonResult();
-            document.getElementById('nav-result').classList.remove('hidden');
-            switchTab('result');
-        }
-
-        function renderCurrentLessonResult() {
-            if (!currentGeneratedLesson) return;
-            let apparatusText = currentGeneratedLesson.apparatus.length > 0 ? ` • Attrezzi: ${currentGeneratedLesson.apparatus.join(', ')}` : '';
-            document.getElementById('res-title').textContent = `Lezione Automatica: ${currentGeneratedLesson.elements.slice(0, 2).join(', ')}`;
-            document.getElementById('res-subtitle').textContent = `Insegnante: ${currentInstructor.name} • Gruppo: ${currentGeneratedLesson.group} (Stretching: ${currentGeneratedLesson.stretchFocus}, Forza: ${currentGeneratedLesson.strengthFocus})${apparatusText}`;
+            document.getElementById('res-title').textContent = `Lezione: ${objective}`;
+            document.getElementById('res-subtitle').textContent = `Insegnante: ${currentInstructor.name} • Gruppo: ${group} • Livello: ${level}`;
 
             const container = document.getElementById('lesson-phases-output');
             container.innerHTML = '';
 
-            currentGeneratedLesson.phases.forEach((phase, phaseIndex) => {
-                let exHtml = "";
-                phase.exercises.forEach((e, itemIdx) => {
-                    let pool = exercises.filter(item => item.category === phase.category);
-                    if (pool.length === 0) pool = exercises;
-                    let optionsHtml = pool.map(item => `<option value="${item.name}" ${item.name === e.name ? 'selected' : ''}>${item.name}</option>`).join('');
+            const myPhases = getMyPhases();
 
-                    exHtml += `
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-2">
-                            <div class="flex items-center justify-between gap-2">
-                                <select onchange="currentGeneratedLesson.phases[${phaseIndex}].exercises[${itemIdx}].name = this.value" class="w-full border-2 border-slate-200 rounded-xl p-2 text-xs font-black text-gymDarkBlue bg-slate-50">
-                                    ${optionsHtml}
-                                </select>
-                                <button onclick="currentGeneratedLesson.phases[${phaseIndex}].exercises.splice(${itemIdx}, 1); renderCurrentLessonResult();" class="text-xs text-rose-400 hover:text-rose-600 px-2"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                            <p class="text-xs text-slate-600 pl-2">${e.desc}</p>
-                        </div>
-                    `;
-                });
+            myPhases.forEach((phase, index) => {
+                let matchingEx = [];
+                if (index === 0) matchingEx = exercises.filter(e => e.category === 'Riscaldamento');
+                else if (index === 1) matchingEx = exercises.filter(e => e.category === 'Stretching' || e.category === 'Potenziamento');
+                else if (index === 2) matchingEx = exercises.filter(e => e.name === objective || e.category === 'Elemento Tecnico');
+                else if (index === 3) matchingEx = exercises.filter(e => e.category === 'Gioco Finale');
+
+                let exHtml = matchingEx.map(e => `<li class="text-sm text-slate-700 py-2 flex items-start space-x-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i><div><span class="font-bold text-slate-900">e.name</span>:<spanclass="text-slate-600">{e.desc}</span></div></li>`).join('');
 
                 const div = document.createElement('div');
-                div.className = "bg-[#A8E8F9]/15 rounded-2xl p-5 border border-[#A8E8F9]/40 space-y-3";
+                div.className = "bg-[#A8E8F9]/15 rounded-2xl p-5 border border-[#A8E8F9]/40 shadow-sm";
                 div.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <h4 class="font-black text-gymDarkBlue text-base">${phase.title}</h4>
-                        <button onclick="openAddPhaseItemModal(${phaseIndex})" class="bg-gymBlue hover:bg-gymDarkBlue text-white text-xs font-bold px-3 py-1.5 rounded-xl transition shadow-sm flex items-center space-x-1.5">
-                            <i class="fa-solid fa-plus"></i> <span>Aggiungi Elemento</span>
-                        </button>
-                    </div>
-                    <p class="text-xs text-slate-500">${phase.desc}</p>
-                    <div class="space-y-2">${exHtml || '<p class="text-xs text-slate-400 italic">Nessun esercizio</p>'}</div>
+                    <h4 class="font-black text-gymDarkBlue text-base mb-2.5 flex items-center space-x-3">
+                        <span class="w-7 h-7 rounded-xl bg-gymBlue text-white flex items-center justify-center text-xs font-bold shadow-sm">${index + 1}</span>
+                        <span>${phase.title}</span>
+                    </h4>
+                    <p class="text-xs text-slate-500 mb-3 pl-10 font-medium">${phase.desc}</p>
+                    <ul class="space-y-1.5 pl-10">${exHtml || '<li class="text-xs text-slate-400 italic">Nessun esercizio specifico associato</li>'}</ul>
                 `;
                 container.appendChild(div);
             });
+
+            document.getElementById('lesson-result-container').classList.remove('hidden');
         }
 
-        function openAddPhaseItemModal(phaseIdx) {
-            document.getElementById('modal-target-phase-idx').value = phaseIdx;
-            document.getElementById('modal-new-item-name').value = '';
-            document.getElementById('modal-new-item-desc').value = '';
-
-            const sel = document.getElementById('modal-existing-exercise-select');
-            sel.innerHTML = '<option value="">-- Seleziona dallarchivio --</option>';
-            exercises.forEach(e => {
-                sel.innerHTML += `<option value="${e.name}">${e.name} (${e.category})</option>`;
-            });
-
-            openModal('add-phase-item-modal');
-        }
-
-        function confirmAddPhaseItem() {
-            const phaseIdx = parseInt(document.getElementById('modal-target-phase-idx').value);
-            const existingName = document.getElementById('modal-existing-exercise-select').value;
-            const newName = document.getElementById('modal-new-item-name').value.trim();
-            const newDesc = document.getElementById('modal-new-item-desc').value.trim();
-
-            if (newName) {
-                let cat = currentGeneratedLesson.phases[phaseIdx].category || "Elemento Tecnico";
-                exercises.push({ id: Date.now(), name: newName, category: cat, level: "Base, Medio", desc: newDesc || "Creato al volo" });
-                saveData();
-                currentGeneratedLesson.phases[phaseIdx].exercises.push({ name: newName, desc: newDesc || "Creato al volo" });
-            } else if (existingName) {
-                let found = exercises.find(e => e.name === existingName);
-                currentGeneratedLesson.phases[phaseIdx].exercises.push({ name: existingName, desc: found ? found.desc : "" });
-            } else {
-                alert("Seleziona un esercizio esistente o scrivi un nome nuovo.");
-                return;
-            }
-
-            closeModal('add-phase-item-modal');
-            renderCurrentLessonResult();
-        }
-
-        // SEZIONE GARE / PROGRAMMI ATLETE
-        function renderCompetitionsSection() {
-            const container = document.getElementById('athletes-competition-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            if (athleteCompetitions.length === 0) {
-                container.innerHTML = `<div class="bg-amber-50 p-6 rounded-2xl text-center text-amber-800 font-medium text-sm">Nessuna scheda atleta creata. Clicca su "Aggiungi Scheda Atleta" in alto.</div>`;
-                return;
-            }
-
-            athleteCompetitions.forEach((athlete, athIdx) => {
-                let apparatusList = ['trave', 'volteggio', 'corpoLibero', 'trampolino'];
-                let apparatusTitles = { trave: 'Trave', volteggio: 'Volteggio', corpoLibero: 'Corpo Libero', trampolino: 'Trampolino' };
-
-                let apparatusHtml = '';
-                apparatusList.forEach(appKey => {
-                    if (!athlete.apparatus[appKey]) athlete.apparatus[appKey] = [];
-                    let itemsHtml = '';
-                    athlete.apparatus[appKey].forEach((elemName, elIdx) => {
-                        itemsHtml += `
-                            <div class="flex items-center space-x-2 mb-2">
-                                <select onchange="updateAthleteElement(${athIdx}, '${appKey}', ${elIdx}, this.value)" class="w-full border-2 border-slate-200 rounded-xl p-2 text-xs font-bold bg-white text-slate-800">
-                                    <option value="">-- Seleziona elemento --</option>
-                                    ${exercises.map(e => `<option value="${e.name}" ${e.name === elemName ? 'selected' : ''}>${e.name}</option>`).join('')}
-                                </select>
-                                <button onclick="removeAthleteElement(${athIdx}, '${appKey}', ${elIdx})" class="text-rose-400 hover:text-rose-600 p-2"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        `;
-                    });
-
-                    apparatusHtml += `
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-                            <div class="flex justify-between items-center border-b pb-2">
-                                <span class="font-black text-xs uppercase tracking-wider text-gymDarkBlue">${apparatusTitles[appKey]}</span>
-                                <button onclick="addAthleteElement(${athIdx}, '${appKey}')" class="text-xs bg-gymBlue text-white px-2.5 py-1 rounded-lg font-bold hover:bg-gymDarkBlue transition"><i class="fa-solid fa-plus mr-1"></i> Aggiungi</button>
-                            </div>
-                            <div class="space-y-1 mt-2">
-                                ${itemsHtml || '<p class="text-xs text-slate-400 italic">Nessun elemento inserito</p>'}
-                            </div>
-                        </div>
-                    `;
-                });
-
-                container.innerHTML += `
-                    <div class="bg-[#A8E8F9]/15 p-6 rounded-3xl border border-[#A8E8F9]/50 space-y-4 shadow-sm">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-[#A8E8F9]/40 pb-4">
-                            <div class="flex items-center space-x-3">
-                                <div class="bg-gymOrange text-slate-950 font-black px-3 py-1.5 rounded-xl text-sm shadow">${athlete.name}</div>
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Gruppo: ${athlete.group}</span>
-                            </div>
-                            <button onclick="deleteAthlete(${athIdx})" class="text-xs text-rose-500 hover:text-rose-700 font-bold px-3 py-1.5 rounded-xl hover:bg-rose-50 transition">
-                                <i class="fa-solid fa-trash mr-1"></i> Elimina Scheda Atleta
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            ${apparatusHtml}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function openAddAthleteCompetitionModal() {
-            document.getElementById('athlete-custom-name').value = '';
-            openModal('athlete-modal');
-        }
-
-        function saveNewAthlete() {
-            const name = document.getElementById('athlete-custom-name').value.trim();
-            const group = document.getElementById('athlete-custom-group').value;
-            if (!name) { alert("Inserisci il nome dell'atleta."); return; }
-
-            athleteCompetitions.push({
-                id: Date.now(),
-                name: name,
-                group: group,
-                apparatus: { trave: [], volteggio: [], corpoLibero: [], trampolino: [] }
-            });
-            saveData();
-            closeModal('athlete-modal');
-            renderCompetitionsSection();
-        }
-
-        function addAthleteElement(athIdx, appKey) {
-            athleteCompetitions[athIdx].apparatus[appKey].push(exercises.length > 0 ? exercises[0].name : "");
-            saveData();
-            renderCompetitionsSection();
-        }
-
-        function updateAthleteElement(athIdx, appKey, elIdx, value) {
-            athleteCompetitions[athIdx].apparatus[appKey][elIdx] = value;
-            saveData();
-        }
-
-        function removeAthleteElement(athIdx, appKey, elIdx) {
-            athleteCompetitions[athIdx].apparatus[appKey].splice(elIdx, 1);
-            saveData();
-            renderCompetitionsSection();
-        }
-
-        function deleteAthlete(athIdx) {
-            if (confirm("Vuoi eliminare la scheda di questa atleta?")) {
-                athleteCompetitions.splice(athIdx, 1);
-                saveData();
-                renderCompetitionsSection();
-            }
-        }
-
-        // FASI & CATEGORIE
         function renderPhasesEditor() {
             const container = document.getElementById('phases-editor-container');
-            const tagsContainer = document.getElementById('categories-tags-container');
-            if (!container) return;
-
             container.innerHTML = '';
-            if (tagsContainer) {
-                tagsContainer.innerHTML = categories.map(cat => `
-                    <span class="inline-flex items-center bg-white px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-gymDarkBlue shadow-sm">
-                        ${cat}
-                        ${categories.length > 1 ? `<button onclick="deleteCategory('${cat}')" class="ml-2 text-rose-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>` : ''}
-                    </span>
-                `).join('');
-            }
-
             const myPhases = getMyPhases();
-            myPhases.forEach((p, idx) => {
-                let catOptions = categories.map(cat => `<option value="${cat}" ${p.category === cat ? 'selected' : ''}>${cat}</option>`).join('');
 
+            document.getElementById('phases-subtitle').textContent = `Struttura lezioni personalizzata per: ${currentInstructor.name}`;
+
+            myPhases.forEach((p, idx) => {
                 container.innerHTML += `
                     <div class="bg-[#A8E8F9]/15 p-5 rounded-2xl border border-[#A8E8F9]/40 space-y-3 shadow-sm" data-phase-index="${idx}">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3 flex-grow">
-                                <span class="w-7 h-7 rounded-xl bg-gymBlue text-white font-bold flex items-center justify-center text-xs">${idx + 1}</span>
-                                <input type="text" class="phase-title-input w-full font-bold text-sm sm:text-base text-gymDarkBlue bg-white border-2 border-slate-200 rounded-xl p-3 outline-none" value="${p.title}">
-                            </div>
-                            <button onclick="deletePhase(${idx})" class="ml-2 text-rose-400 hover:text-rose-600 p-2"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-xl bg-gymBlue text-white font-bold flex items-center justify-center text-xs shadow-sm">${idx + 1}</span>
+                            <input type="text" class="phase-title-input w-full font-bold text-sm sm:text-base text-gymDarkBlue bg-white border-2 border-slate-200 rounded-xl p-3 outline-none focus:border-gymBlue shadow-sm" value="${p.title}">
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10">
-                            <input type="text" class="phase-desc-input w-full text-xs sm:text-sm text-slate-600 bg-white border-2 border-slate-200 rounded-xl p-3 outline-none" value="${p.desc}" placeholder="Descrizione fase...">
-                            <select class="phase-category-select w-full text-xs sm:text-sm font-bold text-gymDarkBlue bg-white border-2 border-slate-200 rounded-xl p-3 outline-none">
-                                ${catOptions}
-                            </select>
+                        <div class="pl-10">
+                            <input type="text" class="phase-desc-input w-full text-xs sm:text-sm text-slate-600 bg-white border-2 border-slate-200 rounded-xl p-3 outline-none focus:border-gymBlue shadow-sm" value="${p.desc}" placeholder="Descrizione fase...">
                         </div>
                     </div>
                 `;
             });
         }
 
-        function addNewCategory() {
-            const input = document.getElementById('new-category-name');
-            const catName = input.value.trim();
-            if (!catName || categories.includes(catName)) { alert("Nome non valido o già esistente."); return; }
-            categories.push(catName);
-            saveData();
-            input.value = "";
-            renderPhasesEditor();
-            populateCategoryFilter();
-        }
-
-        function deleteCategory(catName) {
-            if (categories.length <= 1) { alert("Mantieni almeno una categoria."); return; }
-            categories = categories.filter(c => c !== catName);
-            saveData();
-            renderPhasesEditor();
-            populateCategoryFilter();
-        }
-
-        function addNewPhase() {
-            let myPhases = getMyPhases();
-            myPhases.push({ title: `Nuova Fase ${myPhases.length + 1}`, desc: "Descrizione...", category: categories[0] });
-            localStorage.setItem('gym_phases_' + currentInstructor.id, JSON.stringify(myPhases));
-            renderPhasesEditor();
-        }
-
-        function deletePhase(idx) {
-            let myPhases = getMyPhases();
-            if (myPhases.length <= 1) { alert("Mantieni almeno una fase."); return; }
-            myPhases.splice(idx, 1);
-            localStorage.setItem('gym_phases_' + currentInstructor.id, JSON.stringify(myPhases));
-            renderPhasesEditor();
-        }
-
-        function saveCategoriesAndPhases() {
+        function saveMyPhases() {
             const container = document.getElementById('phases-editor-container');
             const items = container.querySelectorAll('[data-phase-index]');
             let updatedPhases = [];
+
             items.forEach(item => {
                 const title = item.querySelector('.phase-title-input').value.trim();
                 const desc = item.querySelector('.phase-desc-input').value.trim();
-                const category = item.querySelector('.phase-category-select').value;
-                updatedPhases.push({ title, desc, category });
+                updatedPhases.push({ title, desc });
             });
-            localStorage.setItem('gym_phases_' + currentInstructor.id, JSON.stringify(updatedPhases));
-            saveData();
-            alert("Modifiche salvate con successo!");
-        }
 
-        function populateCategoryFilter() {
-            ['filter-category', 'ex-category'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.innerHTML = id === 'filter-category' ? '<option value="Tutti">Tutte le categorie</option>' : '';
-                    categories.forEach(cat => el.innerHTML += `<option value="${cat}">${cat}</option>`);
-                }
-            });
+            const key = 'gym_phases_' + currentInstructor.id;
+            localStorage.setItem(key, JSON.stringify(updatedPhases));
+            alert("Le tue fasi di allenamento personali sono state salvate con successo!");
         }
 
         function renderExercisesTable() {
             const tbody = document.getElementById('exercise-table-body');
-            const catFilter = document.getElementById('filter-category').value;
-            const lvlFilter = document.getElementById('filter-level').value;
-            if (!tbody) return;
             tbody.innerHTML = '';
-            let filtered = exercises.filter(ex => (catFilter === 'Tutti' || ex.category === catFilter) && (lvlFilter === 'Tutti' || ex.level.includes(lvlFilter)));
-            filtered.forEach(ex => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="p-4 font-black text-gymDarkBlue">${ex.name}</td>
-                        <td class="p-4"><span class="px-3 py-1 rounded-lg text-xs font-bold bg-[#A8E8F9]/30 text-gymDarkBlue">${ex.category}</span></td>
-                        <td class="p-4"><span class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-800">${ex.level}</span></td>
-                        <td class="p-4 text-slate-600 text-xs font-medium">${ex.desc}</td>
-                        <td class="p-4 text-right space-x-1">
-                            <button onclick="exercises = exercises.filter(e => e.id !== ${ex.id}); saveData(); renderExercisesTable();" class="text-slate-400 hover:text-rose-600 p-2"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
+            exercises.forEach(ex => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+                    <td class="p-4 font-black text-gymDarkBlue">${ex.name}</td>
+                    <td class="p-4"><span class="px-3 py-1 rounded-lg text-xs font-bold bg-[#A8E8F9]/30 text-gymDarkBlue border border-[#A8E8F9]/60">${ex.category}</span></td>
+                    <td class="p-4"><span class="px-3 py-1 rounded-lg text-xs font-bold ex.level==='Base'?'bg-emerald-50text-emerald-700borderborder-emerald-200':ex.level==='Medio'?'bg-amber-50text-amber-700borderborder-amber-200':'bg-rose-50text-rose-700borderborder-rose-200'">{ex.level}</span></td>
+                    <td class="p-4 text-slate-600 text-xs font-medium">${ex.desc}</td>
+                    <td class="p-4 text-right space-x-1">
+                        <button onclick="editExercise(${ex.id})" class="text-slate-400 hover:text-gymBlue p-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteExercise(${ex.id})" class="text-slate-400 hover:text-rose-600 p-2.5 rounded-xl hover:bg-rose-50 transition"><i class="fa-solid fa-trash"></i></button>
+                    </td>
                 `;
+                tbody.appendChild(tr);
             });
         }
 
-        function openAddExerciseModal() { populateCategoryFilter(); openModal('exercise-modal'); }
-        
+        function openAddExerciseModal() {
+            document.getElementById('exercise-modal-title').textContent = "Nuovo Esercizio";
+            document.getElementById('ex-edit-id').value = "";
+            document.getElementById('ex-name').value = "";
+            document.getElementById('ex-desc').value = "";
+            openModal('exercise-modal');
+        }
+
+        function editExercise(id) {
+            const ex = exercises.find(e => e.id === id);
+            if (!ex) return;
+            document.getElementById('exercise-modal-title').textContent = "Modifica Esercizio";
+            document.getElementById('ex-edit-id').value = ex.id;
+            document.getElementById('ex-name').value = ex.name;
+            document.getElementById('ex-category').value = ex.category;
+            document.getElementById('ex-level').value = ex.level;
+            document.getElementById('ex-desc').value = ex.desc;
+            openModal('exercise-modal');
+        }
+
         function saveExercise() {
+            const id = document.getElementById('ex-edit-id').value;
             const name = document.getElementById('ex-name').value.trim();
             const category = document.getElementById('ex-category').value;
+            const level = document.getElementById('ex-level').value;
             const desc = document.getElementById('ex-desc').value.trim();
-            const levels = Array.from(document.querySelectorAll('input[name="ex-level-chk"]:checked')).map(cb => cb.value);
-            if (!name || levels.length === 0) { alert("Inserisci nome e almeno un livello."); return; }
-            exercises.push({ id: Date.now(), name, category, level: levels.join(', '), desc });
+
+            if (!name) { alert("Inserisci il nome dell'esercizio"); return; }
+
+            if (id) {
+                const ex = exercises.find(e => e.id == id);
+                if (ex) { ex.name = name; ex.category = category; ex.level = level; ex.desc = desc; }
+            } else {
+                const newId = exercises.length > 0 ? Math.max(...exercises.map(e => e.id)) + 1 : 1;
+                exercises.push({ id: newId, name, category, level, desc });
+            }
+
             saveData();
             closeModal('exercise-modal');
             renderExercisesTable();
         }
 
-        // CALENDARIO: VISUALIZZAZIONE LUN-VEN + LEZIONI PROGRAMMATE SOTTO
-        function renderCalendarTab() {
-            // 1. Renderizza i turni fissi (Lunedì - Venerdì)
-            const grid = document.getElementById('calendar-grid');
-            if (grid) {
-                grid.innerHTML = '';
-                let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
-                days.forEach(day => {
-                    let slots = calendarSlots.filter(s => s.day === day);
-                    let slotsHtml = slots.map(s => `
-                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-1 relative">
-                            <button onclick="calendarSlots = calendarSlots.filter(x => x.id !== ${s.id}); saveData(); renderCalendarTab();" class="absolute top-2 right-2 text-rose-400 hover:text-rose-600 text-xs"><i class="fa-solid fa-xmark"></i></button>
-                            <div class="text-xs font-black text-gymBlue">${s.start} - ${s.end}</div>
-                            <div class="text-sm font-black text-gymDarkBlue">${s.group}</div>
-                            <div class="text-xs text-slate-500">${s.instructor}</div>
-                        </div>
-                    `).join('');
-
-                    grid.innerHTML += `
-                        <div class="bg-[#A8E8F9]/15 rounded-2xl p-4 border border-[#A8E8F9]/40 space-y-3">
-                            <h3 class="font-black text-gymDarkBlue text-sm border-b pb-2">${day}</h3>
-                            <div class="space-y-2">${slotsHtml || '<p class="text-xs text-slate-400 italic text-center py-2">Nessun turno</p>'}</div>
-                        </div>
-                    `;
-                });
-            }
-
-            // 2. Renderizza le lezioni programmate personali sotto
-            const schedContainer = document.getElementById('scheduled-lessons-container');
-            if (schedContainer) {
-                schedContainer.innerHTML = '';
-                if (scheduledLessons.length === 0) {
-                    schedContainer.innerHTML = `<div class="col-span-full bg-slate-50 p-6 rounded-2xl text-center text-slate-400 italic text-sm">Nessuna lezione programmata. Genera una lezione e clicca su "Programma in Calendario".</div>`;
-                    return;
-                }
-
-                scheduledLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                scheduledLessons.forEach(s => {
-                    let formattedDate = s.date ? s.date.split('-').reverse().join('/') : 'Data non specificata';
-                    schedContainer.innerHTML += `
-                        <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200 shadow-sm space-y-2 relative">
-                            <button onclick="scheduledLessons = scheduledLessons.filter(x => x.id !== ${s.id}); saveData(); renderCalendarTab();" class="absolute top-4 right-4 text-amber-600 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                            <div class="flex items-center space-x-2 text-amber-800 font-black text-xs">
-                                <i class="fa-solid fa-calendar-check"></i> <span>${formattedDate} (${s.start} - ${s.end})</span>
-                            </div>
-                            <div class="text-lg font-black text-amber-950">${s.group}</div>
-                            <div class="text-xs text-amber-900 font-medium">Insegnante: ${s.instructor}</div>
-                        </div>
-                    `;
-                });
+        function deleteExercise(id) {
+            if (confirm("Vuoi eliminare questo esercizio dall'archivio condiviso?")) {
+                exercises = exercises.filter(e => e.id !== id);
+                saveData();
+                renderExercisesTable();
             }
         }
 
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            const days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
+
+            days.forEach(day => {
+                const daySlots = calendarSlots.filter(s => s.day === day);
+                const col = document.createElement('div');
+                col.className = "bg-[#A8E8F9]/15 rounded-2xl p-4 border border-[#A8E8F9]/40 flex flex-col space-y-3 shadow-sm";
+                
+                let slotsHtml = daySlots.map(s => `
+                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-black text-gymBlue">${s.start} - ${s.end}</span>
+                            <button onclick="deleteCalendarSlot(${s.id})" class="text-slate-300 hover:text-rose-600 text-xs transition"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="text-sm font-black text-gymDarkBlue">${s.group}</div>
+                        <div class="text-xs text-slate-500 flex items-center space-x-1.5 font-medium"><i class="fa-solid fa-user-tie text-xs text-slate-400"></i> <span>${s.instructor}</span></div>
+                    </div>
+                `).join('');
+
+                col.innerHTML = `
+                    <h3 class="font-black text-gymDarkBlue text-sm sm:text-base border-b border-slate-200 pb-2.5 flex items-center justify-between">
+                        <span>${day}</span>
+                        <span class="text-xs bg-[#00537A] text-white px-2.5 py-0.5 rounded-full font-bold">${daySlots.length}</span>
+                    </h3>
+                    <div class="space-y-2.5 flex-grow">${slotsHtml || '<p class="text-xs text-slate-400 italic py-6 text-center font-medium">Nessun turno</p>'}</div>
+                `;
+                grid.appendChild(col);
+            });
+        }
+
         function openAddSlotModal() {
-            const sel = document.getElementById('cal-instructor');
-            sel.innerHTML = '';
-            instructors.forEach(i => sel.innerHTML += `<option value="${i.name}">${i.name}</option>`);
+            const select = document.getElementById('cal-instructor');
+            select.innerHTML = '';
+            instructors.forEach(ins => {
+                const opt = document.createElement('option');
+                opt.value = ins.name;
+                opt.textContent = ins.name;
+                select.appendChild(opt);
+            });
             openModal('calendar-modal');
         }
 
@@ -1259,117 +733,81 @@
             const end = document.getElementById('cal-end').value;
             const group = document.getElementById('cal-group').value.trim();
             const instructor = document.getElementById('cal-instructor').value;
-            if (!group) { alert("Inserisci il nome del gruppo."); return; }
 
-            calendarSlots.push({ id: Date.now(), day, start, end, group, instructor });
+            if (!group) { alert("Inserisci il nome del gruppo"); return; }
+
+            const newId = calendarSlots.length > 0 ? Math.max(...calendarSlots.map(s => s.id)) + 1 : 1;
+            calendarSlots.push({ id: newId, day, start, end, group, instructor });
             saveData();
             closeModal('calendar-modal');
-            renderCalendarTab();
-            alert("Turno fisso aggiunto al calendario settimanale!");
+            renderCalendar();
         }
 
-        // Programmazione lezione dal piano lezione
-        function openScheduleModal() {
-            const sel = document.getElementById('sch-instructor');
-            sel.innerHTML = '';
-            instructors.forEach(i => sel.innerHTML += `<option value="${i.name}">${i.name}</option>`);
-            document.getElementById('sch-group').value = document.getElementById('gen-group').value || "Elementari 1";
-            document.getElementById('sch-date').value = new Date().toISOString().split('T')[0];
-            openModal('schedule-lesson-modal');
-        }
-
-        function saveScheduledLesson() {
-            const date = document.getElementById('sch-date').value;
-            const start = document.getElementById('sch-start').value;
-            const end = document.getElementById('sch-end').value;
-            const group = document.getElementById('sch-group').value.trim();
-            const instructor = document.getElementById('sch-instructor').value;
-            if (!date || !group) { alert("Inserisci la data e il nome del gruppo."); return; }
-
-            scheduledLessons.push({ id: Date.now(), date, start, end, group, instructor });
+        function deleteCalendarSlot(id) {
+            calendarSlots = calendarSlots.filter(s => s.id !== id);
             saveData();
-            closeModal('schedule-lesson-modal');
-            switchTab('calendar');
-            alert("Lezione salvata tra le tue programmazioni personali!");
+            renderCalendar();
         }
 
-        // TEAM & GRUPPI
+        function openScheduleModal() {
+            switchTab('calendar');
+            openAddSlotModal();
+        }
+
         function renderInstructors() {
             const container = document.getElementById('instructors-list');
             const btnContainer = document.getElementById('admin-action-btn-container');
-            if (!container) return;
             container.innerHTML = '';
-            
+            btnContainer.innerHTML = '';
+
             if (currentInstructor && currentInstructor.isAdmin) {
                 btnContainer.innerHTML = `
                     <button onclick="openAddInstructorModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                        <i class="fa-solid fa-user-plus mr-1"></i> <span>Aggiungi Insegnante</span>
+                        <i class="fa-solid fa-user-plus mr-1"></i> Aggiungi Insegnante
                     </button>
                 `;
             } else {
-                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Gestione gruppo attivo.</span>`;
+                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Sezione gestita dall'Amministratrice (Ilaria Boldrini)</span>`;
             }
 
             instructors.forEach(ins => {
                 const isMe = currentInstructor && currentInstructor.id === ins.id;
-                let currentGroup = ins.assignedGroup || "Elementari 1";
-
                 container.innerHTML += `
-                    <div class="bg-[#A8E8F9]/15 border ${isMe ? 'border-gymBlue ring-2 ring-[#A8E8F9]' : 'border-[#A8E8F9]/40'} p-5 rounded-2xl space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h4 class="font-black text-sm text-gymDarkBlue flex items-center space-x-2">
-                                    <span>${ins.name}</span>
-                                    ${ins.isAdmin ? '<span class="text-[10px] bg-gymYellow text-slate-950 px-2 py-0.5 rounded-full font-black">Admin</span>' : ''}
-                                    ${isMe ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-black">Tu</span>' : ''}
-                                </h4>
-                            </div>
-                            ${currentInstructor && currentInstructor.isAdmin && !ins.isAdmin ? `
-                                <button onclick="deleteInstructor(${ins.id})" class="text-xs text-rose-500 hover:text-rose-700 p-2 rounded-xl hover:bg-rose-50 transition" title="Rimuovi">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>` : ''}
+                    <div class="bg-[#A8E8F9]/15 border ${isMe ? 'border-gymBlue ring-2 ring-[#A8E8F9] shadow-md' : 'border-[#A8E8F9]/40'} p-5 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-black text-sm sm:text-base text-gymDarkBlue flex items-center space-x-2">
+                                <span>${ins.name}</span>
+                                ${ins.isAdmin ? '<span class="text-[10px] bg-gymYellow text-slate-950 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Admin</span>' : ''}
+                                ${isMe ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Tu</span>' : ''}
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-0.5 font-medium">PIN protetto</p>
                         </div>
-                        <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between">
-                            <label class="text-xs font-black uppercase text-slate-600">Gruppo:</label>
-                            <input type="text" value="${currentGroup}" onchange="updateInstructorGroup(${ins.id}, this.value)" class="border-2 border-gymBlue rounded-lg p-1.5 text-xs font-bold text-gymDarkBlue bg-slate-50 outline-none w-36">
-                        </div>
+                        ${currentInstructor && currentInstructor.isAdmin && !ins.isAdmin ? `<button onclick="deleteInstructor(${ins.id})" class="text-xs text-rose-500 hover:text-rose-700 p-2.5 rounded-xl hover:bg-rose-50 transition"><i class="fa-solid fa-trash"></i></button>` : ''}
                     </div>
                 `;
             });
         }
 
-        function updateInstructorGroup(insId, newGroup) {
-            instructors = instructors.map(i => {
-                if (i.id === insId) {
-                    i.assignedGroup = newGroup;
-                    if (currentInstructor && currentInstructor.id === i.id) {
-                        currentInstructor = i;
-                        document.getElementById('current-user-name').textContent = `${i.name} [${newGroup}]`;
-                    }
-                }
-                return i;
-            });
-            saveData();
-            alert(`Gruppo aggiornato a ${newGroup}!`);
-        }
-
         function openAddInstructorModal() {
-            if (!currentInstructor || !currentInstructor.isAdmin) return;
+            if (!currentInstructor || !currentInstructor.isAdmin) {
+                alert("Accesso negato: solo l'amministratrice Ilaria Boldrini può aggiungere insegnanti.");
+                return;
+            }
             const name = prompt("Nome della nuova insegnante:");
             if (!name) return;
-            const tempPin = prompt("Inserisci un PIN provvisorio:");
-            if (!tempPin || tempPin.length < 4) { alert("PIN non valido"); return; }
+            const tempPin = prompt("Inserisci un PIN provvisorio iniziale:");
+            if (!tempPin || tempPin.length < 4) { alert("PIN non valido (almeno 4 cifre)"); return; }
             
             const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
-            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true, assignedGroup: "Elementari 1" });
+            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true });
             saveData();
             renderInstructors();
-            alert(`Insegnante ${name} aggiunta!`);
+            alert(`Insegnante ${name} aggiunta con PIN provvisorio. Al primo accesso le verrà chiesto di cambiarlo.`);
         }
 
         function deleteInstructor(id) {
             if (!currentInstructor || !currentInstructor.isAdmin) return;
-            if (confirm("Vuoi rimuovere questa insegnante?")) {
+            if (confirm("Vuoi rimuovere questa insegnante dal team?")) {
                 instructors = instructors.filter(i => i.id !== id);
                 saveData();
                 renderInstructors();
@@ -1377,10 +815,832 @@
         }
 
         window.onload = function() {
-            initCloudSync(() => {
-                initStartupLogin();
-            });
+            initStartupLogin();
         };
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gymnastics Team Planner</title>
+    <!-- Nome app per schermata Home -->
+    <meta name="apple-mobile-web-app-title" content="Gym Team Planner">
+    <meta name="application-name" content="Gym Team Planner">
+    <!-- Icona personalizzata standard ad alta definizione -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3112/3112946.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3112/3112946.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gymDarkBlue: '#013C58',
+                        gymBlue: '#00537A',
+                        gymLightBlue: '#A8E8F9',
+                        gymOrange: '#F5A201',
+                        gymYellow: '#FFBA42',
+                        gymLightYellow: '#FFD35B'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <!-- Header / Navbar -->
+    <header class="bg-gymDarkBlue text-white shadow-xl sticky top-0 z-40 border-b border-[#00537A]">
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gymYellow text-slate-950 p-2.5 rounded-2xl font-bold text-xl shadow-md">
+                    <i class="fa-solid fa-medal"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-extrabold tracking-wide text-white">Gymnastics Team Planner</h1>
+                    <p class="text-xs text-[#A8E8F9]">Gestione Lezioni & Archivio Condiviso</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-1.5 sm:space-x-2 mt-2.5 sm:mt-0 overflow-x-auto py-1">
+                <button onclick="switchTab('generator')" id="nav-generator" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gymBlue text-white transition flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Generatore</span>
+                </button>
+                <button onclick="switchTab('calendar')" id="nav-calendar" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-calendar-days"></i> <span>Calendario</span>
+                </button>
+                <button onclick="switchTab('archive')" id="nav-archive" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio Esercizi</span>
+                </button>
+                <button onclick="switchTab('phases')" id="nav-phases" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-list-check"></i> <span>Fasi Allenamento</span>
+                </button>
+                <button onclick="switchTab('team')" id="nav-team" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-users"></i> <span>Team Insegnanti</span>
+                </button>
+            </nav>
+
+            <!-- User Status / Logout badge -->
+            <div class="flex items-center space-x-3 mt-2 sm:mt-0">
+                <div id="user-badge" class="flex items-center space-x-2 bg-[#00537A] px-3.5 py-1.5 rounded-full text-xs border border-[#A8E8F9]/30 shadow-inner">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="current-user-name" class="font-bold text-white">Non loggato</span>
+                </div>
+                <button onclick="forceLogout()" class="text-xs bg-[#00537A] hover:bg-rose-900/60 text-white px-3 py-1.5 rounded-full border border-[#A8E8F9]/30 transition shadow-sm" title="Cambia Utente">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+
+        <!-- TAB 1: GENERATORE LEZIONE -->
+        <section id="tab-generator" class="tab-content space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8">
+                <div class="border-b border-slate-100 pb-5 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Crea Nuova Lezione</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Seleziona i parametri per generare la scaletta d'allenamento ideale.</p>
+                    </div>
+                    <button onclick="generateLesson()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-black px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition flex items-center space-x-2 text-sm">
+                        <i class="fa-solid fa-bolt"></i> <span>Genera Lezione</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Gruppo / Età</label>
+                        <select id="gen-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue focus:ring-2 focus:ring-[#A8E8F9] outline-none bg-white font-bold text-slate-900 shadow-sm transition">
+                            <option value="Asilo">Asilo</option>
+                            <option value="Elementari" selected>Elementari</option>
+                            <option value="Medie">Medie</option>
+                            <option value="Pre Silver">Pre Silver</option>
+                            <option value="Silver">Silver</option>
+                        </select>
+                    </div>
+                    <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Livello</label>
+                        <select id="gen-level" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue focus:ring-2 focus:ring-[#A8E8F9] outline-none bg-white font-bold text-slate-900 shadow-sm transition">
+                            <option value="Base" selected>Base</option>
+                            <option value="Medio">Medio</option>
+                            <option value="Avanzato">Avanzato</option>
+                        </select>
+                    </div>
+                    <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Obiettivo Principale</label>
+                        <select id="gen-objective" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue focus:ring-2 focus:ring-[#A8E8F9] outline-none bg-white font-bold text-slate-900 shadow-sm transition">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risultato Lezione Generata -->
+            <div id="lesson-result-container" class="hidden bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
+                    <div>
+                        <h3 class="text-xl font-black text-gymDarkBlue flex items-center space-x-3">
+                            <span class="p-2.5 bg-gymYellow/30 text-gymDarkBlue rounded-2xl shadow-sm"><i class="fa-solid fa-clipboard-list"></i></span>
+                            <span id="res-title">Scheda Allenamento</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1 font-medium" id="res-subtitle">Dettagli gruppo e livello</p>
+                    </div>
+                    <div class="flex space-x-2.5">
+                        <button onclick="openScheduleModal()" class="bg-gymBlue hover:bg-[#013C58] text-white text-xs font-bold px-4 py-3 rounded-xl transition shadow-md flex items-center space-x-1.5">
+                            <i class="fa-solid fa-calendar-plus"></i> <span>Programma in Calendario</span>
+                        </button>
+                        <button onclick="window.print()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-4 py-3 rounded-xl transition shadow-sm flex items-center space-x-1.5">
+                            <i class="fa-solid fa-print"></i> <span>Stampa</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="lesson-phases-output" class="space-y-4">
+                    <!-- Dynamic phases -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: CALENDARIO -->
+        <section id="tab-calendar" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario e Orario Settimanale</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Gestisci i turni, le fasce orarie e le lezioni assegnate.</p>
+                    </div>
+                    <button onclick="openAddSlotModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i> <span>Aggiungi Turno</span>
+                    </button>
+                </div>
+
+                <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <!-- Days -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: ARCHIVIO ESERCIZI -->
+        <section id="tab-archive" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Esercizi Condiviso</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Elementi visibili e sincronizzati in tempo reale per tutto il team.</p>
+                    </div>
+                    <button onclick="openAddExerciseModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i> <span>Nuovo Esercizio</span>
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gymDarkBlue text-white text-xs font-black uppercase tracking-wider">
+                                <th class="p-4 rounded-l-2xl">Nome Elemento</th>
+                                <th class="p-4">Categoria</th>
+                                <th class="p-4">Livello</th>
+                                <th class="p-4">Descrizione / Propedeutica</th>
+                                <th class="p-4 rounded-r-2xl text-right">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exercise-table-body" class="divide-y divide-slate-100 text-sm font-medium">
+                            <!-- Injected -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: FASI ALLENAMENTO (PERSONALI) -->
+        <section id="tab-phases" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Fasi di Allenamento Personali</h2>
+                        <p class="text-sm text-slate-500 mt-0.5" id="phases-subtitle">Personalizza la struttura delle tue lezioni.</p>
+                    </div>
+                    <button onclick="saveMyPhases()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 text-xs font-bold px-6 py-3 rounded-2xl shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-floppy-disk"></i> <span>Salva Modifiche Fasi</span>
+                    </button>
+                </div>
+                <div id="phases-editor-container" class="space-y-4">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: TEAM INSEGNANTI (SOLO ADMIN) -->
+        <section id="tab-team" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & PIN</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Gestione riservata all'Amministratrice (Ilaria Boldrini).</p>
+                    </div>
+                    <div id="admin-action-btn-container">
+                        <!-- Injected if admin -->
+                    </div>
+                </div>
+                <div id="instructors-list" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- Injected -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 mt-auto">
+        Gymnastics Team Planner &bull; Condiviso e Sincronizzato per la tua Società Sportiva
+    </footer>
+
+    <!-- MODAL: LOGIN PIN OBBLIGATORIO ALL'AVVIO -->
+    <div id="startup-login-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center space-y-6 border border-slate-100">
+            <div class="w-16 h-16 bg-[#A8E8F9]/30 text-gymDarkBlue rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-gymDarkBlue">Benvenuto</h3>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Seleziona la tua persona e inserisci il PIN per accedere.</p>
+            </div>
+            <div class="space-y-4 text-left">
+                <div class="bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
+                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Seleziona Insegnante</label>
+                    <select id="login-select-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
+                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">PIN / Password</label>
+                    <input type="password" id="startup-pin-input" maxlength="10" class="w-full text-center tracking-widest text-2xl border-2 border-slate-200 rounded-xl p-3 focus:border-gymBlue outline-none font-bold bg-white text-slate-900 shadow-sm" placeholder="••••••" value="112000">
+                </div>
+            </div>
+            <button onclick="performLogin()" class="w-full py-4 rounded-2xl font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-xl transition text-base">
+                Accedi
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: CAMBIO PIN PRIMO ACCESSO -->
+    <div id="change-pin-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center space-y-6 border border-slate-100">
+            <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-key"></i>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-gymDarkBlue">Primo Accesso</h3>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Ti è stato assegnato un PIN provvisorio. Inseriscine uno nuovo personale.</p>
+            </div>
+            <div class="space-y-4 text-left">
+                <div class="bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
+                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Nuovo PIN Personale</label>
+                    <input type="password" id="new-pin-input" maxlength="10" class="w-full text-center tracking-widest text-2xl border-2 border-slate-200 rounded-xl p-3 focus:border-gymBlue outline-none font-bold bg-white text-slate-900 shadow-sm" placeholder="••••••">
+                </div>
+            </div>
+            <button onclick="saveNewPin()" class="w-full py-4 rounded-2xl font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-xl transition text-base">
+                Salva e Entra
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: AGGIUNGI / MODIFICA ESERCIZIO -->
+    <div id="exercise-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
+            <h3 class="text-xl font-black text-gymDarkBlue" id="exercise-modal-title">Nuovo Esercizio</h3>
+            <input type="hidden" id="ex-edit-id">
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Esercizio / Elemento</label>
+                <input type="text" id="ex-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Verticale al muro">
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Categoria</label>
+                <select id="ex-category" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <option value="Riscaldamento">Riscaldamento / Andature</option>
+                    <option value="Stretching">Stretching & Mobilità</option>
+                    <option value="Potenziamento">Potenziamento & Tenute</option>
+                    <option value="Elemento Tecnico">Elemento Tecnico / Propedeutico</option>
+                    <option value="Gioco Finale">Gioco / Scioltezza Finale</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Livello</label>
+                <select id="ex-level" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <option value="Base">Base</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Avanzato">Avanzato</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Descrizione / Note</label>
+                <textarea id="ex-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Breve spiegazione o consiglio didattico..."></textarea>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeModal('exercise-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
+                <button onclick="saveExercise()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Salva</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: AGGIUNGI TURNO CALENDARIO -->
+    <div id="calendar-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
+            <h3 class="text-xl font-black text-gymDarkBlue">Pianifica Turno in Calendario</h3>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Giorno della Settimana</label>
+                <select id="cal-day" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <option value="Lunedì">Lunedì</option>
+                    <option value="Martedì">Martedì</option>
+                    <option value="Mercoledì">Mercoledì</option>
+                    <option value="Giovedì">Giovedì</option>
+                    <option value="Venerdì">Venerdì</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Ora Inizio</label>
+                    <input type="time" id="cal-start" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="16:30">
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Ora Fine</label>
+                    <input type="time" id="cal-end" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="18:00">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo / Corso</label>
+                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Elementari o Silver">
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante Assegnata</label>
+                <select id="cal-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                    <!-- Injected -->
+                </select>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeModal('calendar-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
+                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let defaultExercises = [
+            { id: 1, name: "Corsa leggera & Andature", category: "Riscaldamento", level: "Base", desc: "Corsa in cerchio, calzate, ginocchia alte, passaggi laterali." },
+            { id: 2, name: "Stretching gambe e spalle", category: "Stretching", level: "Base", desc: "Allungamento passivo e mobilità articolare." },
+            { id: 3, name: "Tenuta candela & squadra", category: "Potenziamento", level: "Base", desc: "Tenute isometriche a terra per addome e lombari." },
+            { id: 4, name: "Passo del gatto", category: "Elemento Tecnico", level: "Base", desc: "Camminata coordinata con sollevamento ginocchio." },
+            { id: 5, name: "Sforbiciata", category: "Elemento Tecnico", level: "Base", desc: "Passaggi e piccoli slanci coordinativi." },
+            { id: 6, name: "Spaccata sagittale / frontale", category: "Elemento Tecnico", level: "Base", desc: "Mobilità e allungamento progressivo." },
+            { id: 7, name: "Ponte da terra", category: "Elemento Tecnico", level: "Base", desc: "Spinta braccia e apertura toracica." },
+            { id: 8, name: "Capriola avanti e indietro", category: "Elemento Tecnico", level: "Base", desc: "Rotolamento raccolto coordinato." },
+            { id: 9, name: "Verticale al muro", category: "Elemento Tecnico", level: "Medio", desc: "Allineamento corpo, spinta spalle." },
+            { id: 10, name: "Ruota", category: "Elemento Tecnico", level: "Medio", desc: "Passaggio laterale mani-piedi in asse." },
+            { id: 11, name: "Gioco dei passaggi / Percorso", category: "Gioco Finale", level: "Base", desc: "Percorso ludico motorio per la fine lezione." }
+        ];
+
+        let defaultPhases = [
+            { id: 1, title: "Fase 1: Riscaldamento", desc: "Corsa e Andature specifiche." },
+            { id: 2, title: "Fase 2: Stretching e Potenziamento", desc: "Tenute, mobilità e rinforzo muscolare." },
+            { id: 3, title: "Fase 3: Elementi Tecnici", desc: "Lavoro mirato sugli elementi e propedeutici." },
+            { id: 4, title: "Fase 4: Fase Finale / Scioltezza", desc: "Giochi motori o defaticamento blando." }
+        ];
+
+        let defaultInstructors = [
+            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false },
+            { id: 2, name: "Maestra Matilde", pin: "1234", isAdmin: false, mustChangePin: false },
+            { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false }
+        ];
+
+        let defaultCalendar = [
+            { id: 1, day: "Lunedì", start: "16:30", end: "17:30", group: "Asilo", instructor: "Ilaria Boldrini" },
+            { id: 2, day: "Lunedì", start: "17:30", end: "19:00", group: "Elementari", instructor: "Maestra Giulia" },
+            { id: 3, day: "Mercoledì", start: "16:30", end: "18:00", group: "Medie", instructor: "Maestra Matilde" }
+        ];
+
+        let exercises = JSON.parse(localStorage.getItem('gym_exercises')) || defaultExercises;
+        
+        let storedInstructors = JSON.parse(localStorage.getItem('gym_instructors'));
+        let instructors = storedInstructors ? storedInstructors : defaultInstructors;
+
+        localStorage.removeItem('gym_current_user');
+        let currentInstructor = null;
+
+        function saveData() {
+            localStorage.setItem('gym_exercises', JSON.stringify(exercises));
+            localStorage.setItem('gym_instructors', JSON.stringify(instructors));
+            localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
+            if (currentInstructor) {
+                localStorage.setItem('gym_current_user', JSON.stringify(currentInstructor));
+            }
+        }
+
+        let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar')) || defaultCalendar;
+
+        function getMyPhases() {
+            if (!currentInstructor) return defaultPhases;
+            const key = 'gym_phases_' + currentInstructor.id;
+            let saved = JSON.parse(localStorage.getItem(key));
+            if (!saved) {
+                saved = JSON.parse(JSON.stringify(defaultPhases));
+            }
+            return saved;
+        }
+
+        function initStartupLogin() {
+            const select = document.getElementById('login-select-instructor');
+            select.innerHTML = '';
+            instructors.forEach(ins => {
+                const opt = document.createElement('option');
+                opt.value = ins.id;
+                opt.textContent = ins.name;
+                if (ins.id === 1) opt.selected = true;
+                select.appendChild(opt);
+            });
+
+            document.getElementById('startup-login-modal').classList.remove('hidden');
+            document.getElementById('startup-login-modal').classList.add('flex');
+        }
+
+        let tempLoggedInInstructor = null;
+
+        function performLogin() {
+            const selectedId = parseInt(document.getElementById('login-select-instructor').value);
+            const pin = document.getElementById('startup-pin-input').value.trim();
+            const ins = instructors.find(i => i.id === selectedId);
+
+            if (ins && ins.pin === pin) {
+                tempLoggedInInstructor = ins;
+                document.getElementById('startup-login-modal').classList.add('hidden');
+
+                if (ins.mustChangePin) {
+                    document.getElementById('change-pin-modal').classList.remove('hidden');
+                    document.getElementById('change-pin-modal').classList.add('flex');
+                } else {
+                    currentInstructor = ins;
+                    saveData();
+                    document.getElementById('current-user-name').textContent = ins.name;
+                    switchTab('generator');
+                }
+            } else {
+                alert("PIN errato!");
+            }
+        }
+
+        function saveNewPin() {
+            const newPin = document.getElementById('new-pin-input').value.trim();
+            if (!newPin || newPin.length < 4) {
+                alert("Il PIN deve essere di almeno 4 caratteri.");
+                return;
+            }
+
+            tempLoggedInInstructor.pin = newPin;
+            tempLoggedInInstructor.mustChangePin = false;
+
+            instructors = instructors.map(i => i.id === tempLoggedInInstructor.id ? tempLoggedInInstructor : i);
+
+            currentInstructor = tempLoggedInInstructor;
+            saveData();
+
+            document.getElementById('change-pin-modal').classList.add('hidden');
+            document.getElementById('current-user-name').textContent = currentInstructor.name;
+            alert("PIN aggiornato con successo! Benvenuta.");
+            switchTab('generator');
+        }
+
+        function forceLogout() {
+            currentInstructor = null;
+            localStorage.removeItem('gym_current_user');
+            initStartupLogin();
+        }
+
+        function switchTab(tabId) {
+            if (!currentInstructor) return;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-gymBlue', 'text-white', 'shadow-sm');
+                el.classList.add('hover:bg-[#00537A]', 'text-slate-200');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('nav-' + tabId);
+            activeBtn.classList.add('bg-gymBlue', 'text-white', 'shadow-sm');
+            activeBtn.classList.remove('hover:bg-[#00537A]', 'text-slate-200');
+
+            if (tabId === 'generator') updateGeneratorObjectives();
+            if (tabId === 'archive') renderExercisesTable();
+            if (tabId === 'calendar') renderCalendar();
+            if (tabId === 'phases') renderPhasesEditor();
+            if (tabId === 'team') renderInstructors();
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+
+        function updateGeneratorObjectives() {
+            const select = document.getElementById('gen-objective');
+            select.innerHTML = '';
+            const techExercises = exercises.filter(e => e.category === 'Elemento Tecnico');
+            techExercises.forEach(ex => {
+                const opt = document.createElement('option');
+                opt.value = ex.name;
+                opt.textContent = ex.name + ` (${ex.level})`;
+                select.appendChild(opt);
+            });
+        }
+
+        function generateLesson() {
+            const group = document.getElementById('gen-group').value;
+            const level = document.getElementById('gen-level').value;
+            const objective = document.getElementById('gen-objective').value;
+
+            document.getElementById('res-title').textContent = `Lezione: ${objective}`;
+            document.getElementById('res-subtitle').textContent = `Insegnante: ${currentInstructor.name} • Gruppo: ${group} • Livello: ${level}`;
+
+            const container = document.getElementById('lesson-phases-output');
+            container.innerHTML = '';
+
+            const myPhases = getMyPhases();
+
+            myPhases.forEach((phase, index) => {
+                let matchingEx = [];
+                if (index === 0) matchingEx = exercises.filter(e => e.category === 'Riscaldamento');
+                else if (index === 1) matchingEx = exercises.filter(e => e.category === 'Stretching' || e.category === 'Potenziamento');
+                else if (index === 2) matchingEx = exercises.filter(e => e.name === objective || e.category === 'Elemento Tecnico');
+                else if (index === 3) matchingEx = exercises.filter(e => e.category === 'Gioco Finale');
+
+                let exHtml = matchingEx.map(e => `<li class="text-sm text-slate-700 py-2 flex items-start space-x-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i><div><span class="font-bold text-slate-900">e.name</span>:<spanclass="text-slate-600">{e.desc}</span></div></li>`).join('');
+
+                const div = document.createElement('div');
+                div.className = "bg-[#A8E8F9]/15 rounded-2xl p-5 border border-[#A8E8F9]/40 shadow-sm";
+                div.innerHTML = `
+                    <h4 class="font-black text-gymDarkBlue text-base mb-2.5 flex items-center space-x-3">
+                        <span class="w-7 h-7 rounded-xl bg-gymBlue text-white flex items-center justify-center text-xs font-bold shadow-sm">${index + 1}</span>
+                        <span>${phase.title}</span>
+                    </h4>
+                    <p class="text-xs text-slate-500 mb-3 pl-10 font-medium">${phase.desc}</p>
+                    <ul class="space-y-1.5 pl-10">${exHtml || '<li class="text-xs text-slate-400 italic">Nessun esercizio specifico associato</li>'}</ul>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('lesson-result-container').classList.remove('hidden');
+        }
+
+        function renderPhasesEditor() {
+            const container = document.getElementById('phases-editor-container');
+            container.innerHTML = '';
+            const myPhases = getMyPhases();
+
+            document.getElementById('phases-subtitle').textContent = `Struttura lezioni personalizzata per: ${currentInstructor.name}`;
+
+            myPhases.forEach((p, idx) => {
+                container.innerHTML += `
+                    <div class="bg-[#A8E8F9]/15 p-5 rounded-2xl border border-[#A8E8F9]/40 space-y-3 shadow-sm" data-phase-index="${idx}">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-7 h-7 rounded-xl bg-gymBlue text-white font-bold flex items-center justify-center text-xs shadow-sm">${idx + 1}</span>
+                            <input type="text" class="phase-title-input w-full font-bold text-sm sm:text-base text-gymDarkBlue bg-white border-2 border-slate-200 rounded-xl p-3 outline-none focus:border-gymBlue shadow-sm" value="${p.title}">
+                        </div>
+                        <div class="pl-10">
+                            <input type="text" class="phase-desc-input w-full text-xs sm:text-sm text-slate-600 bg-white border-2 border-slate-200 rounded-xl p-3 outline-none focus:border-gymBlue shadow-sm" value="${p.desc}" placeholder="Descrizione fase...">
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function saveMyPhases() {
+            const container = document.getElementById('phases-editor-container');
+            const items = container.querySelectorAll('[data-phase-index]');
+            let updatedPhases = [];
+
+            items.forEach(item => {
+                const title = item.querySelector('.phase-title-input').value.trim();
+                const desc = item.querySelector('.phase-desc-input').value.trim();
+                updatedPhases.push({ title, desc });
+            });
+
+            const key = 'gym_phases_' + currentInstructor.id;
+            localStorage.setItem(key, JSON.stringify(updatedPhases));
+            alert("Le tue fasi di allenamento personali sono state salvate con successo!");
+        }
+
+        function renderExercisesTable() {
+            const tbody = document.getElementById('exercise-table-body');
+            tbody.innerHTML = '';
+            exercises.forEach(ex => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+                    <td class="p-4 font-black text-gymDarkBlue">${ex.name}</td>
+                    <td class="p-4"><span class="px-3 py-1 rounded-lg text-xs font-bold bg-[#A8E8F9]/30 text-gymDarkBlue border border-[#A8E8F9]/60">${ex.category}</span></td>
+                    <td class="p-4"><span class="px-3 py-1 rounded-lg text-xs font-bold ex.level==='Base'?'bg-emerald-50text-emerald-700borderborder-emerald-200':ex.level==='Medio'?'bg-amber-50text-amber-700borderborder-amber-200':'bg-rose-50text-rose-700borderborder-rose-200'">{ex.level}</span></td>
+                    <td class="p-4 text-slate-600 text-xs font-medium">${ex.desc}</td>
+                    <td class="p-4 text-right space-x-1">
+                        <button onclick="editExercise(${ex.id})" class="text-slate-400 hover:text-gymBlue p-2.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteExercise(${ex.id})" class="text-slate-400 hover:text-rose-600 p-2.5 rounded-xl hover:bg-rose-50 transition"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openAddExerciseModal() {
+            document.getElementById('exercise-modal-title').textContent = "Nuovo Esercizio";
+            document.getElementById('ex-edit-id').value = "";
+            document.getElementById('ex-name').value = "";
+            document.getElementById('ex-desc').value = "";
+            openModal('exercise-modal');
+        }
+
+        function editExercise(id) {
+            const ex = exercises.find(e => e.id === id);
+            if (!ex) return;
+            document.getElementById('exercise-modal-title').textContent = "Modifica Esercizio";
+            document.getElementById('ex-edit-id').value = ex.id;
+            document.getElementById('ex-name').value = ex.name;
+            document.getElementById('ex-category').value = ex.category;
+            document.getElementById('ex-level').value = ex.level;
+            document.getElementById('ex-desc').value = ex.desc;
+            openModal('exercise-modal');
+        }
+
+        function saveExercise() {
+            const id = document.getElementById('ex-edit-id').value;
+            const name = document.getElementById('ex-name').value.trim();
+            const category = document.getElementById('ex-category').value;
+            const level = document.getElementById('ex-level').value;
+            const desc = document.getElementById('ex-desc').value.trim();
+
+            if (!name) { alert("Inserisci il nome dell'esercizio"); return; }
+
+            if (id) {
+                const ex = exercises.find(e => e.id == id);
+                if (ex) { ex.name = name; ex.category = category; ex.level = level; ex.desc = desc; }
+            } else {
+                const newId = exercises.length > 0 ? Math.max(...exercises.map(e => e.id)) + 1 : 1;
+                exercises.push({ id: newId, name, category, level, desc });
+            }
+
+            saveData();
+            closeModal('exercise-modal');
+            renderExercisesTable();
+        }
+
+        function deleteExercise(id) {
+            if (confirm("Vuoi eliminare questo esercizio dall'archivio condiviso?")) {
+                exercises = exercises.filter(e => e.id !== id);
+                saveData();
+                renderExercisesTable();
+            }
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            const days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
+
+            days.forEach(day => {
+                const daySlots = calendarSlots.filter(s => s.day === day);
+                const col = document.createElement('div');
+                col.className = "bg-[#A8E8F9]/15 rounded-2xl p-4 border border-[#A8E8F9]/40 flex flex-col space-y-3 shadow-sm";
+                
+                let slotsHtml = daySlots.map(s => `
+                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-black text-gymBlue">${s.start} - ${s.end}</span>
+                            <button onclick="deleteCalendarSlot(${s.id})" class="text-slate-300 hover:text-rose-600 text-xs transition"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="text-sm font-black text-gymDarkBlue">${s.group}</div>
+                        <div class="text-xs text-slate-500 flex items-center space-x-1.5 font-medium"><i class="fa-solid fa-user-tie text-xs text-slate-400"></i> <span>${s.instructor}</span></div>
+                    </div>
+                `).join('');
+
+                col.innerHTML = `
+                    <h3 class="font-black text-gymDarkBlue text-sm sm:text-base border-b border-slate-200 pb-2.5 flex items-center justify-between">
+                        <span>${day}</span>
+                        <span class="text-xs bg-[#00537A] text-white px-2.5 py-0.5 rounded-full font-bold">${daySlots.length}</span>
+                    </h3>
+                    <div class="space-y-2.5 flex-grow">${slotsHtml || '<p class="text-xs text-slate-400 italic py-6 text-center font-medium">Nessun turno</p>'}</div>
+                `;
+                grid.appendChild(col);
+            });
+        }
+
+        function openAddSlotModal() {
+            const select = document.getElementById('cal-instructor');
+            select.innerHTML = '';
+            instructors.forEach(ins => {
+                const opt = document.createElement('option');
+                opt.value = ins.name;
+                opt.textContent = ins.name;
+                select.appendChild(opt);
+            });
+            openModal('calendar-modal');
+        }
+
+        function saveCalendarSlot() {
+            const day = document.getElementById('cal-day').value;
+            const start = document.getElementById('cal-start').value;
+            const end = document.getElementById('cal-end').value;
+            const group = document.getElementById('cal-group').value.trim();
+            const instructor = document.getElementById('cal-instructor').value;
+
+            if (!group) { alert("Inserisci il nome del gruppo"); return; }
+
+            const newId = calendarSlots.length > 0 ? Math.max(...calendarSlots.map(s => s.id)) + 1 : 1;
+            calendarSlots.push({ id: newId, day, start, end, group, instructor });
+            saveData();
+            closeModal('calendar-modal');
+            renderCalendar();
+        }
+
+        function deleteCalendarSlot(id) {
+            calendarSlots = calendarSlots.filter(s => s.id !== id);
+            saveData();
+            renderCalendar();
+        }
+
+        function openScheduleModal() {
+            switchTab('calendar');
+            openAddSlotModal();
+        }
+
+        function renderInstructors() {
+            const container = document.getElementById('instructors-list');
+            const btnContainer = document.getElementById('admin-action-btn-container');
+            container.innerHTML = '';
+            btnContainer.innerHTML = '';
+
+            if (currentInstructor && currentInstructor.isAdmin) {
+                btnContainer.innerHTML = `
+                    <button onclick="openAddInstructorModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Aggiungi Insegnante
+                    </button>
+                `;
+            } else {
+                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Sezione gestita dall'Amministratrice (Ilaria Boldrini)</span>`;
+            }
+
+            instructors.forEach(ins => {
+                const isMe = currentInstructor && currentInstructor.id === ins.id;
+                container.innerHTML += `
+                    <div class="bg-[#A8E8F9]/15 border ${isMe ? 'border-gymBlue ring-2 ring-[#A8E8F9] shadow-md' : 'border-[#A8E8F9]/40'} p-5 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-black text-sm sm:text-base text-gymDarkBlue flex items-center space-x-2">
+                                <span>${ins.name}</span>
+                                ${ins.isAdmin ? '<span class="text-[10px] bg-gymYellow text-slate-950 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Admin</span>' : ''}
+                                ${isMe ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Tu</span>' : ''}
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-0.5 font-medium">PIN protetto</p>
+                        </div>
+                        ${currentInstructor && currentInstructor.isAdmin && !ins.isAdmin ? `<button onclick="deleteInstructor(${ins.id})" class="text-xs text-rose-500 hover:text-rose-700 p-2.5 rounded-xl hover:bg-rose-50 transition"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </div>
+                `;
+            });
+        }
+
+        function openAddInstructorModal() {
+            if (!currentInstructor || !currentInstructor.isAdmin) {
+                alert("Accesso negato: solo l'amministratrice Ilaria Boldrini può aggiungere insegnanti.");
+                return;
+            }
+            const name = prompt("Nome della nuova insegnante:");
+            if (!name) return;
+            const tempPin = prompt("Inserisci un PIN provvisorio iniziale:");
+            if (!tempPin || tempPin.length < 4) { alert("PIN non valido (almeno 4 cifre)"); return; }
+            
+            const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
+            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true });
+            saveData();
+            renderInstructors();
+            alert(`Insegnante ${name} aggiunta con PIN provvisorio. Al primo accesso le verrà chiesto di cambiarlo.`);
+        }
+
+        function deleteInstructor(id) {
+            if (!currentInstructor || !currentInstructor.isAdmin) return;
+            if (confirm("Vuoi rimuovere questa insegnante dal team?")) {
+                instructors = instructors.filter(i => i.id !== id);
+                saveData();
+                renderInstructors();
+            }
+        }
+
+        window.onload = function() {
+            initStartupLogin();
+        };
+    </script>
+</body>
+</html>
+
+     
