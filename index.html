@@ -55,7 +55,10 @@
                     <i class="fa-solid fa-calendar-days"></i> <span>Calendario</span>
                 </button>
                 <button onclick="switchTab('archive')" id="nav-archive" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio & Gara</span>
+                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio</span>
+                </button>
+                <button onclick="switchTab('competitions')" id="nav-competitions" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-trophy"></i> <span>Gare</span>
                 </button>
                 <button onclick="switchTab('phases')" id="nav-phases" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
                     <i class="fa-solid fa-list-check"></i> <span>Fasi & Categorie</span>
@@ -79,24 +82,18 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
 
-        <!-- GENERATORE INTelligente -->
+        <!-- GENERATORE INTELLETTUALE -->
         <section id="tab-generator" class="tab-content space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="border-b border-slate-100 pb-5">
                     <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Crea Nuova Lezione Intelligente</h2>
-                    <p class="text-sm text-slate-500 mt-0.5">Seleziona il gruppo, gli elementi tecnici desiderati e bilancia il carico di lavoro.</p>
+                    <p class="text-sm text-slate-500 mt-0.5">Scrivi il nome del gruppo (es. Elementari 1), bilancia stretching/forza e seleziona gli elementi tecnici.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Gruppo / Età</label>
-                        <select id="gen-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm transition">
-                            <option value="Asilo">Asilo</option>
-                            <option value="Elementari" selected>Elementari</option>
-                            <option value="Medie">Medie</option>
-                            <option value="Pre Silver">Pre Silver</option>
-                            <option value="Silver">Silver</option>
-                        </select>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Nome Gruppo Personalizzato</label>
+                        <input type="text" id="gen-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm transition" value="Elementari 1">
                     </div>
                     <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
                         <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Livello</label>
@@ -150,9 +147,9 @@
                     </div>
                 </div>
 
-                <!-- SOLO ELEMENTI DA SCEGLIERE -->
+                <!-- SOLO ELEMENTI TECNICI -->
                 <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner space-y-3">
-                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Seleziona Elementi Chiave (Il sito genererà gli esercizi adatti)</label>
+                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Seleziona Elementi Tecnici (Solo acrobatica e passaggi)</label>
                     <div id="gen-elements-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-48 overflow-y-auto p-2 bg-white rounded-xl border-2 border-slate-200">
                     </div>
                 </div>
@@ -165,7 +162,7 @@
             </div>
         </section>
 
-        <!-- PIANO LEZIONE -->
+        <!-- PIANO LEZIONE (CON AGGIUNGI ELEMENTO ESISTENTE O NUOVO) -->
         <section id="tab-result" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
@@ -199,34 +196,28 @@
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario e Orario Settimanale</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Gestisci i turni, le fasce orarie e le lezioni assegnate.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario e Lezioni Programmate</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Visualizza le lezioni pianificate con date e gruppi specifici.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="toggleSaturday()" id="sat-toggle-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-3 rounded-2xl text-sm transition shadow-sm flex items-center space-x-2">
-                            <i class="fa-solid fa-calendar-plus"></i> <span id="sat-btn-text">Attiva Sabato</span>
-                        </button>
-                        <button onclick="openBatchCalendarModal()" class="bg-gymBlue hover:bg-[#013C58] text-white font-bold px-4 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                            <i class="fa-solid fa-file-arrow-down"></i> <span>Importa Turni in Blocco</span>
-                        </button>
                         <button onclick="openAddSlotModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i> <span>Aggiungi Turno</span>
+                            <i class="fa-solid fa-plus"></i> <span>Aggiungi Lezione a Calendario</span>
                         </button>
                     </div>
                 </div>
 
-                <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 </div>
             </div>
         </section>
 
-        <!-- ARCHIVIO ESERCIZI & GARA -->
+        <!-- ARCHIVIO GENERALE -->
         <section id="tab-archive" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-5">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Esercizi & Esercizi di Gara</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Gestisci il database generale e gli esercizi di gara riservati al tuo gruppo.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Generale Esercizi</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Database completo di tutti gli elementi tecnici, potenziamento e stretching.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <button onclick="openAddExerciseModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
@@ -235,72 +226,59 @@
                     </div>
                 </div>
 
-                <!-- SEZIONE DEDICATA ESERCIZI DI GARA (VISIBILI SOLO PER IL GRUPPO DELL'INSEGNANTE) -->
-                <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200 space-y-4">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                        <div>
-                            <h3 class="font-black text-amber-900 text-base flex items-center space-x-2">
-                                <i class="fa-solid fa-trophy text-amber-600"></i>
-                                <span>Esercizi di Gara Riservati al tuo Gruppo (<span id="my-assigned-group-label">Assegnazione in Team</span>)</span>
-                            </h3>
-                            <p class="text-xs text-amber-700 font-medium">Questi esercizi speciali di gara sono visibili solo alle insegnanti che seguono questo specifico gruppo.</p>
-                        </div>
-                        <button onclick="openAddCompetitionExerciseModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
-                            <i class="fa-solid fa-star"></i> <span>Aggiungi Esercizio di Gara</span>
-                        </button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Categoria</label>
+                        <select id="filter-category" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
+                            <option value="Tutti">Tutte le categorie</option>
+                        </select>
                     </div>
-                    <div class="overflow-x-auto bg-white rounded-xl border border-amber-200">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-amber-100/80 text-amber-900 text-xs font-black uppercase tracking-wider">
-                                    <th class="p-3">Nome Elemento / Gara</th>
-                                    <th class="p-3">Gruppo Destinato</th>
-                                    <th class="p-3">Dettagli / Sequenza</th>
-                                    <th class="p-3 text-right">Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody id="competition-table-body" class="divide-y divide-amber-100 text-xs font-medium">
-                            </tbody>
-                        </table>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Livello</label>
+                        <select id="filter-level" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
+                            <option value="Tutti">Tutti i livelli</option>
+                            <option value="Base">Base</option>
+                            <option value="Medio">Medio</option>
+                            <option value="Avanzato">Avanzato</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- ARCHIVIO GENERALE -->
-                <div class="space-y-4 pt-4">
-                    <h3 class="font-black text-gymDarkBlue text-base">Archivio Standard Esercizi</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
-                        <div>
-                            <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Categoria</label>
-                            <select id="filter-category" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                                <option value="Tutti">Tutte le categorie</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Livello</label>
-                            <select id="filter-level" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                                <option value="Tutti">Tutti i livelli</option>
-                                <option value="Base">Base</option>
-                                <option value="Medio">Medio</option>
-                                <option value="Avanzato">Avanzato</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gymDarkBlue text-white text-xs font-black uppercase tracking-wider">
+                                <th class="p-4 rounded-l-2xl">Nome Elemento</th>
+                                <th class="p-4">Categoria</th>
+                                <th class="p-4">Livello</th>
+                                <th class="p-4">Descrizione / Propedeutica</th>
+                                <th class="p-4 rounded-r-2xl text-right">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exercise-table-body" class="divide-y divide-slate-100 text-sm font-medium">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gymDarkBlue text-white text-xs font-black uppercase tracking-wider">
-                                    <th class="p-4 rounded-l-2xl">Nome Elemento</th>
-                                    <th class="p-4">Categoria</th>
-                                    <th class="p-4">Livello</th>
-                                    <th class="p-4">Descrizione / Propedeutica</th>
-                                    <th class="p-4 rounded-r-2xl text-right">Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody id="exercise-table-body" class="divide-y divide-slate-100 text-sm font-medium">
-                            </tbody>
-                        </table>
+        <!-- SEZIONE GARE / PROGRAMMI ATLETE -->
+        <section id="tab-competitions" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-5 gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight flex items-center space-x-2">
+                            <i class="fa-solid fa-trophy text-gymOrange"></i>
+                            <span>Gestione Programmi di Gara per Atleta</span>
+                        </h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Scrivi il nome dell'atleta e componi i suoi esercizi di gara scegliendo gli elementi dai menù a tendina.</p>
                     </div>
+                    <button onclick="openAddAthleteCompetitionModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
+                        <i class="fa-solid fa-user-plus"></i> <span>Aggiungi Scheda Atleta</span>
+                    </button>
+                </div>
+
+                <div id="athletes-competition-container" class="space-y-6">
                 </div>
             </div>
         </section>
@@ -341,13 +319,13 @@
             </div>
         </section>
 
-        <!-- TEAM INSEGNANTI & ASSEGNAZIONE GRUPPI -->
+        <!-- TEAM & GRUPPI -->
         <section id="tab-team" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & Assegnazione Gruppi</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Ogni insegnante può scegliere quale gruppo segue per sbloccare i relativi esercizi di gara.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & Gruppi</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Gestione insegnanti e assegnazione gruppi.</p>
                     </div>
                     <div id="admin-action-btn-container">
                     </div>
@@ -450,51 +428,67 @@
         </div>
     </div>
 
-    <!-- MODAL ESERCIZIO DI GARA -->
-    <div id="competition-exercise-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <!-- MODAL AGGIUNGI SCHEDA ATLETA GARA -->
+    <div id="athlete-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-amber-900 flex items-center space-x-2">
-                <i class="fa-solid fa-trophy text-amber-600"></i>
-                <span>Nuovo Esercizio di Gara</span>
-            </h3>
+            <h3 class="text-xl font-black text-gymDarkBlue">Nuova Scheda Atleta (Gara)</h3>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Esercizio / Sequenza Gara</label>
-                <input type="text" id="comp-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-amber-500 outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Serie acrobatica trave gara">
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome / Nome di Battesimo (es. Giulia)</label>
+                <input type="text" id="athlete-custom-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm" placeholder="Es. Giulia">
             </div>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo di Destinazione</label>
-                <select id="comp-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-amber-500 outline-none bg-slate-50 font-bold text-slate-900 shadow-sm">
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo / Corso</label>
+                <select id="athlete-custom-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
                     <option value="Elementari">Elementari</option>
                     <option value="Medie">Medie</option>
                     <option value="Pre Silver">Pre Silver</option>
                     <option value="Silver">Silver</option>
                 </select>
             </div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Note / Note Tecniche di Gara</label>
-                <textarea id="comp-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-amber-500 outline-none bg-slate-50 font-medium shadow-sm" placeholder="Requisiti di giuria o sequenza obbligatoria..."></textarea>
-            </div>
             <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('competition-exercise-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="saveCompetitionExercise()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-amber-600 hover:bg-amber-700 text-white shadow-md transition">Salva Gara</button>
+                <button onclick="closeModal('athlete-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
+                <button onclick="saveNewAthlete()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Crea Scheda</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CALENDARIO -->
+    <!-- MODAL AGGIUNGI ELEMENTO AL VOLO NELLA FASE -->
+    <div id="add-phase-item-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
+            <h3 class="text-xl font-black text-gymDarkBlue">Aggiungi Esercizio alla Fase</h3>
+            <input type="hidden" id="modal-target-phase-idx">
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Scegli dall'Archivio</label>
+                <select id="modal-existing-exercise-select" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
+                </select>
+            </div>
+            <div class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest my-2">- OPPURE CREA NUOVO -</div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Nuovo Esercizio</label>
+                <input type="text" id="modal-new-item-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Esercizio speciale inventato ora">
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Descrizione / Nota</label>
+                <textarea id="modal-new-item-desc" rows="2" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Come eseguirlo..."></textarea>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeModal('add-phase-item-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
+                <button onclick="confirmAddPhaseItem()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi alla Fase</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PROGRAMMAZIONE CON DATA E GRUPPO LIBERO -->
     <div id="calendar-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Pianifica Turno in Calendario</h3>
+            <h3 class="text-xl font-black text-gymDarkBlue">Pianifica Lezione nel Calendario</h3>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Giorno</label>
-                <select id="cal-day" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
-                    <option value="Lunedì">Lunedì</option>
-                    <option value="Martedì">Martedì</option>
-                    <option value="Mercoledì">Mercoledì</option>
-                    <option value="Giovedì">Giovedì</option>
-                    <option value="Venerdì">Venerdì</option>
-                    <option value="Sabato">Sabato</option>
-                </select>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Data dell'allenamento</label>
+                <input type="date" id="cal-date" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Gruppo (es. Elementari 1)</label>
+                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm" placeholder="Es. Elementari 1">
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
@@ -507,31 +501,13 @@
                 </div>
             </div>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo / Corso</label>
-                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Elementari">
-            </div>
-            <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante</label>
                 <select id="cal-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
                 </select>
             </div>
             <div class="flex justify-end space-x-2 pt-2">
                 <button onclick="closeModal('calendar-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL IMPORT TURNI BLOCCO -->
-    <div id="batch-calendar-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Importa Turni in Blocco</h3>
-            <div>
-                <textarea id="batch-calendar-text" rows="6" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Lunedì 16:30-18:00 Elementari Ilaria"></textarea>
-            </div>
-            <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('batch-calendar-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="processBatchCalendarImport()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Importa</button>
+                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Salva in Calendario</button>
             </div>
         </div>
     </div>
@@ -565,15 +541,25 @@
             { id: 2, name: "Stretching gambe e spalle", category: "Stretching", level: "Base, Medio", desc: "Allungamento passivo e mobilità." },
             { id: 3, name: "Tenuta candela & squadra", category: "Potenziamento", level: "Base, Medio", desc: "Tenute isometriche addome e lombari." },
             { id: 4, name: "Passo del gatto", category: "Elemento Tecnico", level: "Base", desc: "Camminata coordinata." },
-            { id: 5, name: "Capriola avanti e indietro", category: "Elemento Tecnico", level: "Base", desc: "Rotolamento raccolto." },
-            { id: 6, name: "Verticale al muro", category: "Elemento Tecnico", level: "Medio, Avanzato", desc: "Allineamento corpo e spinta." },
-            { id: 7, name: "Ruota", category: "Elemento Tecnico", level: "Medio", desc: "Passaggio laterale mani-piedi." },
-            { id: 8, name: "Gioco dei passaggi", category: "Gioco Finale", level: "Base, Medio", desc: "Percorso ludico motorio." }
+            { id: 5, name: "Capriola avanti", category: "Elemento Tecnico", level: "Base", desc: "Rotolamento raccolto in avanti." },
+            { id: 6, name: "Capriola indietro", category: "Elemento Tecnico", level: "Base, Medio", desc: "Rotolamento raccolto indietro." },
+            { id: 7, name: "Verticale al muro", category: "Elemento Tecnico", level: "Medio, Avanzato", desc: "Allineamento corpo e spinta." },
+            { id: 8, name: "Ruota", category: "Elemento Tecnico", level: "Medio", desc: "Passaggio laterale mani-piedi." },
+            { id: 9, name: "Salto teso al trampolino", category: "Elemento Tecnico", level: "Base", desc: "Slancio e chiusura in volo." }
         ];
 
-        const defaultCompetitionExercises = [
-            { id: 101, name: "Sequenza Trave Gara Base", group: "Elementari", desc: "Salita, salto gatto, ruota avanti, discesa." },
-            { id: 102, name: "Combinazione Corpo Libero Silver", group: "Silver", desc: "Salto teso, ribaltata, arrivo in affondo." }
+        const defaultAthleteCompetitions = [
+            {
+                id: 1,
+                name: "Giulia",
+                group: "Elementari 1",
+                apparatus: {
+                    trave: ["Capriola avanti", "Passo del gatto"],
+                    volteggio: ["Salto teso al trampolino"],
+                    corpoLibero: ["Ruota", "Verticale al muro"],
+                    trampolino: ["Salto teso al trampolino"]
+                }
+            }
         ];
 
         const defaultCategories = ["Riscaldamento", "Stretching", "Potenziamento", "Elemento Tecnico", "Gioco Finale"];
@@ -586,32 +572,28 @@
         ];
 
         const defaultInstructors = [
-            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false, assignedGroup: "Elementari" },
+            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false, assignedGroup: "Elementari 1" },
             { id: 2, name: "Maestra Matilde", pin: "1234", isAdmin: false, mustChangePin: false, assignedGroup: "Silver" },
             { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false, assignedGroup: "Medie" }
         ];
 
         const defaultCalendar = [
-            { id: 1, day: "Lunedì", start: "16:30", end: "17:30", group: "Asilo", instructor: "Ilaria Boldrini" },
-            { id: 2, day: "Lunedì", start: "17:30", end: "19:00", group: "Elementari", instructor: "Maestra Giulia" },
-            { id: 3, day: "Mercoledì", start: "16:30", end: "18:00", group: "Medie", instructor: "Maestra Matilde" }
+            { id: 1, date: "2026-11-19", start: "16:30", end: "18:00", group: "Elementari 1", instructor: "Ilaria Boldrini" }
         ];
 
         let exercises = JSON.parse(localStorage.getItem('gym_exercises')) || defaultExercises;
-        let competitionExercises = JSON.parse(localStorage.getItem('gym_competition_exercises')) || defaultCompetitionExercises;
+        let athleteCompetitions = JSON.parse(localStorage.getItem('gym_athlete_competitions')) || defaultAthleteCompetitions;
         let categories = JSON.parse(localStorage.getItem('gym_categories')) || defaultCategories;
-        let showSaturday = JSON.parse(localStorage.getItem('gym_show_saturday')) || false;
         let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar')) || defaultCalendar;
         let instructors = JSON.parse(localStorage.getItem('gym_instructors')) || defaultInstructors;
         let currentInstructor = null;
 
         function saveData() {
             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
-            localStorage.setItem('gym_competition_exercises', JSON.stringify(competitionExercises));
+            localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
             localStorage.setItem('gym_categories', JSON.stringify(categories));
             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
             localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
-            localStorage.setItem('gym_show_saturday', JSON.stringify(showSaturday));
             if (currentInstructor) {
                 localStorage.setItem('gym_current_user', JSON.stringify(currentInstructor));
             }
@@ -619,11 +601,10 @@
             if (useCloud && db) {
                 db.collection("gym_data").doc("main").set({
                     exercises: exercises,
-                    competitionExercises: competitionExercises,
+                    athleteCompetitions: athleteCompetitions,
                     categories: categories,
                     instructors: instructors,
-                    calendarSlots: calendarSlots,
-                    showSaturday: showSaturday
+                    calendarSlots: calendarSlots
                 }).catch(err => console.log("Errore sync cloud:", err));
             }
         }
@@ -635,24 +616,21 @@
                         const data = doc.data();
                         if (data.instructors && data.instructors.length > 0) {
                             exercises = data.exercises || defaultExercises;
-                            competitionExercises = data.competitionExercises || defaultCompetitionExercises;
+                            athleteCompetitions = data.athleteCompetitions || defaultAthleteCompetitions;
                             categories = data.categories || defaultCategories;
                             instructors = data.instructors || defaultInstructors;
                             calendarSlots = data.calendarSlots || defaultCalendar;
-                            showSaturday = data.showSaturday || false;
                             
-                            // Aggiorna currentInstructor se loggato
                             if (currentInstructor) {
                                 let updatedMe = instructors.find(i => i.id === currentInstructor.id);
                                 if (updatedMe) currentInstructor = updatedMe;
                             }
 
                             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
-                            localStorage.setItem('gym_competition_exercises', JSON.stringify(competitionExercises));
+                            localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
                             localStorage.setItem('gym_categories', JSON.stringify(categories));
                             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
                             localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
-                            localStorage.setItem('gym_show_saturday', JSON.stringify(showSaturday));
                         } else {
                             saveData();
                         }
@@ -705,7 +683,7 @@
                     document.getElementById('change-pin-modal').classList.add('flex');
                 } else {
                     currentInstructor = ins;
-                    if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari";
+                    if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari 1";
                     saveData();
                     document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
                     switchTab('generator');
@@ -724,7 +702,7 @@
             currentInstructor = tempLoggedInInstructor;
             saveData();
             document.getElementById('change-pin-modal').classList.add('hidden');
-            document.getElementById('current-user-name').textContent = `${currentInstructor.name} [${currentInstructor.assignedGroup || 'Elementari'}]`;
+            document.getElementById('current-user-name').textContent = `${currentInstructor.name} [${currentInstructor.assignedGroup || 'Elementari 1'}]`;
             switchTab('generator');
         }
 
@@ -748,7 +726,8 @@
             activeBtn.classList.remove('hover:bg-[#00537A]', 'text-slate-200');
 
             if (tabId === 'generator') updateGeneratorElements();
-            if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); renderCompetitionTable(); }
+            if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); }
+            if (tabId === 'competitions') renderCompetitionsSection();
             if (tabId === 'calendar') renderCalendar();
             if (tabId === 'phases') renderPhasesEditor();
             if (tabId === 'team') renderInstructors();
@@ -758,12 +737,10 @@
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
-        // GENERATORE INTELLIGENTE CON SOLO ELEMENTI
         function updateGeneratorElements() {
             const container = document.getElementById('gen-elements-container');
             container.innerHTML = '';
-            // Prende solo gli elementi tecnici o dall'archivio
-            let techExercises = exercises.filter(e => e.category === "Elemento Tecnico" || e.category === "Riscaldamento");
+            let techExercises = exercises.filter(e => e.category === "Elemento Tecnico");
             if(techExercises.length === 0) techExercises = exercises;
 
             techExercises.forEach(ex => {
@@ -771,7 +748,7 @@
                 label.className = "flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition";
                 label.innerHTML = `
                     <input type="checkbox" name="gen-elem-checkbox" value="${ex.name}" class="w-4 h-4 text-gymBlue rounded border-slate-300">
-                    <span>${ex.name} <span class="text-xs font-medium text-slate-400">(${ex.category})</span></span>
+                    <span>${ex.name} <span class="text-xs font-medium text-slate-400">(${ex.level})</span></span>
                 `;
                 container.appendChild(label);
             });
@@ -791,11 +768,10 @@
             const checkboxes = document.querySelectorAll('input[name="gen-elem-checkbox"]:checked');
             let selectedElements = Array.from(checkboxes).map(cb => cb.value);
 
-            if (selectedElements.length === 0) { alert("Seleziona almeno un elemento chiave per la lezione!"); return; }
+            if (selectedElements.length === 0) { alert("Seleziona almeno un elemento tecnico per la lezione!"); return; }
 
             const myPhases = getMyPhases();
             
-            // Genera la lezione bilanciando stretching e forza in base alle preferenze
             currentGeneratedLesson = {
                 group: group, level: level, apparatus: selectedApparatus, elements: selectedElements,
                 stretchFocus: stretchFocus, strengthFocus: strengthFocus,
@@ -810,7 +786,6 @@
                         let count = strengthFocus === "Alto" ? 3 : (strengthFocus === "Basso" ? 1 : 2);
                         phaseExercises = exercises.filter(e => e.category === "Potenziamento").slice(0, count).map(e => ({ name: e.name, desc: e.desc }));
                     } else if (catName === "Elemento Tecnico") {
-                        // Inserisce gli elementi scelti dall'utente
                         phaseExercises = selectedElements.map(elemName => {
                             let found = exercises.find(e => e.name === elemName);
                             return { name: elemName, desc: found ? found.desc : "Esercizio tecnico mirato" };
@@ -860,12 +835,165 @@
                 const div = document.createElement('div');
                 div.className = "bg-[#A8E8F9]/15 rounded-2xl p-5 border border-[#A8E8F9]/40 space-y-3";
                 div.innerHTML = `
-                    <h4 class="font-black text-gymDarkBlue text-base">${phase.title}</h4>
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-black text-gymDarkBlue text-base">${phase.title}</h4>
+                        <button onclick="openAddPhaseItemModal(${phaseIndex})" class="bg-gymBlue hover:bg-gymDarkBlue text-white text-xs font-bold px-3 py-1.5 rounded-xl transition shadow-sm flex items-center space-x-1.5">
+                            <i class="fa-solid fa-plus"></i> <span>Aggiungi Elemento</span>
+                        </button>
+                    </div>
                     <p class="text-xs text-slate-500">${phase.desc}</p>
                     <div class="space-y-2">${exHtml || '<p class="text-xs text-slate-400 italic">Nessun esercizio</p>'}</div>
                 `;
                 container.appendChild(div);
             });
+        }
+
+        // AGGIUNGI ELEMENTO AL VOLO NELLA FASE
+        function openAddPhaseItemModal(phaseIdx) {
+            document.getElementById('modal-target-phase-idx').value = phaseIdx;
+            document.getElementById('modal-new-item-name').value = '';
+            document.getElementById('modal-new-item-desc').value = '';
+
+            const sel = document.getElementById('modal-existing-exercise-select');
+            sel.innerHTML = '<option value="">-- Seleziona dallarchivio --</option>';
+            exercises.forEach(e => {
+                sel.innerHTML += `<option value="${e.name}">${e.name} (${e.category})</option>`;
+            });
+
+            openModal('add-phase-item-modal');
+        }
+
+        function confirmAddPhaseItem() {
+            const phaseIdx = parseInt(document.getElementById('modal-target-phase-idx').value);
+            const existingName = document.getElementById('modal-existing-exercise-select').value;
+            const newName = document.getElementById('modal-new-item-name').value.trim();
+            const newDesc = document.getElementById('modal-new-item-desc').value.trim();
+
+            if (newName) {
+                // Aggiunge un elemento totalmente nuovo e lo salva anche nell'archivio generale
+                let cat = currentGeneratedLesson.phases[phaseIdx].category || "Elemento Tecnico";
+                exercises.push({ id: Date.now(), name: newName, category: cat, level: "Base, Medio", desc: newDesc || "Creato al volo" });
+                saveData();
+                currentGeneratedLesson.phases[phaseIdx].exercises.push({ name: newName, desc: newDesc || "Creato al volo" });
+            } else if (existingName) {
+                let found = exercises.find(e => e.name === existingName);
+                currentGeneratedLesson.phases[phaseIdx].exercises.push({ name: existingName, desc: found ? found.desc : "" });
+            } else {
+                alert("Seleziona un esercizio esistente o scrivi un nome nuovo.");
+                return;
+            }
+
+            closeModal('add-phase-item-modal');
+            renderCurrentLessonResult();
+        }
+
+        // SEZIONE GARE / PROGRAMMI ATLETE
+        function renderCompetitionsSection() {
+            const container = document.getElementById('athletes-competition-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (athleteCompetitions.length === 0) {
+                container.innerHTML = `<div class="bg-amber-50 p-6 rounded-2xl text-center text-amber-800 font-medium text-sm">Nessuna scheda atleta creata. Clicca su "Aggiungi Scheda Atleta" in alto.</div>`;
+                return;
+            }
+
+            athleteCompetitions.forEach((athlete, athIdx) => {
+                let apparatusList = ['trave', 'volteggio', 'corpoLibero', 'trampolino'];
+                let apparatusTitles = { trave: 'Trave', volteggio: 'Volteggio', corpoLibero: 'Corpo Libero', trampolino: 'Trampolino' };
+
+                let apparatusHtml = '';
+                apparatusList.forEach(appKey => {
+                    if (!athlete.apparatus[appKey]) athlete.apparatus[appKey] = [];
+                    let itemsHtml = '';
+                    athlete.apparatus[appKey].forEach((elemName, elIdx) => {
+                        itemsHtml += `
+                            <div class="flex items-center space-x-2 mb-2">
+                                <select onchange="updateAthleteElement(${athIdx}, '${appKey}', ${elIdx}, this.value)" class="w-full border-2 border-slate-200 rounded-xl p-2 text-xs font-bold bg-white text-slate-800">
+                                    <option value="">-- Seleziona elemento --</option>
+                                    ${exercises.map(e => `<option value="${e.name}" ${e.name === elemName ? 'selected' : ''}>${e.name}</option>`).join('')}
+                                </select>
+                                <button onclick="removeAthleteElement(${athIdx}, '${appKey}', ${elIdx})" class="text-rose-400 hover:text-rose-600 p-2"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                    });
+
+                    apparatusHtml += `
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                            <div class="flex justify-between items-center border-b pb-2">
+                                <span class="font-black text-xs uppercase tracking-wider text-gymDarkBlue">${apparatusTitles[appKey]}</span>
+                                <button onclick="addAthleteElement(${athIdx}, '${appKey}')" class="text-xs bg-gymBlue text-white px-2.5 py-1 rounded-lg font-bold hover:bg-gymDarkBlue transition"><i class="fa-solid fa-plus mr-1"></i> Aggiungi</button>
+                            </div>
+                            <div class="space-y-1 mt-2">
+                                ${itemsHtml || '<p class="text-xs text-slate-400 italic">Nessun elemento inserito</p>'}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="bg-[#A8E8F9]/15 p-6 rounded-3xl border border-[#A8E8F9]/50 space-y-4 shadow-sm">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-[#A8E8F9]/40 pb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="bg-gymOrange text-slate-950 font-black px-3 py-1.5 rounded-xl text-sm shadow">${athlete.name}</div>
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Gruppo: ${athlete.group}</span>
+                            </div>
+                            <button onclick="deleteAthlete(${athIdx})" class="text-xs text-rose-500 hover:text-rose-700 font-bold px-3 py-1.5 rounded-xl hover:bg-rose-50 transition">
+                                <i class="fa-solid fa-trash mr-1"></i> Elimina Scheda Atleta
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            ${apparatusHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openAddAthleteCompetitionModal() {
+            document.getElementById('athlete-custom-name').value = '';
+            openModal('athlete-modal');
+        }
+
+        function saveNewAthlete() {
+            const name = document.getElementById('athlete-custom-name').value.trim();
+            const group = document.getElementById('athlete-custom-group').value;
+            if (!name) { alert("Inserisci il nome dell'atleta."); return; }
+
+            athleteCompetitions.push({
+                id: Date.now(),
+                name: name,
+                group: group,
+                apparatus: { trave: [], volteggio: [], corpoLibero: [], trampolino: [] }
+            });
+            saveData();
+            closeModal('athlete-modal');
+            renderCompetitionsSection();
+        }
+
+        function addAthleteElement(athIdx, appKey) {
+            athleteCompetitions[athIdx].apparatus[appKey].push(exercises.length > 0 ? exercises[0].name : "");
+            saveData();
+            renderCompetitionsSection();
+        }
+
+        function updateAthleteElement(athIdx, appKey, elIdx, value) {
+            athleteCompetitions[athIdx].apparatus[appKey][elIdx] = value;
+            saveData();
+        }
+
+        function removeAthleteElement(athIdx, appKey, elIdx) {
+            athleteCompetitions[athIdx].apparatus[appKey].splice(elIdx, 1);
+            saveData();
+            renderCompetitionsSection();
+        }
+
+        function deleteAthlete(athIdx) {
+            if (confirm("Vuoi eliminare la scheda di questa atleta?")) {
+                athleteCompetitions.splice(athIdx, 1);
+                saveData();
+                renderCompetitionsSection();
+            }
         }
 
         // FASI & CATEGORIE
@@ -989,43 +1117,7 @@
             });
         }
 
-        // GESTIONE ESERCIZI DI GARA (VISIBILI SOLO PER IL GRUPPO SCELTO DALL'INSEGNANTE)
-        function renderCompetitionTable() {
-            const tbody = document.getElementById('competition-table-body');
-            const groupLabel = document.getElementById('my-assigned-group-label');
-            if (!tbody) return;
-
-            let myGroup = currentInstructor ? (currentInstructor.assignedGroup || "Elementari") : "Elementari";
-            if (groupLabel) groupLabel.textContent = myGroup;
-
-            tbody.innerHTML = '';
-            // Mostra solo gli esercizi di gara del gruppo dell'insegnante loggata
-            let myCompExercises = competitionExercises.filter(ce => ce.group === myGroup);
-
-            if(myCompExercises.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-xs text-slate-400 italic">Nessun esercizio di gara inserito per il gruppo ${myGroup}. Clicca su "Aggiungi Esercizio di Gara".</td></tr>`;
-                return;
-            }
-
-            myCompExercises.forEach(ce => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-amber-50/50 transition">
-                        <td class="p-3 font-black text-amber-900">${ce.name}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-200 text-amber-900">${ce.group}</span></td>
-                        <td class="p-3 text-slate-700 text-xs">${ce.desc}</td>
-                        <td class="p-3 text-right">
-                            <button onclick="competitionExercises = competitionExercises.filter(x => x.id !== ${ce.id}); saveData(); renderCompetitionTable();" class="text-amber-400 hover:text-rose-600 p-1.5"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
         function openAddExerciseModal() { populateCategoryFilter(); openModal('exercise-modal'); }
-        function openAddCompetitionExerciseModal() { 
-            document.getElementById('comp-group').value = currentInstructor ? (currentInstructor.assignedGroup || "Elementari") : "Elementari";
-            openModal('competition-exercise-modal'); 
-        }
         
         function saveExercise() {
             const name = document.getElementById('ex-name').value.trim();
@@ -1039,76 +1131,62 @@
             renderExercisesTable();
         }
 
-        function saveCompetitionExercise() {
-            const name = document.getElementById('comp-name').value.trim();
-            const group = document.getElementById('comp-group').value;
-            const desc = document.getElementById('comp-desc').value.trim();
-            if (!name) { alert("Inserisci il nome dell'esercizio di gara."); return; }
-            competitionExercises.push({ id: Date.now(), name, group, desc });
-            saveData();
-            closeModal('competition-exercise-modal');
-            renderCompetitionTable();
-            alert("Esercizio di gara aggiunto con successo!");
-        }
-
         function renderCalendar() {
             const grid = document.getElementById('calendar-grid');
             if (!grid) return;
             grid.innerHTML = '';
-            let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
-            if (showSaturday) days.push("Sabato");
-            grid.className = showSaturday ? "grid grid-cols-1 md:grid-cols-6 gap-4" : "grid grid-cols-1 md:grid-cols-5 gap-4";
 
-            days.forEach(day => {
-                let slots = calendarSlots.filter(s => s.day === day);
-                let slotsHtml = slots.map(s => `
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-1">
-                        <div class="flex justify-between"><span class="text-xs font-black text-gymBlue">${s.start}-${s.end}</span><button onclick="calendarSlots = calendarSlots.filter(x => x.id !== ${s.id}); saveData(); renderCalendar();" class="text-xs text-rose-500"><i class="fa-solid fa-xmark"></i></button></div>
-                        <div class="text-sm font-black text-gymDarkBlue">${s.group}</div>
-                        <div class="text-xs text-slate-500">${s.instructor}</div>
+            if (calendarSlots.length === 0) {
+                grid.innerHTML = `<div class="col-span-full bg-white p-6 rounded-2xl text-center text-slate-400 italic">Nessuna lezione programmata. Clicca su "Programma in Calendario" dopo aver generato una lezione.</div>`;
+                return;
+            }
+
+            calendarSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            calendarSlots.forEach(s => {
+                let formattedDate = s.date ? s.date.split('-').reverse().join('/') : 'Data non specificata';
+                grid.innerHTML += `
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 relative">
+                        <button onclick="calendarSlots = calendarSlots.filter(x => x.id !== ${s.id}); saveData(); renderCalendar();" class="absolute top-4 right-4 text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex items-center space-x-2 text-gymBlue font-black text-xs">
+                            <i class="fa-solid fa-calendar-days"></i> <span>${formattedDate} (${s.start} - ${s.end})</span>
+                        </div>
+                        <div class="text-lg font-black text-gymDarkBlue">${s.group}</div>
+                        <div class="text-xs text-slate-500 font-medium">Insegnante: ${s.instructor}</div>
                     </div>
-                `).join('');
-                grid.innerHTML += `<div class="bg-[#A8E8F9]/15 rounded-2xl p-4 border border-[#A8E8F9]/40 space-y-3"><h3 class="font-black text-gymDarkBlue text-sm border-b pb-2">${day}</h3><div class="space-y-2">${slotsHtml || '<p class="text-xs text-slate-400 italic text-center py-4">Nessun turno</p>'}</div></div>`;
+                `;
             });
         }
 
-        function toggleSaturday() { showSaturday = !showSaturday; saveData(); renderCalendar(); }
         function openAddSlotModal() {
             const sel = document.getElementById('cal-instructor');
             sel.innerHTML = '';
             instructors.forEach(i => sel.innerHTML += `<option value="${i.name}">${i.name}</option>`);
+            document.getElementById('cal-group').value = document.getElementById('gen-group').value || "Elementari 1";
+            document.getElementById('cal-date').value = new Date().toISOString().split('T')[0];
             openModal('calendar-modal');
         }
+
+        function openScheduleModal() {
+            openAddSlotModal();
+        }
+
         function saveCalendarSlot() {
-            const day = document.getElementById('cal-day').value;
+            const date = document.getElementById('cal-date').value;
             const start = document.getElementById('cal-start').value;
             const end = document.getElementById('cal-end').value;
             const group = document.getElementById('cal-group').value.trim();
             const instructor = document.getElementById('cal-instructor').value;
-            if (!group) return;
-            calendarSlots.push({ id: Date.now(), day, start, end, group, instructor });
+            if (!date || !group) { alert("Inserisci la data e il nome del gruppo."); return; }
+
+            calendarSlots.push({ id: Date.now(), date, start, end, group, instructor });
             saveData();
             closeModal('calendar-modal');
-            renderCalendar();
+            switchTab('calendar');
+            alert("Lezione programmata con successo!");
         }
-        function openBatchCalendarModal() { openModal('batch-calendar-modal'); }
-        function processBatchCalendarImport() {
-            const text = document.getElementById('batch-calendar-text').value.trim();
-            if (!text) return;
-            text.split('\n').forEach(line => {
-                let p = line.split(/\s+/);
-                if (p.length >= 4) {
-                    calendarSlots.push({ id: Date.now() + Math.random(), day: p[0], start: p[1].split('-')[0]||'16:30', end: p[1].split('-')[1]||'18:00', group: p[2], instructor: p.slice(3).join(' ') });
-                }
-            });
-            saveData();
-            closeModal('batch-calendar-modal');
-            renderCalendar();
-            alert("Turni importati!");
-        }
-        function openScheduleModal() { switchTab('calendar'); openAddSlotModal(); }
 
-        // TEAM & SCELTA GRUPPO PER INSEGNANTE
+        // TEAM & GRUPPI
         function renderInstructors() {
             const container = document.getElementById('instructors-list');
             const btnContainer = document.getElementById('admin-action-btn-container');
@@ -1122,12 +1200,12 @@
                     </button>
                 `;
             } else {
-                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Puoi modificare il tuo gruppo assegnato dal menu sottostante.</span>`;
+                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Gestione gruppo attivo.</span>`;
             }
 
             instructors.forEach(ins => {
                 const isMe = currentInstructor && currentInstructor.id === ins.id;
-                let currentGroup = ins.assignedGroup || "Elementari";
+                let currentGroup = ins.assignedGroup || "Elementari 1";
 
                 container.innerHTML += `
                     <div class="bg-[#A8E8F9]/15 border ${isMe ? 'border-gymBlue ring-2 ring-[#A8E8F9]' : 'border-[#A8E8F9]/40'} p-5 rounded-2xl space-y-3">
@@ -1145,13 +1223,8 @@
                                 </button>` : ''}
                         </div>
                         <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between">
-                            <label class="text-xs font-black uppercase text-slate-600">Gruppo Assegnato:</label>
-                            <select onchange="updateInstructorGroup(${ins.id}, this.value)" class="border-2 border-gymBlue rounded-lg p-1.5 text-xs font-bold text-gymDarkBlue bg-slate-50 outline-none">
-                                <option value="Elementari" ${currentGroup === 'Elementari' ? 'selected' : ''}>Elementari</option>
-                                <option value="Medie" ${currentGroup === 'Medie' ? 'selected' : ''}>Medie</option>
-                                <option value="Pre Silver" ${currentGroup === 'Pre Silver' ? 'selected' : ''}>Pre Silver</option>
-                                <option value="Silver" ${currentGroup === 'Silver' ? 'selected' : ''}>Silver</option>
-                            </select>
+                            <label class="text-xs font-black uppercase text-slate-600">Gruppo:</label>
+                            <input type="text" value="${currentGroup}" onchange="updateInstructorGroup(${ins.id}, this.value)" class="border-2 border-gymBlue rounded-lg p-1.5 text-xs font-bold text-gymDarkBlue bg-slate-50 outline-none w-36">
                         </div>
                     </div>
                 `;
@@ -1170,7 +1243,7 @@
                 return i;
             });
             saveData();
-            alert(`Gruppo aggiornato a ${newGroup}! Ora vedrai i relativi esercizi di gara.`);
+            alert(`Gruppo aggiornato a ${newGroup}!`);
         }
 
         function openAddInstructorModal() {
@@ -1181,7 +1254,7 @@
             if (!tempPin || tempPin.length < 4) { alert("PIN non valido"); return; }
             
             const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
-            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true, assignedGroup: "Elementari" });
+            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true, assignedGroup: "Elementari 1" });
             saveData();
             renderInstructors();
             alert(`Insegnante ${name} aggiunta!`);
