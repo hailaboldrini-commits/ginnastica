@@ -162,7 +162,7 @@
             </div>
         </section>
 
-        <!-- PIANO LEZIONE (CON AGGIUNGI ELEMENTO ESISTENTE O NUOVO) -->
+        <!-- PIANO LEZIONE -->
         <section id="tab-result" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
@@ -191,22 +191,35 @@
             </div>
         </section>
 
-        <!-- CALENDARIO -->
-        <section id="tab-calendar" class="tab-content hidden space-y-6">
+        <!-- CALENDARIO (GIORNI FISSI + LEZIONI PROGRAMMATE SOTTO) -->
+        <section id="tab-calendar" class="tab-content hidden space-y-8">
+            <!-- PARTE 1: ORARIO SETTIMANALE FISSO (LUN-VEN) -->
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario e Lezioni Programmate</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Visualizza le lezioni pianificate con date e gruppi specifici.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Calendario Settimanale dei Turni</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Orari fissi dei gruppi dal lunedì al venerdì.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="openAddSlotModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                            <i class="fa-solid fa-plus"></i> <span>Aggiungi Lezione a Calendario</span>
-                        </button>
-                    </div>
+                    <button onclick="openAddSlotModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i> <span>Aggiungi Turno Fisso</span>
+                    </button>
                 </div>
 
-                <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                </div>
+            </div>
+
+            <!-- PARTE 2: LEZIONI PROGRAMMATE (PERSONALI) -->
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
+                <div class="border-b pb-4">
+                    <h3 class="text-lg font-black text-gymDarkBlue flex items-center space-x-2">
+                        <i class="fa-solid fa-bookmark text-gymBlue"></i>
+                        <span>Lezioni Programmate (Personali)</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Lezioni che hai programmato tu per date specifiche in vista degli allenamenti futuri.</p>
+                </div>
+
+                <div id="scheduled-lessons-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 </div>
             </div>
         </section>
@@ -478,17 +491,19 @@
         </div>
     </div>
 
-    <!-- MODAL PROGRAMMAZIONE CON DATA E GRUPPO LIBERO -->
+    <!-- MODAL AGGIUNGI TURNO FISSO AL CALENDARIO -->
     <div id="calendar-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Pianifica Lezione nel Calendario</h3>
+            <h3 class="text-xl font-black text-gymDarkBlue">Aggiungi Turno Fisso Settimanale</h3>
             <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Data dell'allenamento</label>
-                <input type="date" id="cal-date" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Gruppo (es. Elementari 1)</label>
-                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm" placeholder="Es. Elementari 1">
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Giorno</label>
+                <select id="cal-day" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
+                    <option value="Lunedì">Lunedì</option>
+                    <option value="Martedì">Martedì</option>
+                    <option value="Mercoledì">Mercoledì</option>
+                    <option value="Giovedì">Giovedì</option>
+                    <option value="Venerdì">Venerdì</option>
+                </select>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
@@ -501,13 +516,51 @@
                 </div>
             </div>
             <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo / Corso</label>
+                <input type="text" id="cal-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Elementari 1">
+            </div>
+            <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante</label>
                 <select id="cal-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
                 </select>
             </div>
             <div class="flex justify-end space-x-2 pt-2">
                 <button onclick="closeModal('calendar-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Salva in Calendario</button>
+                <button onclick="saveCalendarSlot()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Aggiungi Turno</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PROGRAMMAZIONE LEZIONE CON DATA -->
+    <div id="schedule-lesson-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
+            <h3 class="text-xl font-black text-gymDarkBlue">Programma Lezione nel Calendario</h3>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Data dell'allenamento</label>
+                <input type="date" id="sch-date" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Gruppo / Squadra</label>
+                <input type="text" id="sch-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-bold shadow-sm" placeholder="Es. Elementari 1">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Inizio</label>
+                    <input type="time" id="sch-start" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="16:30">
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Fine</label>
+                    <input type="time" id="sch-end" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" value="18:00">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Insegnante</label>
+                <select id="sch-instructor" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
+                </select>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeModal('schedule-lesson-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
+                <button onclick="saveScheduledLesson()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Salva Programmazione</button>
             </div>
         </div>
     </div>
@@ -577,14 +630,20 @@
             { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false, assignedGroup: "Medie" }
         ];
 
-        const defaultCalendar = [
+        const defaultCalendarSlots = [
+            { id: 1, day: "Lunedì", start: "16:30", end: "18:00", group: "Elementari 1", instructor: "Ilaria Boldrini" },
+            { id: 2, day: "Mercoledì", start: "17:00", end: "18:30", group: "Medie", instructor: "Maestra Giulia" }
+        ];
+
+        const defaultScheduledLessons = [
             { id: 1, date: "2026-11-19", start: "16:30", end: "18:00", group: "Elementari 1", instructor: "Ilaria Boldrini" }
         ];
 
         let exercises = JSON.parse(localStorage.getItem('gym_exercises')) || defaultExercises;
         let athleteCompetitions = JSON.parse(localStorage.getItem('gym_athlete_competitions')) || defaultAthleteCompetitions;
         let categories = JSON.parse(localStorage.getItem('gym_categories')) || defaultCategories;
-        let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar')) || defaultCalendar;
+        let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar_slots')) || defaultCalendarSlots;
+        let scheduledLessons = JSON.parse(localStorage.getItem('gym_scheduled_lessons')) || defaultScheduledLessons;
         let instructors = JSON.parse(localStorage.getItem('gym_instructors')) || defaultInstructors;
         let currentInstructor = null;
 
@@ -593,7 +652,8 @@
             localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
             localStorage.setItem('gym_categories', JSON.stringify(categories));
             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
-            localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
+            localStorage.setItem('gym_calendar_slots', JSON.stringify(calendarSlots));
+            localStorage.setItem('gym_scheduled_lessons', JSON.stringify(scheduledLessons));
             if (currentInstructor) {
                 localStorage.setItem('gym_current_user', JSON.stringify(currentInstructor));
             }
@@ -604,7 +664,8 @@
                     athleteCompetitions: athleteCompetitions,
                     categories: categories,
                     instructors: instructors,
-                    calendarSlots: calendarSlots
+                    calendarSlots: calendarSlots,
+                    scheduledLessons: scheduledLessons
                 }).catch(err => console.log("Errore sync cloud:", err));
             }
         }
@@ -619,7 +680,8 @@
                             athleteCompetitions = data.athleteCompetitions || defaultAthleteCompetitions;
                             categories = data.categories || defaultCategories;
                             instructors = data.instructors || defaultInstructors;
-                            calendarSlots = data.calendarSlots || defaultCalendar;
+                            calendarSlots = data.calendarSlots || defaultCalendarSlots;
+                            scheduledLessons = data.scheduledLessons || defaultScheduledLessons;
                             
                             if (currentInstructor) {
                                 let updatedMe = instructors.find(i => i.id === currentInstructor.id);
@@ -630,7 +692,8 @@
                             localStorage.setItem('gym_athlete_competitions', JSON.stringify(athleteCompetitions));
                             localStorage.setItem('gym_categories', JSON.stringify(categories));
                             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
-                            localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
+                            localStorage.setItem('gym_calendar_slots', JSON.stringify(calendarSlots));
+                            localStorage.setItem('gym_scheduled_lessons', JSON.stringify(scheduledLessons));
                         } else {
                             saveData();
                         }
@@ -728,7 +791,7 @@
             if (tabId === 'generator') updateGeneratorElements();
             if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); }
             if (tabId === 'competitions') renderCompetitionsSection();
-            if (tabId === 'calendar') renderCalendar();
+            if (tabId === 'calendar') renderCalendarTab();
             if (tabId === 'phases') renderPhasesEditor();
             if (tabId === 'team') renderInstructors();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -848,7 +911,6 @@
             });
         }
 
-        // AGGIUNGI ELEMENTO AL VOLO NELLA FASE
         function openAddPhaseItemModal(phaseIdx) {
             document.getElementById('modal-target-phase-idx').value = phaseIdx;
             document.getElementById('modal-new-item-name').value = '';
@@ -870,7 +932,6 @@
             const newDesc = document.getElementById('modal-new-item-desc').value.trim();
 
             if (newName) {
-                // Aggiunge un elemento totalmente nuovo e lo salva anche nell'archivio generale
                 let cat = currentGeneratedLesson.phases[phaseIdx].category || "Elemento Tecnico";
                 exercises.push({ id: Date.now(), name: newName, category: cat, level: "Base, Medio", desc: newDesc || "Creato al volo" });
                 saveData();
@@ -1131,59 +1192,105 @@
             renderExercisesTable();
         }
 
-        function renderCalendar() {
+        // CALENDARIO: VISUALIZZAZIONE LUN-VEN + LEZIONI PROGRAMMATE SOTTO
+        function renderCalendarTab() {
+            // 1. Renderizza i turni fissi (Lunedì - Venerdì)
             const grid = document.getElementById('calendar-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
+            if (grid) {
+                grid.innerHTML = '';
+                let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
+                days.forEach(day => {
+                    let slots = calendarSlots.filter(s => s.day === day);
+                    let slotsHtml = slots.map(s => `
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-1 relative">
+                            <button onclick="calendarSlots = calendarSlots.filter(x => x.id !== ${s.id}); saveData(); renderCalendarTab();" class="absolute top-2 right-2 text-rose-400 hover:text-rose-600 text-xs"><i class="fa-solid fa-xmark"></i></button>
+                            <div class="text-xs font-black text-gymBlue">${s.start} - ${s.end}</div>
+                            <div class="text-sm font-black text-gymDarkBlue">${s.group}</div>
+                            <div class="text-xs text-slate-500">${s.instructor}</div>
+                        </div>
+                    `).join('');
 
-            if (calendarSlots.length === 0) {
-                grid.innerHTML = `<div class="col-span-full bg-white p-6 rounded-2xl text-center text-slate-400 italic">Nessuna lezione programmata. Clicca su "Programma in Calendario" dopo aver generato una lezione.</div>`;
-                return;
+                    grid.innerHTML += `
+                        <div class="bg-[#A8E8F9]/15 rounded-2xl p-4 border border-[#A8E8F9]/40 space-y-3">
+                            <h3 class="font-black text-gymDarkBlue text-sm border-b pb-2">${day}</h3>
+                            <div class="space-y-2">${slotsHtml || '<p class="text-xs text-slate-400 italic text-center py-2">Nessun turno</p>'}</div>
+                        </div>
+                    `;
+                });
             }
 
-            calendarSlots.sort((a, b) => new Date(a.date) - new Date(b.date));
+            // 2. Renderizza le lezioni programmate personali sotto
+            const schedContainer = document.getElementById('scheduled-lessons-container');
+            if (schedContainer) {
+                schedContainer.innerHTML = '';
+                if (scheduledLessons.length === 0) {
+                    schedContainer.innerHTML = `<div class="col-span-full bg-slate-50 p-6 rounded-2xl text-center text-slate-400 italic text-sm">Nessuna lezione programmata. Genera una lezione e clicca su "Programma in Calendario".</div>`;
+                    return;
+                }
 
-            calendarSlots.forEach(s => {
-                let formattedDate = s.date ? s.date.split('-').reverse().join('/') : 'Data non specificata';
-                grid.innerHTML += `
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 relative">
-                        <button onclick="calendarSlots = calendarSlots.filter(x => x.id !== ${s.id}); saveData(); renderCalendar();" class="absolute top-4 right-4 text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                        <div class="flex items-center space-x-2 text-gymBlue font-black text-xs">
-                            <i class="fa-solid fa-calendar-days"></i> <span>${formattedDate} (${s.start} - ${s.end})</span>
+                scheduledLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                scheduledLessons.forEach(s => {
+                    let formattedDate = s.date ? s.date.split('-').reverse().join('/') : 'Data non specificata';
+                    schedContainer.innerHTML += `
+                        <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200 shadow-sm space-y-2 relative">
+                            <button onclick="scheduledLessons = scheduledLessons.filter(x => x.id !== ${s.id}); saveData(); renderCalendarTab();" class="absolute top-4 right-4 text-amber-600 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                            <div class="flex items-center space-x-2 text-amber-800 font-black text-xs">
+                                <i class="fa-solid fa-calendar-check"></i> <span>${formattedDate} (${s.start} - ${s.end})</span>
+                            </div>
+                            <div class="text-lg font-black text-amber-950">${s.group}</div>
+                            <div class="text-xs text-amber-900 font-medium">Insegnante: ${s.instructor}</div>
                         </div>
-                        <div class="text-lg font-black text-gymDarkBlue">${s.group}</div>
-                        <div class="text-xs text-slate-500 font-medium">Insegnante: ${s.instructor}</div>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
         }
 
         function openAddSlotModal() {
             const sel = document.getElementById('cal-instructor');
             sel.innerHTML = '';
             instructors.forEach(i => sel.innerHTML += `<option value="${i.name}">${i.name}</option>`);
-            document.getElementById('cal-group').value = document.getElementById('gen-group').value || "Elementari 1";
-            document.getElementById('cal-date').value = new Date().toISOString().split('T')[0];
             openModal('calendar-modal');
         }
 
-        function openScheduleModal() {
-            openAddSlotModal();
-        }
-
         function saveCalendarSlot() {
-            const date = document.getElementById('cal-date').value;
+            const day = document.getElementById('cal-day').value;
             const start = document.getElementById('cal-start').value;
             const end = document.getElementById('cal-end').value;
             const group = document.getElementById('cal-group').value.trim();
             const instructor = document.getElementById('cal-instructor').value;
-            if (!date || !group) { alert("Inserisci la data e il nome del gruppo."); return; }
+            if (!group) { alert("Inserisci il nome del gruppo."); return; }
 
-            calendarSlots.push({ id: Date.now(), date, start, end, group, instructor });
+            calendarSlots.push({ id: Date.now(), day, start, end, group, instructor });
             saveData();
             closeModal('calendar-modal');
+            renderCalendarTab();
+            alert("Turno fisso aggiunto al calendario settimanale!");
+        }
+
+        // Programmazione lezione dal piano lezione
+        function openScheduleModal() {
+            const sel = document.getElementById('sch-instructor');
+            sel.innerHTML = '';
+            instructors.forEach(i => sel.innerHTML += `<option value="${i.name}">${i.name}</option>`);
+            document.getElementById('sch-group').value = document.getElementById('gen-group').value || "Elementari 1";
+            document.getElementById('sch-date').value = new Date().toISOString().split('T')[0];
+            openModal('schedule-lesson-modal');
+        }
+
+        function saveScheduledLesson() {
+            const date = document.getElementById('sch-date').value;
+            const start = document.getElementById('sch-start').value;
+            const end = document.getElementById('sch-end').value;
+            const group = document.getElementById('sch-group').value.trim();
+            const instructor = document.getElementById('sch-instructor').value;
+            if (!date || !group) { alert("Inserisci la data e il nome del gruppo."); return; }
+
+            scheduledLessons.push({ id: Date.now(), date, start, end, group, instructor });
+            saveData();
+            closeModal('schedule-lesson-modal');
             switchTab('calendar');
-            alert("Lezione programmata con successo!");
+            alert("Lezione salvata tra le tue programmazioni personali!");
         }
 
         // TEAM & GRUPPI
