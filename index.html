@@ -55,13 +55,13 @@
                     <i class="fa-solid fa-calendar-days"></i> <span>Calendario</span>
                 </button>
                 <button onclick="switchTab('archive')" id="nav-archive" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio Esercizi</span>
+                    <i class="fa-solid fa-dumbbell"></i> <span>Archivio & Gara</span>
                 </button>
                 <button onclick="switchTab('phases')" id="nav-phases" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
                     <i class="fa-solid fa-list-check"></i> <span>Fasi & Categorie</span>
                 </button>
                 <button onclick="switchTab('team')" id="nav-team" class="nav-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#00537A] text-slate-200 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-users"></i> <span>Team Insegnanti</span>
+                    <i class="fa-solid fa-users"></i> <span>Team & Gruppi</span>
                 </button>
             </nav>
 
@@ -79,12 +79,12 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
 
-        <!-- GENERATORE -->
+        <!-- GENERATORE INTelligente -->
         <section id="tab-generator" class="tab-content space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="border-b border-slate-100 pb-5">
-                    <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Crea Nuova Lezione</h2>
-                    <p class="text-sm text-slate-500 mt-0.5">Seleziona gruppo, livello, attrezzi e obiettivi per la lezione.</p>
+                    <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Crea Nuova Lezione Intelligente</h2>
+                    <p class="text-sm text-slate-500 mt-0.5">Seleziona il gruppo, gli elementi tecnici desiderati e bilancia il carico di lavoro.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -108,37 +108,58 @@
                     </div>
                 </div>
 
+                <!-- BILANCIAMENTO STRETCHING / FORZA -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Focus Stretching / Mobilità</label>
+                        <select id="gen-stretching-focus" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm">
+                            <option value="Normale">Normale (Standard)</option>
+                            <option value="Alto" selected>Alto (Più allungamento e mobilità)</option>
+                            <option value="Basso">Basso (Ridotto)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-2">Focus Forza Fisica / Potenziamento</label>
+                        <select id="gen-strength-focus" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-white font-bold text-slate-900 shadow-sm">
+                            <option value="Normale">Normale (Standard)</option>
+                            <option value="Alto" selected>Alto (Più rinforzo e tenute)</option>
+                            <option value="Basso">Basso (Ridotto)</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner space-y-3">
                     <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Attrezzi Utilizzati</label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-2 bg-white rounded-xl border-2 border-slate-200">
                         <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Trampolino" class="w-4 h-4 text-gymBlue rounded border-slate-300 focus:ring-gymBlue">
+                            <input type="checkbox" name="gen-apparatus" value="Trampolino" class="w-4 h-4 text-gymBlue rounded border-slate-300">
                             <span>Trampolino</span>
                         </label>
                         <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Volteggio" class="w-4 h-4 text-gymBlue rounded border-slate-300 focus:ring-gymBlue">
+                            <input type="checkbox" name="gen-apparatus" value="Volteggio" class="w-4 h-4 text-gymBlue rounded border-slate-300">
                             <span>Volteggio</span>
                         </label>
                         <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Trave" class="w-4 h-4 text-gymBlue rounded border-slate-300 focus:ring-gymBlue">
+                            <input type="checkbox" name="gen-apparatus" value="Trave" class="w-4 h-4 text-gymBlue rounded border-slate-300">
                             <span>Trave</span>
                         </label>
                         <label class="flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition">
-                            <input type="checkbox" name="gen-apparatus" value="Corpo Libero" class="w-4 h-4 text-gymBlue rounded border-slate-300 focus:ring-gymBlue">
+                            <input type="checkbox" name="gen-apparatus" value="Corpo Libero" class="w-4 h-4 text-gymBlue rounded border-slate-300">
                             <span>Corpo Libero</span>
                         </label>
                     </div>
                 </div>
 
+                <!-- SOLO ELEMENTI DA SCEGLIERE -->
                 <div class="bg-[#A8E8F9]/20 p-5 rounded-2xl border border-[#A8E8F9]/50 shadow-inner space-y-3">
-                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Obiettivi Principali / Elementi</label>
-                    <div id="gen-objectives-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-48 overflow-y-auto p-2 bg-white rounded-xl border-2 border-slate-200">
+                    <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue">Seleziona Elementi Chiave (Il sito genererà gli esercizi adatti)</label>
+                    <div id="gen-elements-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-48 overflow-y-auto p-2 bg-white rounded-xl border-2 border-slate-200">
                     </div>
                 </div>
 
                 <div class="pt-4 flex justify-end">
-                    <button onclick="generateLesson()" class="w-full sm:w-auto bg-gymOrange hover:bg-amber-600 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition flex items-center justify-center space-x-3 text-base">
-                        <i class="fa-solid fa-bolt text-lg"></i> <span>Genera Lezione</span>
+                    <button onclick="generateIntelligentLesson()" class="w-full sm:w-auto bg-gymOrange hover:bg-amber-600 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition flex items-center justify-center space-x-3 text-base">
+                        <i class="fa-solid fa-bolt text-lg"></i> <span>Genera Lezione Automatica</span>
                     </button>
                 </div>
             </div>
@@ -199,56 +220,87 @@
             </div>
         </section>
 
-        <!-- ARCHIVIO ESERCIZI -->
+        <!-- ARCHIVIO ESERCIZI & GARA -->
         <section id="tab-archive" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-5">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Esercizi Condiviso</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Filtra per categoria o livello, oppure gestisci gli elementi.</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Archivio Esercizi & Esercizi di Gara</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Gestisci il database generale e gli esercizi di gara riservati al tuo gruppo.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="openBatchImportModal()" class="bg-gymBlue hover:bg-[#013C58] text-white font-bold px-4 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
-                            <i class="fa-solid fa-file-arrow-down"></i> <span>Importa in Blocco</span>
-                        </button>
                         <button onclick="openAddExerciseModal()" class="bg-gymOrange hover:bg-amber-600 text-slate-950 font-bold px-5 py-3 rounded-2xl text-sm shadow-lg transition flex items-center space-x-2">
                             <i class="fa-solid fa-plus"></i> <span>Nuovo Esercizio</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
-                    <div>
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Categoria</label>
-                        <select id="filter-category" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                            <option value="Tutti">Tutte le categorie</option>
-                        </select>
+                <!-- SEZIONE DEDICATA ESERCIZI DI GARA (VISIBILI SOLO PER IL GRUPPO DELL'INSEGNANTE) -->
+                <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200 space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <h3 class="font-black text-amber-900 text-base flex items-center space-x-2">
+                                <i class="fa-solid fa-trophy text-amber-600"></i>
+                                <span>Esercizi di Gara Riservati al tuo Gruppo (<span id="my-assigned-group-label">Assegnazione in Team</span>)</span>
+                            </h3>
+                            <p class="text-xs text-amber-700 font-medium">Questi esercizi speciali di gara sono visibili solo alle insegnanti che seguono questo specifico gruppo.</p>
+                        </div>
+                        <button onclick="openAddCompetitionExerciseModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center space-x-1.5">
+                            <i class="fa-solid fa-star"></i> <span>Aggiungi Esercizio di Gara</span>
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Livello</label>
-                        <select id="filter-level" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
-                            <option value="Tutti">Tutti i livelli</option>
-                            <option value="Base">Base</option>
-                            <option value="Medio">Medio</option>
-                            <option value="Avanzato">Avanzato</option>
-                        </select>
+                    <div class="overflow-x-auto bg-white rounded-xl border border-amber-200">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-amber-100/80 text-amber-900 text-xs font-black uppercase tracking-wider">
+                                    <th class="p-3">Nome Elemento / Gara</th>
+                                    <th class="p-3">Gruppo Destinato</th>
+                                    <th class="p-3">Dettagli / Sequenza</th>
+                                    <th class="p-3 text-right">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="competition-table-body" class="divide-y divide-amber-100 text-xs font-medium">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gymDarkBlue text-white text-xs font-black uppercase tracking-wider">
-                                <th class="p-4 rounded-l-2xl">Nome Elemento</th>
-                                <th class="p-4">Categoria</th>
-                                <th class="p-4">Livello</th>
-                                <th class="p-4">Descrizione / Propedeutica</th>
-                                <th class="p-4 rounded-r-2xl text-right">Azioni</th>
-                            </tr>
-                        </thead>
-                        <tbody id="exercise-table-body" class="divide-y divide-slate-100 text-sm font-medium">
-                        </tbody>
-                    </table>
+                <!-- ARCHIVIO GENERALE -->
+                <div class="space-y-4 pt-4">
+                    <h3 class="font-black text-gymDarkBlue text-base">Archivio Standard Esercizi</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#A8E8F9]/20 p-4 rounded-2xl border border-[#A8E8F9]/50">
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Categoria</label>
+                            <select id="filter-category" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
+                                <option value="Tutti">Tutte le categorie</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-wider text-gymDarkBlue mb-1">Filtra per Livello</label>
+                            <select id="filter-level" onchange="renderExercisesTable()" class="w-full border-2 border-slate-200 rounded-xl p-2.5 text-xs font-bold bg-white outline-none focus:border-gymBlue">
+                                <option value="Tutti">Tutti i livelli</option>
+                                <option value="Base">Base</option>
+                                <option value="Medio">Medio</option>
+                                <option value="Avanzato">Avanzato</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gymDarkBlue text-white text-xs font-black uppercase tracking-wider">
+                                    <th class="p-4 rounded-l-2xl">Nome Elemento</th>
+                                    <th class="p-4">Categoria</th>
+                                    <th class="p-4">Livello</th>
+                                    <th class="p-4">Descrizione / Propedeutica</th>
+                                    <th class="p-4 rounded-r-2xl text-right">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="exercise-table-body" class="divide-y divide-slate-100 text-sm font-medium">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -289,18 +341,18 @@
             </div>
         </section>
 
-        <!-- TEAM INSEGNANTI (CON AGGIUNGI E CANCELLA) -->
+        <!-- TEAM INSEGNANTI & ASSEGNAZIONE GRUPPI -->
         <section id="tab-team" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-5 gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & PIN</h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Gestione riservata all'Amministratrice (Ilaria Boldrini).</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-gymDarkBlue tracking-tight">Team Insegnanti & Assegnazione Gruppi</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Ogni insegnante può scegliere quale gruppo segue per sbloccare i relativi esercizi di gara.</p>
                     </div>
                     <div id="admin-action-btn-container">
                     </div>
                 </div>
-                <div id="instructors-list" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div id="instructors-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 </div>
             </div>
         </section>
@@ -363,8 +415,7 @@
     <!-- MODAL ESERCIZIO -->
     <div id="exercise-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue" id="exercise-modal-title">Nuovo Esercizio</h3>
-            <input type="hidden" id="ex-edit-id">
+            <h3 class="text-xl font-black text-gymDarkBlue">Nuovo Esercizio Standard</h3>
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Esercizio / Elemento</label>
                 <input type="text" id="ex-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Verticale al muro">
@@ -390,7 +441,7 @@
             </div>
             <div>
                 <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Descrizione / Note</label>
-                <textarea id="ex-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Breve spiegazione..."></textarea>
+                <textarea id="ex-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Consiglio didattico..."></textarea>
             </div>
             <div class="flex justify-end space-x-2 pt-2">
                 <button onclick="closeModal('exercise-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
@@ -399,23 +450,33 @@
         </div>
     </div>
 
-    <!-- MODAL IMPORT BLOCCO -->
-    <div id="batch-import-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-4 border border-slate-100">
-            <h3 class="text-xl font-black text-gymDarkBlue">Importa Esercizi in Blocco</h3>
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1">Categoria di destinazione</label>
-                    <select id="batch-category" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm">
-                    </select>
-                </div>
-                <div>
-                    <textarea id="batch-text-input" rows="5" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-gymBlue outline-none bg-slate-50 font-medium shadow-sm" placeholder="Ruota&#10;Verticale al muro"></textarea>
-                </div>
+    <!-- MODAL ESERCIZIO DI GARA -->
+    <div id="competition-exercise-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-4 border border-slate-100">
+            <h3 class="text-xl font-black text-amber-900 flex items-center space-x-2">
+                <i class="fa-solid fa-trophy text-amber-600"></i>
+                <span>Nuovo Esercizio di Gara</span>
+            </h3>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Nome Esercizio / Sequenza Gara</label>
+                <input type="text" id="comp-name" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-amber-500 outline-none bg-slate-50 font-medium shadow-sm" placeholder="Es. Serie acrobatica trave gara">
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Gruppo di Destinazione</label>
+                <select id="comp-group" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-amber-500 outline-none bg-slate-50 font-bold text-slate-900 shadow-sm">
+                    <option value="Elementari">Elementari</option>
+                    <option value="Medie">Medie</option>
+                    <option value="Pre Silver">Pre Silver</option>
+                    <option value="Silver">Silver</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-1.5">Note / Note Tecniche di Gara</label>
+                <textarea id="comp-desc" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm focus:border-amber-500 outline-none bg-slate-50 font-medium shadow-sm" placeholder="Requisiti di giuria o sequenza obbligatoria..."></textarea>
             </div>
             <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('batch-import-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
-                <button onclick="processBatchImport()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-gymOrange hover:bg-amber-600 text-slate-950 shadow-md transition">Importa</button>
+                <button onclick="closeModal('competition-exercise-modal')" class="px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition">Annulla</button>
+                <button onclick="saveCompetitionExercise()" class="px-6 py-2.5 rounded-xl text-sm font-black bg-amber-600 hover:bg-amber-700 text-white shadow-md transition">Salva Gara</button>
             </div>
         </div>
     </div>
@@ -510,6 +571,11 @@
             { id: 8, name: "Gioco dei passaggi", category: "Gioco Finale", level: "Base, Medio", desc: "Percorso ludico motorio." }
         ];
 
+        const defaultCompetitionExercises = [
+            { id: 101, name: "Sequenza Trave Gara Base", group: "Elementari", desc: "Salita, salto gatto, ruota avanti, discesa." },
+            { id: 102, name: "Combinazione Corpo Libero Silver", group: "Silver", desc: "Salto teso, ribaltata, arrivo in affondo." }
+        ];
+
         const defaultCategories = ["Riscaldamento", "Stretching", "Potenziamento", "Elemento Tecnico", "Gioco Finale"];
 
         const defaultPhases = [
@@ -520,9 +586,9 @@
         ];
 
         const defaultInstructors = [
-            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false },
-            { id: 2, name: "Maestra Matilde", pin: "1234", isAdmin: false, mustChangePin: false },
-            { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false }
+            { id: 1, name: "Ilaria Boldrini", pin: "112000", isAdmin: true, mustChangePin: false, assignedGroup: "Elementari" },
+            { id: 2, name: "Maestra Matilde", pin: "1234", isAdmin: false, mustChangePin: false, assignedGroup: "Silver" },
+            { id: 3, name: "Maestra Giulia", pin: "5678", isAdmin: false, mustChangePin: false, assignedGroup: "Medie" }
         ];
 
         const defaultCalendar = [
@@ -532,6 +598,7 @@
         ];
 
         let exercises = JSON.parse(localStorage.getItem('gym_exercises')) || defaultExercises;
+        let competitionExercises = JSON.parse(localStorage.getItem('gym_competition_exercises')) || defaultCompetitionExercises;
         let categories = JSON.parse(localStorage.getItem('gym_categories')) || defaultCategories;
         let showSaturday = JSON.parse(localStorage.getItem('gym_show_saturday')) || false;
         let calendarSlots = JSON.parse(localStorage.getItem('gym_calendar')) || defaultCalendar;
@@ -540,6 +607,7 @@
 
         function saveData() {
             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
+            localStorage.setItem('gym_competition_exercises', JSON.stringify(competitionExercises));
             localStorage.setItem('gym_categories', JSON.stringify(categories));
             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
             localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
@@ -551,6 +619,7 @@
             if (useCloud && db) {
                 db.collection("gym_data").doc("main").set({
                     exercises: exercises,
+                    competitionExercises: competitionExercises,
                     categories: categories,
                     instructors: instructors,
                     calendarSlots: calendarSlots,
@@ -566,12 +635,20 @@
                         const data = doc.data();
                         if (data.instructors && data.instructors.length > 0) {
                             exercises = data.exercises || defaultExercises;
+                            competitionExercises = data.competitionExercises || defaultCompetitionExercises;
                             categories = data.categories || defaultCategories;
                             instructors = data.instructors || defaultInstructors;
                             calendarSlots = data.calendarSlots || defaultCalendar;
                             showSaturday = data.showSaturday || false;
                             
+                            // Aggiorna currentInstructor se loggato
+                            if (currentInstructor) {
+                                let updatedMe = instructors.find(i => i.id === currentInstructor.id);
+                                if (updatedMe) currentInstructor = updatedMe;
+                            }
+
                             localStorage.setItem('gym_exercises', JSON.stringify(exercises));
+                            localStorage.setItem('gym_competition_exercises', JSON.stringify(competitionExercises));
                             localStorage.setItem('gym_categories', JSON.stringify(categories));
                             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
                             localStorage.setItem('gym_calendar', JSON.stringify(calendarSlots));
@@ -605,7 +682,7 @@
             instructors.forEach(ins => {
                 const opt = document.createElement('option');
                 opt.value = ins.id;
-                opt.textContent = ins.name;
+                opt.textContent = `${ins.name} (${ins.assignedGroup || 'Nessun gruppo'})`;
                 if (ins.id === 1) opt.selected = true;
                 select.appendChild(opt);
             });
@@ -628,8 +705,9 @@
                     document.getElementById('change-pin-modal').classList.add('flex');
                 } else {
                     currentInstructor = ins;
+                    if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari";
                     saveData();
-                    document.getElementById('current-user-name').textContent = ins.name;
+                    document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
                     switchTab('generator');
                 }
             } else {
@@ -646,7 +724,7 @@
             currentInstructor = tempLoggedInInstructor;
             saveData();
             document.getElementById('change-pin-modal').classList.add('hidden');
-            document.getElementById('current-user-name').textContent = currentInstructor.name;
+            document.getElementById('current-user-name').textContent = `${currentInstructor.name} [${currentInstructor.assignedGroup || 'Elementari'}]`;
             switchTab('generator');
         }
 
@@ -669,8 +747,8 @@
             activeBtn.classList.add('bg-gymBlue', 'text-white', 'shadow-sm');
             activeBtn.classList.remove('hover:bg-[#00537A]', 'text-slate-200');
 
-            if (tabId === 'generator') updateGeneratorObjectives();
-            if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); }
+            if (tabId === 'generator') updateGeneratorElements();
+            if (tabId === 'archive') { populateCategoryFilter(); renderExercisesTable(); renderCompetitionTable(); }
             if (tabId === 'calendar') renderCalendar();
             if (tabId === 'phases') renderPhasesEditor();
             if (tabId === 'team') renderInstructors();
@@ -680,15 +758,20 @@
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
-        function updateGeneratorObjectives() {
-            const container = document.getElementById('gen-objectives-container');
+        // GENERATORE INTELLIGENTE CON SOLO ELEMENTI
+        function updateGeneratorElements() {
+            const container = document.getElementById('gen-elements-container');
             container.innerHTML = '';
-            exercises.forEach(ex => {
+            // Prende solo gli elementi tecnici o dall'archivio
+            let techExercises = exercises.filter(e => e.category === "Elemento Tecnico" || e.category === "Riscaldamento");
+            if(techExercises.length === 0) techExercises = exercises;
+
+            techExercises.forEach(ex => {
                 const label = document.createElement('label');
                 label.className = "flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-50 cursor-pointer text-sm font-bold text-slate-800 transition";
                 label.innerHTML = `
-                    <input type="checkbox" name="gen-obj-checkbox" value="${ex.name}" class="w-4 h-4 text-gymBlue rounded border-slate-300 focus:ring-gymBlue">
-                    <span>${ex.name} <span class="text-xs font-medium text-slate-400">(${ex.category} • ${ex.level})</span></span>
+                    <input type="checkbox" name="gen-elem-checkbox" value="${ex.name}" class="w-4 h-4 text-gymBlue rounded border-slate-300">
+                    <span>${ex.name} <span class="text-xs font-medium text-slate-400">(${ex.category})</span></span>
                 `;
                 container.appendChild(label);
             });
@@ -696,30 +779,46 @@
 
         let currentGeneratedLesson = null;
 
-        function generateLesson() {
+        function generateIntelligentLesson() {
             const group = document.getElementById('gen-group').value;
             const level = document.getElementById('gen-level').value;
+            const stretchFocus = document.getElementById('gen-stretching-focus').value;
+            const strengthFocus = document.getElementById('gen-strength-focus').value;
+
             const apparatusCheckboxes = document.querySelectorAll('input[name="gen-apparatus"]:checked');
             let selectedApparatus = Array.from(apparatusCheckboxes).map(cb => cb.value);
-            const checkboxes = document.querySelectorAll('input[name="gen-obj-checkbox"]:checked');
-            let selectedObjectives = Array.from(checkboxes).map(cb => cb.value);
+            
+            const checkboxes = document.querySelectorAll('input[name="gen-elem-checkbox"]:checked');
+            let selectedElements = Array.from(checkboxes).map(cb => cb.value);
 
-            if (selectedObjectives.length === 0) { alert("Seleziona almeno un obiettivo!"); return; }
+            if (selectedElements.length === 0) { alert("Seleziona almeno un elemento chiave per la lezione!"); return; }
 
             const myPhases = getMyPhases();
+            
+            // Genera la lezione bilanciando stretching e forza in base alle preferenze
             currentGeneratedLesson = {
-                group: group, level: level, apparatus: selectedApparatus, objectives: selectedObjectives,
+                group: group, level: level, apparatus: selectedApparatus, elements: selectedElements,
+                stretchFocus: stretchFocus, strengthFocus: strengthFocus,
                 phases: myPhases.map((phase, index) => {
                     let phaseExercises = [];
                     let catName = phase.category || categories[0];
-                    if (index === 2 || (myPhases.length > 2 && index === Math.floor(myPhases.length / 2))) {
-                        phaseExercises = selectedObjectives.map(objName => {
-                            let found = exercises.find(e => e.name === objName);
-                            return { name: objName, desc: found ? found.desc : "Esercizio" };
+
+                    if (catName === "Stretching") {
+                        let count = stretchFocus === "Alto" ? 3 : (stretchFocus === "Basso" ? 1 : 2);
+                        phaseExercises = exercises.filter(e => e.category === "Stretching").slice(0, count).map(e => ({ name: e.name, desc: e.desc }));
+                    } else if (catName === "Potenziamento") {
+                        let count = strengthFocus === "Alto" ? 3 : (strengthFocus === "Basso" ? 1 : 2);
+                        phaseExercises = exercises.filter(e => e.category === "Potenziamento").slice(0, count).map(e => ({ name: e.name, desc: e.desc }));
+                    } else if (catName === "Elemento Tecnico") {
+                        // Inserisce gli elementi scelti dall'utente
+                        phaseExercises = selectedElements.map(elemName => {
+                            let found = exercises.find(e => e.name === elemName);
+                            return { name: elemName, desc: found ? found.desc : "Esercizio tecnico mirato" };
                         });
                     } else {
                         phaseExercises = exercises.filter(e => e.category === catName).slice(0, 1).map(e => ({ name: e.name, desc: e.desc }));
                     }
+
                     return { title: phase.title, desc: phase.desc, category: catName, exercises: phaseExercises };
                 })
             };
@@ -732,8 +831,8 @@
         function renderCurrentLessonResult() {
             if (!currentGeneratedLesson) return;
             let apparatusText = currentGeneratedLesson.apparatus.length > 0 ? ` • Attrezzi: ${currentGeneratedLesson.apparatus.join(', ')}` : '';
-            document.getElementById('res-title').textContent = `Lezione: ${currentGeneratedLesson.objectives.slice(0, 2).join(', ')}`;
-            document.getElementById('res-subtitle').textContent = `Insegnante: ${currentInstructor.name} • Gruppo: ${currentGeneratedLesson.group}${apparatusText}`;
+            document.getElementById('res-title').textContent = `Lezione Automatica: ${currentGeneratedLesson.elements.slice(0, 2).join(', ')}`;
+            document.getElementById('res-subtitle').textContent = `Insegnante: ${currentInstructor.name} • Gruppo: ${currentGeneratedLesson.group} (Stretching: ${currentGeneratedLesson.stretchFocus}, Forza: ${currentGeneratedLesson.strengthFocus})${apparatusText}`;
 
             const container = document.getElementById('lesson-phases-output');
             container.innerHTML = '';
@@ -859,7 +958,7 @@
         }
 
         function populateCategoryFilter() {
-            ['filter-category', 'ex-category', 'batch-category'].forEach(id => {
+            ['filter-category', 'ex-category'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.innerHTML = id === 'filter-category' ? '<option value="Tutti">Tutte le categorie</option>' : '';
@@ -890,8 +989,43 @@
             });
         }
 
+        // GESTIONE ESERCIZI DI GARA (VISIBILI SOLO PER IL GRUPPO SCELTO DALL'INSEGNANTE)
+        function renderCompetitionTable() {
+            const tbody = document.getElementById('competition-table-body');
+            const groupLabel = document.getElementById('my-assigned-group-label');
+            if (!tbody) return;
+
+            let myGroup = currentInstructor ? (currentInstructor.assignedGroup || "Elementari") : "Elementari";
+            if (groupLabel) groupLabel.textContent = myGroup;
+
+            tbody.innerHTML = '';
+            // Mostra solo gli esercizi di gara del gruppo dell'insegnante loggata
+            let myCompExercises = competitionExercises.filter(ce => ce.group === myGroup);
+
+            if(myCompExercises.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-xs text-slate-400 italic">Nessun esercizio di gara inserito per il gruppo ${myGroup}. Clicca su "Aggiungi Esercizio di Gara".</td></tr>`;
+                return;
+            }
+
+            myCompExercises.forEach(ce => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-amber-50/50 transition">
+                        <td class="p-3 font-black text-amber-900">${ce.name}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-200 text-amber-900">${ce.group}</span></td>
+                        <td class="p-3 text-slate-700 text-xs">${ce.desc}</td>
+                        <td class="p-3 text-right">
+                            <button onclick="competitionExercises = competitionExercises.filter(x => x.id !== ${ce.id}); saveData(); renderCompetitionTable();" class="text-amber-400 hover:text-rose-600 p-1.5"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
         function openAddExerciseModal() { populateCategoryFilter(); openModal('exercise-modal'); }
-        function openBatchImportModal() { populateCategoryFilter(); openModal('batch-import-modal'); }
+        function openAddCompetitionExerciseModal() { 
+            document.getElementById('comp-group').value = currentInstructor ? (currentInstructor.assignedGroup || "Elementari") : "Elementari";
+            openModal('competition-exercise-modal'); 
+        }
         
         function saveExercise() {
             const name = document.getElementById('ex-name').value.trim();
@@ -905,17 +1039,16 @@
             renderExercisesTable();
         }
 
-        function processBatchImport() {
-            const text = document.getElementById('batch-text-input').value.trim();
-            const category = document.getElementById('batch-category').value;
-            if (!text) return;
-            text.split('\n').forEach(name => {
-                if (name.trim()) exercises.push({ id: Date.now() + Math.random(), name: name.trim(), category, level: "Base, Medio", desc: "Importato." });
-            });
+        function saveCompetitionExercise() {
+            const name = document.getElementById('comp-name').value.trim();
+            const group = document.getElementById('comp-group').value;
+            const desc = document.getElementById('comp-desc').value.trim();
+            if (!name) { alert("Inserisci il nome dell'esercizio di gara."); return; }
+            competitionExercises.push({ id: Date.now(), name, group, desc });
             saveData();
-            closeModal('batch-import-modal');
-            renderExercisesTable();
-            alert("Esercizi importati con successo!");
+            closeModal('competition-exercise-modal');
+            renderCompetitionTable();
+            alert("Esercizio di gara aggiunto con successo!");
         }
 
         function renderCalendar() {
@@ -975,7 +1108,7 @@
         }
         function openScheduleModal() { switchTab('calendar'); openAddSlotModal(); }
 
-        // TEAM INSEGNANTI (AGGIUNGI / ELIMINA RIPRISTINATO)
+        // TEAM & SCELTA GRUPPO PER INSEGNANTE
         function renderInstructors() {
             const container = document.getElementById('instructors-list');
             const btnContainer = document.getElementById('admin-action-btn-container');
@@ -989,47 +1122,74 @@
                     </button>
                 `;
             } else {
-                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Gestito dall'Amministratrice (Ilaria Boldrini)</span>`;
+                btnContainer.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Puoi modificare il tuo gruppo assegnato dal menu sottostante.</span>`;
             }
 
             instructors.forEach(ins => {
                 const isMe = currentInstructor && currentInstructor.id === ins.id;
+                let currentGroup = ins.assignedGroup || "Elementari";
+
                 container.innerHTML += `
-                    <div class="bg-[#A8E8F9]/15 border ${isMe ? 'border-gymBlue ring-2 ring-[#A8E8F9]' : 'border-[#A8E8F9]/40'} p-5 rounded-2xl flex items-center justify-between">
-                        <div>
-                            <h4 class="font-black text-sm text-gymDarkBlue flex items-center space-x-2">
-                                <span>${ins.name}</span>
-                                ${ins.isAdmin ? '<span class="text-[10px] bg-gymYellow text-slate-950 px-2 py-0.5 rounded-full font-black">Admin</span>' : ''}
-                                ${isMe ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-black">Tu</span>' : ''}
-                            </h4>
-                            <p class="text-xs text-slate-400 mt-0.5">PIN protetto</p>
+                    <div class="bg-[#A8E8F9]/15 border ${isMe ? 'border-gymBlue ring-2 ring-[#A8E8F9]' : 'border-[#A8E8F9]/40'} p-5 rounded-2xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-black text-sm text-gymDarkBlue flex items-center space-x-2">
+                                    <span>${ins.name}</span>
+                                    ${ins.isAdmin ? '<span class="text-[10px] bg-gymYellow text-slate-950 px-2 py-0.5 rounded-full font-black">Admin</span>' : ''}
+                                    ${isMe ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-black">Tu</span>' : ''}
+                                </h4>
+                            </div>
+                            ${currentInstructor && currentInstructor.isAdmin && !ins.isAdmin ? `
+                                <button onclick="deleteInstructor(${ins.id})" class="text-xs text-rose-500 hover:text-rose-700 p-2 rounded-xl hover:bg-rose-50 transition" title="Rimuovi">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>` : ''}
                         </div>
-                        ${currentInstructor && currentInstructor.isAdmin && !ins.isAdmin ? `
-                            <button onclick="deleteInstructor(${ins.id})" class="text-xs text-rose-500 hover:text-rose-700 p-2.5 rounded-xl hover:bg-rose-50 transition" title="Rimuovi insegnante">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>` : ''}
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between">
+                            <label class="text-xs font-black uppercase text-slate-600">Gruppo Assegnato:</label>
+                            <select onchange="updateInstructorGroup(${ins.id}, this.value)" class="border-2 border-gymBlue rounded-lg p-1.5 text-xs font-bold text-gymDarkBlue bg-slate-50 outline-none">
+                                <option value="Elementari" ${currentGroup === 'Elementari' ? 'selected' : ''}>Elementari</option>
+                                <option value="Medie" ${currentGroup === 'Medie' ? 'selected' : ''}>Medie</option>
+                                <option value="Pre Silver" ${currentGroup === 'Pre Silver' ? 'selected' : ''}>Pre Silver</option>
+                                <option value="Silver" ${currentGroup === 'Silver' ? 'selected' : ''}>Silver</option>
+                            </select>
+                        </div>
                     </div>
                 `;
             });
+        }
+
+        function updateInstructorGroup(insId, newGroup) {
+            instructors = instructors.map(i => {
+                if (i.id === insId) {
+                    i.assignedGroup = newGroup;
+                    if (currentInstructor && currentInstructor.id === i.id) {
+                        currentInstructor = i;
+                        document.getElementById('current-user-name').textContent = `${i.name} [${newGroup}]`;
+                    }
+                }
+                return i;
+            });
+            saveData();
+            alert(`Gruppo aggiornato a ${newGroup}! Ora vedrai i relativi esercizi di gara.`);
         }
 
         function openAddInstructorModal() {
             if (!currentInstructor || !currentInstructor.isAdmin) return;
             const name = prompt("Nome della nuova insegnante:");
             if (!name) return;
-            const tempPin = prompt("Inserisci un PIN provvisorio iniziale:");
-            if (!tempPin || tempPin.length < 4) { alert("PIN non valido (almeno 4 cifre)"); return; }
+            const tempPin = prompt("Inserisci un PIN provvisorio:");
+            if (!tempPin || tempPin.length < 4) { alert("PIN non valido"); return; }
             
             const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
-            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true });
+            instructors.push({ id: newId, name: name.trim(), pin: tempPin, isAdmin: false, mustChangePin: true, assignedGroup: "Elementari" });
             saveData();
             renderInstructors();
-            alert(`Insegnante ${name} aggiunta con successo!`);
+            alert(`Insegnante ${name} aggiunta!`);
         }
 
         function deleteInstructor(id) {
             if (!currentInstructor || !currentInstructor.isAdmin) return;
-            if (confirm("Vuoi rimuovere questa insegnante dal team?")) {
+            if (confirm("Vuoi rimuovere questa insegnante?")) {
                 instructors = instructors.filter(i => i.id !== id);
                 saveData();
                 renderInstructors();
