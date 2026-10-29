@@ -652,9 +652,6 @@
             localStorage.setItem('gym_instructors', JSON.stringify(instructors));
             localStorage.setItem('gym_calendar_slots', JSON.stringify(calendarSlots));
             localStorage.setItem('gym_scheduled_lessons', JSON.stringify(scheduledLessons));
-            if (currentInstructor) {
-                localStorage.setItem('gym_current_user', JSON.stringify(currentInstructor));
-            }
 
             if (useCloud && db) {
                 db.collection("gym_data").doc("main").set({
@@ -745,7 +742,6 @@
                 } else {
                     currentInstructor = ins;
                     if(!currentInstructor.assignedGroup) currentInstructor.assignedGroup = "Elementari 1";
-                    saveData();
                     document.getElementById('current-user-name').textContent = `${ins.name} [${ins.assignedGroup}]`;
                     switchTab('generator');
                 }
@@ -769,7 +765,6 @@
 
         function forceLogout() {
             currentInstructor = null;
-            localStorage.removeItem('gym_current_user');
             initStartupLogin();
         }
 
@@ -946,7 +941,7 @@
             renderCurrentLessonResult();
         }
 
-        // SEZIONE GARE / PROGRAMMI ATLETE
+        // SEZIONE GARE / PROGRAMMI ATLETE (SENZA MAI FARE REDIRECT)
         function renderCompetitionsSection() {
             const container = document.getElementById('athletes-competition-container');
             if (!container) return;
