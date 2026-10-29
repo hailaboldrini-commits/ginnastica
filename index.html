@@ -273,7 +273,7 @@
             </div>
         </section>
 
-        <!-- SEZIONE GARE / PROGRAMMI ATLETE (LIBERA E SENZA BLOCCHI DI PIN) -->
+        <!-- SEZIONE GARE / PROGRAMMI ATLETE (LIBERA E SENZA BLOCCHI) -->
         <section id="tab-competitions" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-3xl shadow-md border border-slate-200/90 p-6 sm:p-8 space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-5 gap-4">
@@ -774,9 +774,10 @@
         }
 
         function switchTab(tabId) {
-            // Se non c'è l'utente loggato ma siamo sul tab competitions, assegniamo la prima insegnante di default per sbloccare la sezione gare senza PIN
+            // Se l'utente non ha effettuato il login iniziale, lo richiede solo se prova ad aprire schede diverse dalle gare
             if (!currentInstructor) {
                 if (tabId === 'competitions') {
+                    // Imposta automaticamente la prima insegnante come profilo predefinito SOLO per sbloccare la sezione Gare senza blocchi
                     currentInstructor = instructors[0];
                     document.getElementById('current-user-name').textContent = `${currentInstructor.name} [${currentInstructor.assignedGroup || 'Elementari 1'}]`;
                 } else {
